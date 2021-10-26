@@ -26,6 +26,7 @@ const pick = require('lodash/pick');
 
 const MANIFEST_CACHE_KEY_PREFIX = 'MANIFEST_CACHE_KEY_';
 const LOCALE_MANIFEST_CACHE_KEY = 'LOCALE_MANIFEST_CACHE_KEY';
+const SERVER_CONF_KEY = 'pitrix-server-conf-key';
 
 const root = dir => `${global.APP_ROOT}/${dir}`.replace(/(\/+)/g, '/');
 
@@ -33,8 +34,6 @@ const cache = global._pitrixCache || new NodeCache();
 if (!global._pitrixCache) {
   global._pitrixCache = cache;
 }
-
-const SERVER_CONF_KEY = 'pitrix-server-conf-key';
 
 /**
  *
