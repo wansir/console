@@ -31,7 +31,7 @@ const {
   safeParseJSON,
 } = require('../libs/utils');
 
-const { send_gateway_request } = require('../libs/request');
+const { sendGatewayRequest } = require('../libs/request');
 
 const handleLogin = async ctx => {
   const params = ctx.request.body;
@@ -159,7 +159,7 @@ const handleLogout = async ctx => {
     const { origin = '', referer = '' } = ctx.headers;
     const refererPath = referer.replace(origin, '');
 
-    await send_gateway_request({
+    await sendGatewayRequest({
       method: 'GET',
       url: '/oauth/logout',
     });

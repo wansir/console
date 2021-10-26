@@ -34,7 +34,7 @@ if (!global._pitrixCache) {
   global._pitrixCache = cache;
 }
 
-const server_conf_key = 'pitrix-server-conf-key';
+const SERVER_CONF_KEY = 'pitrix-server-conf-key';
 
 /**
  *
@@ -55,20 +55,20 @@ const loadYaml = filePath => {
  * @returns {*|{}}
  */
 const getServerConfig = key => {
-  let config = cache.get(server_conf_key);
+  let config = cache.get(SERVER_CONF_KEY);
   if (!config) {
     // parse config yaml
     config = loadYaml(root('server/config.yaml')) || {};
     const tryFile = root('server/local_config.yaml');
     if (fs.existsSync(tryFile)) {
       // merge local_config
-      const local_config = loadYaml(tryFile);
-      if (typeof local_config === 'object') {
-        merge(config, local_config);
+      const localConfig = loadYaml(tryFile);
+      if (typeof localConfig === 'object') {
+        merge(config, localConfig);
       }
     }
 
-    cache.set(server_conf_key, config);
+    cache.set(SERVER_CONF_KEY, config);
   }
   return key ? config[key] : config;
 };

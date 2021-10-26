@@ -22,7 +22,7 @@ const isEmpty = require('lodash/isEmpty');
 const isArray = require('lodash/isArray');
 const jwtDecode = require('jwt-decode');
 
-const { send_gateway_request } = require('../libs/request');
+const { sendGatewayRequest } = require('../libs/request');
 
 const {
   isAppsRoute,
@@ -37,7 +37,11 @@ const handleLoginResp = (resp = {}) => {
     throw new Error(resp.message);
   }
 
-  const { access_token, refresh_token, expires_in } = resp || {};
+  const {
+    access_token: token,
+    refresh_token: refreshToken,
+    expires_in: expiresIn,
+  } = resp || {};
 
   const { username, extra, groups } = jwtDecode(access_token);
   const email = get(extra, 'email[0]');
@@ -50,9 +54,9 @@ const handleLoginResp = (resp = {}) => {
     groups,
     extraname,
     initialized,
-    token: access_token,
-    refreshToken: refresh_token,
-    expire: new Date().getTime() + Number(expires_in) * 1000,
+    token,
+    refreshToken,
+    expire: new Date().getTime() + Number(expiresIn) * 1000,
   };
 };
 
@@ -70,7 +74,7 @@ const login = async (data, headers) => {
   data.client_id = clientID;
   data.client_secret = clientSecret;
 
-  const resp = await send_gateway_request({
+  const resp = await sendGatewayRequest({
     method: 'POST',
     url: '/oauth/token',
     headers: {
@@ -108,7 +112,7 @@ const getNewToken = async ctx => {
   data.client_id = clientID;
   data.client_secret = clientSecret;
 
-  const resp = await send_gateway_request({
+  const resp = await sendGatewayRequest({
     method: 'POST',
     url: '/oauth/token',
     headers: {
@@ -118,23 +122,27 @@ const getNewToken = async ctx => {
     token: refreshToken,
   });
 
-  const { access_token, refresh_token, expires_in } = resp || {};
+  const {
+    access_token: token,
+    refresh_token: rfsToken,
+    expires_in: expiresIn,
+  } = resp || {};
 
-  if (!access_token) {
+  if (!token) {
     throw new Error(resp.message);
   }
 
   newToken = {
-    token: access_token,
-    refreshToken: refresh_token,
-    expire: new Date().getTime() + Number(expires_in) * 1000,
+    token,
+    refreshToken: rfsToken,
+    expire: new Date().getTime() + Number(expiresIn) * 1000,
   };
 
   return newToken;
 };
 
 const oAuthLogin = async ({ oauthName, ...params }) => {
-  const resp = await send_gateway_request({
+  const resp = await sendGatewayRequest({
     method: 'GET',
     url: `/oauth/callback/${oauthName}`,
     params,
@@ -144,7 +152,7 @@ const oAuthLogin = async ({ oauthName, ...params }) => {
 };
 
 const getUserGlobalRules = async (username, token) => {
-  const resp = await send_gateway_request({
+  const resp = await sendGatewayRequest({
     method: 'GET',
     url: `/kapis/iam.kubesphere.io/v1alpha2/users/${username}/globalroles`,
     token,
@@ -179,7 +187,7 @@ const getUserDetail = async token => {
 
   const { username } = jwtDecode(token);
 
-  const resp = await send_gateway_request({
+  const resp = await sendGatewayRequest({
     method: 'GET',
     url: `/kapis/iam.kubesphere.io/v1alpha2/users/${username}`,
     token,
@@ -210,7 +218,7 @@ const getUserDetail = async token => {
 const getWorkspaces = async token => {
   let workspaces = [];
 
-  const resp = await send_gateway_request({
+  const resp = await sendGatewayRequest({
     method: 'GET',
     url: '/kapis/tenant.kubesphere.io/v1alpha2/workspaces',
     params: { limit: 10 },
@@ -228,12 +236,12 @@ const getKSConfig = async token => {
   let resp = {};
   try {
     const [config, version] = await Promise.all([
-      send_gateway_request({
+      sendGatewayRequest({
         method: 'GET',
         url: '/kapis/config.kubesphere.io/v1alpha2/configs/configz',
         token,
       }),
-      send_gateway_request({
+      sendGatewayRequest({
         method: 'GET',
         url: '/kapis/version',
         token,
@@ -271,7 +279,7 @@ const getCurrentUser = async ctx => {
 const getOAuthInfo = async () => {
   let resp = [];
   try {
-    resp = await send_gateway_request({
+    resp = await sendGatewayRequest({
       method: 'GET',
       url: '/kapis/config.kubesphere.io/v1alpha2/configs/oauth',
     });
@@ -332,7 +340,7 @@ const getOAuthInfo = async () => {
 };
 
 const createUser = (params, token) => {
-  return send_gateway_request({
+  return sendGatewayRequest({
     method: 'POST',
     url: '/kapis/iam.kubesphere.io/v1alpha2/users',
     params: {

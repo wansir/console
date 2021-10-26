@@ -18,12 +18,12 @@
 
 const isEmpty = require('lodash/isEmpty');
 const isUndefined = require('lodash/isUndefined');
-const { send_gateway_request } = require('../libs/request');
+const { sendGatewayRequest } = require('../libs/request');
 
 module.exports = async (ctx, next) => {
   if (ctx.headers['x-check-exist']) {
     try {
-      ctx.body = await send_gateway_request({
+      ctx.body = await sendGatewayRequest({
         method: ctx.method,
         headers: ctx.headers,
         url: ctx.url,

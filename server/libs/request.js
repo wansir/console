@@ -29,7 +29,7 @@ const { server: serverConfig } = getServerConfig();
  *  gateway api request, if get logined resource, token must exists,
  * @param {options} options: { token, method, url, params }
  */
-const send_gateway_request = ({
+const sendGatewayRequest = ({
   method,
   url,
   params,
@@ -54,7 +54,7 @@ const send_gateway_request = ({
   );
 };
 
-const send_dockerhub_request = ({ params, path, headers }) => {
+const sendDockerhubRequest = ({ params, path, headers }) => {
   const httpsAgent = new https.Agent({
     lookup: (host, options, cb) => {
       resolve4(host, options, (err, addresses) => {
@@ -72,14 +72,14 @@ const send_dockerhub_request = ({ params, path, headers }) => {
   return request.get(`${serverConfig.dockerHubUrl}${path}`, params, options);
 };
 
-const send_harbor_request = ({ path }) => {
+const sendHarborRequest = ({ path }) => {
   return request.get(
     `${path.replace('http:/', 'http://').replace('https:/', 'https://')}`,
   );
 };
 
 module.exports = {
-  send_gateway_request,
-  send_dockerhub_request,
-  send_harbor_request,
+  sendGatewayRequest,
+  sendDockerhubRequest,
+  sendHarborRequest,
 };
