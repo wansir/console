@@ -1,0 +1,45 @@
+{
+  "name": "@ks-console/server",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "wayne <wayne@yunify.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/core.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@git.internal.yunify.com:wayne/plugin-demo.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7",
+    "dnscache": "^1.0.2",
+    "http-proxy": "^1.18.1",
+    "js-yaml": "^3.13.1",
+    "jwt-decode": "^3.1.2",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-compress": "^5.1.0",
+    "koa-convert": "^2.0.0",
+    "koa-ejs": "^4.3.0",
+    "koa-locales": "^1.12.0",
+    "koa-logger": "^3.2.0",
+    "koa-mount": "^4.0.0",
+    "koa-router": "^10.1.1",
+    "koa-static": "^5.0.0",
+    "lodash": "^4.17.21",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.1",
+    "path-to-regexp": "^6.2.0",
+    "stream-array": "^1.1.2"
+  }
+}
