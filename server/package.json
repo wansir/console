@@ -1,24 +1,12 @@
 {
   "name": "@ks-console/server",
-  "version": "1.0.0",
-  "description": "> TODO: description",
-  "author": "wayne <wayne@yunify.com>",
+  "version": "4.0.0",
+  "description": "BFF of KubeSphere Console",
   "homepage": "",
-  "license": "ISC",
-  "main": "lib/core.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git@git.internal.yunify.com:wayne/plugin-demo.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "url": "git@git@github.com:kubesphere/console.git"
   },
   "dependencies": {
     "dayjs": "^1.10.7",

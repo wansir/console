@@ -8,6 +8,10 @@
     "plugins/*",
     "server"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@git@github.com:kubesphere/console.git"
+  },
   "scripts": {
     "bootstrap": "lerna bootstrap --use-workspaces",
     "build:dll": "webpack --config ./scripts/webpack.dll.conf.js",
@@ -52,9 +56,9 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@babel/runtime": "^7.15.4",
-    "@geist-ui/react": "^2.1.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
     "@types/react": "^16.9.56",
+    "@types/webpack-env": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "autoprefixer": "^9.7.4",

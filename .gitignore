@@ -20,7 +20,7 @@ yarn-error.log*
 .idea/
 
 # local config
-/server/local_config.yaml
+/configs/local_config.yaml
 
 *.rdb
 /build

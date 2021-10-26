@@ -19,12 +19,13 @@
 const fs = require('fs');
 const yaml = require('js-yaml/dist/js-yaml');
 const NodeCache = require('node-cache');
-const get = require('lodash/get');
+// const get = require('lodash/get');
 const merge = require('lodash/merge');
 const isEmpty = require('lodash/isEmpty');
 const pick = require('lodash/pick');
+const { systemImports } = require('../../scripts/config');
 
-const MANIFEST_CACHE_KEY_PREFIX = 'MANIFEST_CACHE_KEY_';
+const MANIFEST_CACHE_KEY = 'MANIFEST_CACHE_KEY';
 const LOCALE_MANIFEST_CACHE_KEY = 'LOCALE_MANIFEST_CACHE_KEY';
 const SERVER_CONF_KEY = 'pitrix-server-conf-key';
 
@@ -57,8 +58,8 @@ const getServerConfig = key => {
   let config = cache.get(SERVER_CONF_KEY);
   if (!config) {
     // parse config yaml
-    config = loadYaml(root('server/config.yaml')) || {};
-    const tryFile = root('server/local_config.yaml');
+    config = loadYaml(root('configs/config.yaml')) || {};
+    const tryFile = root('configs/local_config.yaml');
     if (fs.existsSync(tryFile)) {
       // merge local_config
       const localConfig = loadYaml(tryFile);
@@ -141,8 +142,8 @@ const safeParseJSON = (json, defaultValue) => {
   return result;
 };
 
-const getManifest = entry => {
-  let manifestCache = cache.get(`${MANIFEST_CACHE_KEY_PREFIX}${entry}`);
+const getManifest = () => {
+  let manifestCache = cache.get(MANIFEST_CACHE_KEY);
 
   if (!manifestCache) {
     let data = {};
@@ -150,8 +151,8 @@ const getManifest = entry => {
       const dataStream = fs.readFileSync(root('dist/manifest.json'));
       data = safeParseJSON(dataStream.toString(), {});
     } catch (error) {}
-    manifestCache = get(data, `entrypoints.${entry}`);
-    cache.set(`${MANIFEST_CACHE_KEY_PREFIX}${entry}`, manifestCache);
+    manifestCache = pick(data, ['main.js', 'vendor.js', 'staticPlugins.js']);
+    cache.set(MANIFEST_CACHE_KEY, manifestCache);
   }
 
   return manifestCache;
@@ -176,6 +177,10 @@ const getLocaleManifest = () => {
   return manifestCache;
 };
 
+const getImportMap = () => {
+  return systemImports;
+};
+
 module.exports = {
   root,
   loadYaml,
@@ -187,4 +192,5 @@ module.exports = {
   isAppsRoute,
   decryptPassword,
   safeParseJSON,
+  getImportMap,
 };
