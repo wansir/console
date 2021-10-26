@@ -1,116 +1,77 @@
-/*
- * This file is part of KubeSphere Console.
- * Copyright (C) 2019 The KubeSphere Console Authors.
- * 
- * KubeSphere Console is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * KubeSphere Console is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 // http://eslint.org/docs/user-guide/configuring
+
+const config = require('./scripts/config');
+
+const { resolve } = config;
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
-      modules: true,
     },
+    project: ['./tsconfig.json'],
   },
   env: {
     es6: true,
     commonjs: true,
     browser: true,
-    jest: true,
   },
-  extends: ['airbnb-base', 'plugin:prettier/recommended'],
-  // https://github.com/yannickcr/eslint-plugin-react
-  plugins: ['react', 'babel', 'promise'],
-  // check if imports actually resolve
+  extends: ['airbnb-typescript', 'plugin:prettier/recommended', 'prettier/react'],
+  plugins: ['prettier', '@typescript-eslint', 'react', 'babel', 'promise', 'import'],
   settings: {
     'import/resolver': {
       webpack: {
-        config: 'scripts/webpack.base.js',
+        config: resolve('scripts/webpack.base.conf.js'),
       },
+    },
+    react: {
+      createClass: 'createReactClass',
+      pragma: 'React',
+      version: 'detect',
     },
   },
   // add your custom rules here
   rules: {
+    'object-curly-newline': 0,
+    'class-methods-use-this': 0,
     // allow paren-less arrow functions
-    'arrow-parens': 0,
-    'import/no-extraneous-dependencies': 0,
-    'import/no-dynamic-require': 0,
-    'import/no-cycle': 0,
+    'arrow-parens': 'off',
+    // 'dot-notation': 0,
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'global-require': 0,
-    'no-console': ["error", { allow: ["warn", "error"] }],
-    'dot-notation': 0,
-    'no-underscore-dangle': 0,
-    'no-param-reassign': 0,
-    'no-unused-expressions': 0,
     'no-mixed-operators': 0,
-    'no-return-await': 0,
-    'no-restricted-syntax': 0,
-    'no-await-in-loop': 0,
-    'no-restricted-globals': 0,
-    'no-empty': [
-      2,
-      {
-        allowEmptyCatch: true,
-      },
-    ],
+    'no-param-reassign': 0,
+    'import/no-extraneous-dependencies': 0,
+    'react/forbid-prop-types': 0,
+    'react/prefer-stateless-function': 1,
+    'react/require-default-props': 0,
+    'react/no-find-dom-node': 0,
+    'react/no-did-mount-set-state': 0,
+    'react/static-property-placement': 0,
+    'react/jsx-filename-extension': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/prop-types': 0,
+    'react/destructuring-assignment': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/no-static-element-interactions': 0,
+    'jsx-a11y/label-has-associated-control': 0,
+    'jsx-a11y/no-noninteractive-element-interactions': 0,
+    // rules are broken and provide falsy mistakes
+    'jsx-a11y/label-has-for': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+
     camelcase: 0,
-    'max-len': [
-      1,
-      {
-        code: 100,
-        tabWidth: 2,
-        ignoreUrls: true,
-        ignoreComments: true,
-        ignoreRegExpLiterals: true,
-        ignoreTrailingComments: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true,
-        ignorePattern:
-          "^(\\s*[a-zA-Z_]+: '[^']+'[,;]*)|(.*require.*)$",
-      },
-    ],
-    'import/prefer-default-export': 0,
-    'no-eval': 0,
-    'no-plusplus': 0,
-    'func-names': 0,
+    'no-console': 0,
+    'no-underscore-dangle': 0,
     'consistent-return': 0,
-    'react/jsx-uses-react': 2,
-    'react/jsx-uses-vars': 2,
-    'class-methods-use-this': 0,
-    'no-nested-ternary': 0,
-    'no-use-before-define': 0,
-    'prefer-destructuring': 0,
-    'max-classes-per-file': 0,
-    'prefer-promise-reject-errors': 0,
-  },
-  parserOptions: {
-    ecmaFeatures: {
-      legacyDecorators: true
-    }
   },
   globals: {
     t: true,
     globals: true,
-    request: true,
   },
-}
+};

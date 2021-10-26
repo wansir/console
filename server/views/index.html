@@ -23,13 +23,16 @@
     <div id="root">
       <%- include('./components/loading.html')  %>
     </div>
+    <script type="systemjs-importmap">
+  { "imports": <%- importMap %> }
+</script>
     <script type="text/javascript">
-      window.globals = JSON.parse(`<%- globals %>`)
+      window.globals = JSON.parse(`<%- globals %>`);
     </script>
-    <% if (manifest && manifest.js && manifest.js.length > 0) { %>
-      <% manifest.js.forEach(function(item){ %>
-        <script type="text/javascript" src="<%= bundlePrefix %>/<%= item %>"></script>
-      <% }) %>
+    <% if (isDev) { %>
+    <%- include('./components/dev_scripts.html') %>
+    <% } else { %>
+    <%- include('./components/prod_scripts.html') %>
     <% } %>
   </body>
 </html>
