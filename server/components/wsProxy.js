@@ -16,27 +16,27 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const httpProxy = require('http-proxy')
+const httpProxy = require('http-proxy');
 
-const { getServerConfig } = require('../libs/utils')
+const { getServerConfig } = require('../libs/utils');
 
-const serverConfig = getServerConfig().server
+const serverConfig = getServerConfig().server;
 
-module.exports = function(app) {
+module.exports = function (app) {
   const wsProxy = httpProxy.createProxyServer({
     ws: true,
     changeOrigin: true,
-  })
+  });
 
   app.server.on('upgrade', (req, socket, head) => {
-    const target = serverConfig.apiServer.wsUrl
-    wsProxy.ws(req, socket, head, { target })
+    const target = serverConfig.apiServer.wsUrl;
+    wsProxy.ws(req, socket, head, { target });
 
     wsProxy.on('proxyReqWs', (proxyReq, _req) => {
       const token = _req.headers.cookie.match(
-        new RegExp('(?:^|;)\\s?token=(.*?)(?:;|$)', 'i')
-      )[1]
-      proxyReq.setHeader('Authorization', `Bearer ${token}`)
-    })
-  })
-}
+        new RegExp('(?:^|;)\\s?token=(.*?)(?:;|$)', 'i'),
+      )[1];
+      proxyReq.setHeader('Authorization', `Bearer ${token}`);
+    });
+  });
+};

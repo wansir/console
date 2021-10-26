@@ -16,50 +16,31 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const Router = require('koa-router')
-const convert = require('koa-convert')
-const bodyParser = require('koa-bodyparser')
+const Router = require('koa-router');
+const convert = require('koa-convert');
+const bodyParser = require('koa-bodyparser');
 
-const proxy = require('./middlewares/proxy')
-const checkToken = require('./middlewares/checkToken')
-const checkIfExist = require('./middlewares/checkIfExist')
+const proxy = require('./middlewares/proxy');
+const checkToken = require('./middlewares/checkToken');
+const checkIfExist = require('./middlewares/checkIfExist');
 
-const {
-  k8sResourceProxy,
-  devopsWebhookProxy,
-  b2iFileProxy,
-} = require('./proxy')
+const { k8sResourceProxy, devopsWebhookProxy, b2iFileProxy } = require('./proxy');
 
-const {
-  handleSampleData,
-  handleDockerhubProxy,
-  handleHarborProxy,
-} = require('./controllers/api')
+const { handleSampleData, handleDockerhubProxy, handleHarborProxy } = require('./controllers/api');
 
-const {
-  handleLogin,
-  handleLogout,
-  handleOAuthLogin,
-  handleLoginConfirm,
-} = require('./controllers/session')
+const { handleLogin, handleLogout, handleOAuthLogin, handleLoginConfirm } = require('./controllers/session');
 
-const {
-  renderView,
-  renderTerminal,
-  renderLogin,
-  renderLoginConfirm,
-  renderMarkdown,
-} = require('./controllers/view')
+const { renderView, renderTerminal, renderLogin, renderLoginConfirm, renderMarkdown } = require('./controllers/view');
 
 const parseBody = convert(
   bodyParser({
     formLimit: '200kb',
     jsonLimit: '200kb',
     bufferLimit: '4mb',
-  })
-)
+  }),
+);
 
-const router = new Router()
+const router = new Router();
 
 router
   .use(proxy('/devops_webhook/(.*)', devopsWebhookProxy))
@@ -84,8 +65,8 @@ router
   .get('/oauth/redirect/:name', handleOAuthLogin)
 
   // terminal
-  .get('/terminal*', renderTerminal)
+  .get('/terminal(.*)', renderTerminal)
   // page entry
-  .all('*', renderView)
+  .all('(.*)', renderView);
 
-module.exports = router
+module.exports = router;
