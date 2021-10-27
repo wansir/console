@@ -75,8 +75,7 @@ const getServerConfig = key => {
 
 const getCache = () => cache;
 
-const isValidReferer = path =>
-  !isEmpty(path) && path !== '/' && path.indexOf('/login') === -1;
+const isValidReferer = path => !isEmpty(path) && path !== '/' && path.indexOf('/login') === -1;
 
 /**
  *

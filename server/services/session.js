@@ -24,11 +24,7 @@ const jwtDecode = require('jwt-decode');
 
 const { sendGatewayRequest } = require('../libs/request');
 
-const {
-  isAppsRoute,
-  safeParseJSON,
-  getServerConfig,
-} = require('../libs/utils');
+const { isAppsRoute, safeParseJSON, getServerConfig } = require('../libs/utils');
 
 const { server: serverConfig } = getServerConfig();
 
@@ -37,11 +33,7 @@ const handleLoginResp = (resp = {}) => {
     throw new Error(resp.message);
   }
 
-  const {
-    access_token: token,
-    refresh_token: refreshToken,
-    expires_in: expiresIn,
-  } = resp || {};
+  const { access_token: token, refresh_token: refreshToken, expires_in: expiresIn } = resp || {};
 
   const { username, extra, groups } = jwtDecode(access_token);
   const email = get(extra, 'email[0]');
@@ -122,11 +114,7 @@ const getNewToken = async ctx => {
     token: refreshToken,
   });
 
-  const {
-    access_token: token,
-    refresh_token: rfsToken,
-    expires_in: expiresIn,
-  } = resp || {};
+  const { access_token: token, refresh_token: rfsToken, expires_in: expiresIn } = resp || {};
 
   if (!token) {
     throw new Error(resp.message);
@@ -161,10 +149,7 @@ const getUserGlobalRules = async (username, token) => {
   const rules = {};
   resp.forEach(item => {
     const rule = safeParseJSON(
-      get(
-        item,
-        "metadata.annotations['iam.kubesphere.io/role-template-rules']",
-      ),
+      get(item, "metadata.annotations['iam.kubesphere.io/role-template-rules']"),
       {},
     );
 
@@ -198,10 +183,7 @@ const getUserDetail = async token => {
       email: get(resp, 'spec.email'),
       lang: get(resp, 'spec.lang'),
       username: get(resp, 'metadata.name'),
-      globalrole: get(
-        resp,
-        'metadata.annotations["iam.kubesphere.io/globalrole"]',
-      ),
+      globalrole: get(resp, 'metadata.annotations["iam.kubesphere.io/globalrole"]'),
       lastLoginTime: get(resp, 'status.lastLoginTime'),
     };
   } else {
@@ -268,10 +250,7 @@ const getCurrentUser = async ctx => {
     ctx.throw(401, 'Not Login');
   }
 
-  const [userDetail, workspaces] = await Promise.all([
-    getUserDetail(token),
-    getWorkspaces(token),
-  ]);
+  const [userDetail, workspaces] = await Promise.all([getUserDetail(token), getWorkspaces(token)]);
 
   return { ...userDetail, workspaces };
 };
@@ -325,10 +304,7 @@ const getOAuthInfo = async () => {
 
         if (url) {
           url = `${url}?${Object.keys(params)
-            .map(
-              key =>
-                `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`,
-            )
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
             .join('&')}`;
           servers.push({ title: item.name, url, type, endSessionURL });
         }

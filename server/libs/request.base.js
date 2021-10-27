@@ -105,9 +105,7 @@ function buildRequest(method, url, params = {}, options) {
   );
 
   const isForm =
-    get(options, 'headers[content-type]', '').indexOf(
-      'application/x-www-form-urlencoded',
-    ) !== -1;
+    get(options, 'headers[content-type]', '').indexOf('application/x-www-form-urlencoded') !== -1;
 
   if (method === 'GET') {
     if (!isEmpty(params)) {

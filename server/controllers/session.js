@@ -18,19 +18,8 @@
 
 const isEmpty = require('lodash/isEmpty');
 const jwtDecode = require('jwt-decode');
-const {
-  login,
-  oAuthLogin,
-  getNewToken,
-  createUser,
-} = require('../services/session');
-const {
-  isValidReferer,
-  isAppsRoute,
-  decryptPassword,
-  safeParseJSON,
-} = require('../libs/utils');
-
+const { login, oAuthLogin, getNewToken, createUser } = require('../services/session');
+const { isValidReferer, isAppsRoute, decryptPassword, safeParseJSON } = require('../libs/utils');
 const { sendGatewayRequest } = require('../libs/request');
 
 const handleLogin = async ctx => {
@@ -138,9 +127,7 @@ const handleLogin = async ctx => {
 };
 
 const handleLogout = async ctx => {
-  const oAuthLoginInfo = safeParseJSON(
-    decodeURIComponent(ctx.cookies.get('oAuthLoginInfo')),
-  );
+  const oAuthLoginInfo = safeParseJSON(decodeURIComponent(ctx.cookies.get('oAuthLoginInfo')));
 
   ctx.cookies.set('token', null);
   ctx.cookies.set('expire', null);

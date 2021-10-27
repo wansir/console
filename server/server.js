@@ -45,7 +45,7 @@ global.PORT = serverConfig.http.port || 8000;
 app.keys = ['kubesphere->_<'];
 
 app
-  .apply(boot)
+  .apply(boot) // eslint-disable-line
   .apply(locale)
   .apply(logging)
   .apply(errorProcess)

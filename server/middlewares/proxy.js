@@ -52,11 +52,7 @@ module.exports = (context, options) => (ctx, next) => {
       resolve();
     });
 
-    if (
-      get(ctx, "req.headers['content-type']", '').includes(
-        'multipart/form-data',
-      )
-    ) {
+    if (get(ctx, "req.headers['content-type']", '').includes('multipart/form-data')) {
       httpProxyOpts.buffer = isArray(ctx.req.rawBody)
         ? streamify(ctx.req.rawBody)
         : ctx.req.rawBody;
