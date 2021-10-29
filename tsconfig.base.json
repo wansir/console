@@ -10,7 +10,7 @@
   "compilerOptions": {
     "strict": true,
     "target": "ES2015",
-    "lib": ["DOM", "ESNext"],
+    "lib": ["DOM", "ESNext", "ES2020.Promise"],
     "module": "ESNext",
     "moduleResolution": "Node",
     "allowJs": true,
