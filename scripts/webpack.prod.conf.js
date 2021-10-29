@@ -14,7 +14,6 @@ const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
   entry: {
     main: config.webIndex,
-    staticPlugins: './packages/entry.ts',
   },
   output: {
     path: resolve(config.assetsRoot),

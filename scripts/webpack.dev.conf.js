@@ -11,8 +11,7 @@ const webpackDevConfig = merge(baseConfig, {
   devtool: 'eval-cheap-module-source-map',
   entry: {
     main: config.webIndex,
-    staticPlugins: './packages/entry.ts',
-    dynamicPlugins: './plugins/entry.ts',
+    plugins: './plugins/entry.ts',
   },
   output: {
     path: resolve('dist'),

@@ -23,6 +23,7 @@ const config = {
       // 'axios',
       // 'echarts',
       'lodash',
+      '@kubed/components',
     ],
   },
   output: {

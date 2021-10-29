@@ -27,7 +27,7 @@
     "lodash": "^4.17.21",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.1",
-    "path-to-regexp": "^6.2.0",
+    "path-to-regexp": "^2.2.1",
     "stream-array": "^1.1.2"
   }
 }
