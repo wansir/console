@@ -16,33 +16,34 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const {
-  getCurrentUser,
-  getKSConfig,
-  getOAuthInfo,
-} = require('../services/session');
+const { getCurrentUser, getKSConfig, getOAuthInfo } = require('../services/session');
+
+const { getInstalledPlugins } = require('../services/plugin');
 
 const {
   getServerConfig,
   getManifest,
   getLocaleManifest,
+  getImportMap,
   isValidReferer,
 } = require('../libs/utils');
 
 const { client: clientConfig } = getServerConfig();
 
 const renderIndex = async (ctx, params) => {
-  const manifest = getManifest('main');
-  const localeManifest = getLocaleManifest();
+  const manifest = getManifest();
+  const installedPlugins = getInstalledPlugins();
+  const importMap = getImportMap();
 
   await ctx.render('index', {
     manifest,
     isDev: global.MODE_DEV,
     title: clientConfig.title,
     hostname: ctx.hostname,
+    importMap: JSON.stringify(importMap),
     globals: JSON.stringify({
       config: clientConfig,
-      localeManifest,
+      installedPlugins,
       ...params,
     }),
   });
@@ -83,10 +84,7 @@ const renderViewErr = async (ctx, err) => {
 const renderTerminal = async ctx => {
   try {
     const manifest = getManifest('terminalEntry');
-    const [user, ksConfig] = await Promise.all([
-      getCurrentUser(ctx),
-      getKSConfig(),
-    ]);
+    const [user, ksConfig] = await Promise.all([getCurrentUser(ctx), getKSConfig()]);
     const localeManifest = getLocaleManifest();
 
     await ctx.render('terminal', {
@@ -101,7 +99,7 @@ const renderTerminal = async ctx => {
       }),
     });
   } catch (err) {
-    renderViewErr(ctx, err);
+    await renderViewErr(ctx, err);
   }
 };
 
@@ -111,10 +109,7 @@ const renderMarkdown = async ctx => {
 
 const renderView = async ctx => {
   try {
-    const [user, ksConfig] = await Promise.all([
-      getCurrentUser(ctx),
-      getKSConfig(),
-    ]);
+    const [user, ksConfig] = await Promise.all([getCurrentUser(ctx), getKSConfig()]);
 
     await renderIndex(ctx, { ksConfig, user });
   } catch (err) {

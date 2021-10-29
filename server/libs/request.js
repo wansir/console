@@ -29,14 +29,7 @@ const { server: serverConfig } = getServerConfig();
  *  gateway api request, if get logined resource, token must exists,
  * @param {options} options: { token, method, url, params }
  */
-const sendGatewayRequest = ({
-  method,
-  url,
-  params,
-  token,
-  headers = {},
-  ...rest
-}) => {
+const sendGatewayRequest = ({ method, url, params, token, headers = {}, ...rest }) => {
   const options = { headers, ...rest };
 
   if (token) {
@@ -47,11 +40,7 @@ const sendGatewayRequest = ({
     };
   }
 
-  return request[method.toLowerCase()](
-    `${serverConfig.apiServer.url}${url}`,
-    params,
-    options,
-  );
+  return request[method.toLowerCase()](`${serverConfig.apiServer.url}${url}`, params, options);
 };
 
 const sendDockerhubRequest = ({ params, path, headers }) => {
@@ -73,9 +62,7 @@ const sendDockerhubRequest = ({ params, path, headers }) => {
 };
 
 const sendHarborRequest = ({ path }) => {
-  return request.get(
-    `${path.replace('http:/', 'http://').replace('https:/', 'https://')}`,
-  );
+  return request.get(`${path.replace('http:/', 'http://').replace('https:/', 'https://')}`);
 };
 
 module.exports = {

@@ -1,5 +1,5 @@
 module.exports = {
-  packageScope: '@ks-plugin',
+  packageScope: '@ks-console',
   packageJson: {
     homepage: '',
     main: 'lib/index.js',

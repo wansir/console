@@ -1,6 +1,6 @@
 // http://eslint.org/docs/user-guide/configuring
 
-const config = require('./scripts/config');
+const { config } = require('./scripts/config');
 
 const { resolve } = config;
 
@@ -39,6 +39,18 @@ module.exports = {
     'class-methods-use-this': 0,
     // allow paren-less arrow functions
     'arrow-parens': 'off',
+    'max-len': [
+      1,
+      {
+        code: 100,
+        ignoreComments: true,
+        ignorePattern: '^(\\s*[a-zA-Z_]+: \'[^\']+\'[,;]*)|(.*interpolate.*)|(.*require.*)|(.*_\\.template.*)|(<svg .*)|(<rect .*)|(<polygon .*)$',
+        ignoreRegExpLiterals: true,
+        ignoreTrailingComments: true,
+        ignoreUrls: true,
+        tabWidth: 2,
+      },
+    ],
     // 'dot-notation': 0,
     // allow async-await
     'generator-star-spacing': 0,

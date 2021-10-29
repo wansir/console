@@ -9,7 +9,7 @@ const config = {
   distPath: resolve('dist'),
   distAssetsPath: resolve('dist/assets/'),
   assetsPath: resolve('packages/core/src/assets'),
-  webIndex: resolve('packages/core/src/index.js'),
+  webIndex: resolve('packages/core/src/index.ts'),
   jsPath: resolve('dist/js'),
   cssPath: resolve('dist/css'),
   resolve,
@@ -21,7 +21,8 @@ const systemImports = {
   "react-dom": "core:react-dom",
   "react-router": "core:react-router",
   "react-router-dom": "core:react-router-dom",
-  "styled-components": "core:styled-components"
+  "styled-components": "core:styled-components",
+  "@kubed/components": "core:@kubed/components",
 }
 
 module.exports = { config, systemImports };

@@ -28,9 +28,20 @@ const { k8sResourceProxy, devopsWebhookProxy, b2iFileProxy } = require('./proxy'
 
 const { handleSampleData, handleDockerhubProxy, handleHarborProxy } = require('./controllers/api');
 
-const { handleLogin, handleLogout, handleOAuthLogin, handleLoginConfirm } = require('./controllers/session');
+const {
+  handleLogin,
+  handleLogout,
+  handleOAuthLogin,
+  handleLoginConfirm,
+} = require('./controllers/session');
 
-const { renderView, renderTerminal, renderLogin, renderLoginConfirm, renderMarkdown } = require('./controllers/view');
+const {
+  renderView,
+  renderTerminal,
+  renderLogin,
+  renderLoginConfirm,
+  renderMarkdown,
+} = require('./controllers/view');
 
 const parseBody = convert(
   bodyParser({

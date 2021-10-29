@@ -1,0 +1,11 @@
+{
+  "name": "@ks-console/core",
+  "description": "",
+  "version": "4.0.0",
+  "homepage": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {}
+}

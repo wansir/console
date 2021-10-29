@@ -1,6 +1,5 @@
-
 const getInstalledPlugins = () => {
-  const mockData = ['cluster', 'devops'];
+  const mockData = [];
   return mockData;
 };
 

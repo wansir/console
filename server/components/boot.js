@@ -42,11 +42,7 @@ module.exports = function (app) {
 
   if (global.MODE_DEV) {
     app.use(async (ctx, next) => {
-      if (
-        /(\.hot-update\.)|(\.(ttf|otf|eot|woff2?)(\?.+)?$)|(\.js$)/.test(
-          ctx.url,
-        )
-      ) {
+      if (/(\.hot-update\.)|(\.(ttf|otf|eot|woff2?)(\?.+)?$)|(\.js$)/.test(ctx.url)) {
         ctx.redirect(`http://${ctx.hostname}:8001${ctx.url}`);
       } else {
         await next();
