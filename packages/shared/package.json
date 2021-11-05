@@ -1,0 +1,14 @@
+{
+  "name": "@ks-console/shared",
+  "description": "",
+  "version": "4.0.0",
+  "homepage": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "whatwg-fetch": "^3.0.0",
+    "axios": "^0.24.0"
+  }
+}
