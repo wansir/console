@@ -2,7 +2,7 @@ const yargs = require('yargs');
 const path = require('path');
 const { exec } = require('child_process');
 const fs = require('fs-extra');
-const createPlugin = require('./plugin/create-plugin');
+const createPlugin = require('./libs/plugin/create-plugin');
 
 const pluginsDir = path.resolve(process.cwd(), 'plugins');
 const publishDir = path.resolve(process.cwd(), 'server/public/plugins');

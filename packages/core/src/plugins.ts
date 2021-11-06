@@ -1,6 +1,6 @@
 import { Plugin } from './libs/Context';
 
-const context = require.context('../../', true, /(?<!core|components|utils)\/src\/index.[jt]s$/);
+const context = require.context('../../', true, /(?<!core|components|shared)\/src\/index.[jt]s$/);
 const plugins: Plugin[] = [];
 context
   .keys()
