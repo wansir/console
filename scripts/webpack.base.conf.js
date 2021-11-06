@@ -17,14 +17,14 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.css', '.ts', '.tsx', '.json'],
     modules: [
       resolve('plugins'),
       resolve('packages'),
       resolve('node_modules'),
     ],
     alias: {
-      // routers: resolve('src/routers'),
+      '@ks-console/shared': resolve('packages/shared/src'),
     },
   },
   module: {

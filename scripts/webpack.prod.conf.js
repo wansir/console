@@ -5,10 +5,15 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
+const MergeJsonPlugin = require('webpack-merge-json-plugin');
 
-const { config, systemImports } = require('./config');
+const { config, systemImports, locales } = require('./config');
 const baseWebpackConfig = require('./webpack.base.conf');
 const resolve = config.resolve;
+
+const localePatterns = locales.map(locale => {
+  return { pattern: `./packages/**/src/locales/${locale}/*.json`, to: `./locales/${locale}.[chunkhash:8].json` }
+});
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -26,7 +31,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         resource: config.webIndex,
         use: [
           {
-            loader: resolve("scripts/systemjs-imports-loader.js"),
+            loader: resolve("scripts/libs/systemjs-imports-loader.js"),
             options: { importsMap: systemImports },
           },
         ],
@@ -100,8 +105,19 @@ const webpackConfig = merge(baseWebpackConfig, {
       root: resolve('dist'),
       cleanOnceBeforeBuildPatterns: ['**/*', '!dll/**'],
     }),
+    new MergeJsonPlugin({
+      groups: localePatterns,
+    }),
     new WebpackAssetsManifest({
-      entrypoints: true,
+      customize(entry) {
+        if (entry.key.indexOf('locales') > -1) {
+          const ret = entry.key.match(/locales\/(\S*?)\./);
+          if (ret) {
+            return { key: `locales-${ret[1]}`, value: entry.value };
+          }
+        }
+      },
+      entrypoints: false,
       writeToDisk: true,
       output: '../dist/manifest.json',
     }),

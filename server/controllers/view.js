@@ -44,6 +44,7 @@ const renderIndex = async (ctx, params) => {
     globals: JSON.stringify({
       config: clientConfig,
       installedPlugins,
+      manifest,
       ...params,
     }),
   });

@@ -13,6 +13,9 @@
     "resolveJsonModule": true,
 //    "isolatedModules": false,
     "noEmit": false,
+    "paths": {
+      "@ks-console/*": ["packages/*/src"],
+    }
   },
   "include": [
     "src",

@@ -2,9 +2,14 @@
 const { merge } = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const { config } = require('./config');
+const MergeJsonPlugin = require('webpack-merge-json-plugin');
+const { config, locales } = require('./config');
 const baseConfig = require('./webpack.base.conf');
 const resolve = config.resolve;
+
+const localePatterns = locales.map(locale => {
+  return { pattern: `./packages/**/src/locales/${locale}/*.json`, to: `./locales/${locale}.json` }
+});
 
 const webpackDevConfig = merge(baseConfig, {
   mode: 'development',
@@ -19,7 +24,7 @@ const webpackDevConfig = merge(baseConfig, {
   },
   module: {
     rules: [
-      { parser: { system: false } },
+      // { parser: { system: false } },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         use: {
@@ -50,6 +55,9 @@ const webpackDevConfig = merge(baseConfig, {
     // new webpack.DllReferencePlugin({
     //   manifest: resolve('dist/dll/common-manifest.json'),
     // }),
+    new MergeJsonPlugin({
+      groups: localePatterns,
+    }),
     new ReactRefreshWebpackPlugin({
       overlay: false,
     }),
