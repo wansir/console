@@ -7,5 +7,10 @@
   "files": [
     "lib"
   ],
-  "dependencies": {}
+  "peerDependencies": {
+    "@ks-console/shared": "4.0.0"
+  },
+  "dependencies": {
+    "i18next": "^21.4.0"
+  }
 }

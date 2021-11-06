@@ -1,8 +1,10 @@
 import { RouteConfig } from 'react-router-config';
+import { merge } from 'lodash';
 import routes from '../routes';
 
 type Plugin = {
-  routes: RouteConfig[];
+  routes?: RouteConfig[];
+  locales?: any;
 };
 
 export { Plugin };
@@ -10,13 +12,21 @@ export { Plugin };
 export default class Context {
   public routes: RouteConfig[];
 
+  public locales: Record<string, any>;
+
   constructor() {
     this.routes = routes;
+    this.locales = {};
   }
 
   public registerPlugin = (plugin: Plugin) => {
-    const { routes: pluginRoutes } = plugin;
-    this.routes = this.routes.concat(pluginRoutes);
+    const { routes: pluginRoutes, locales } = plugin;
+    if (pluginRoutes) {
+      this.routes = this.routes.concat(pluginRoutes);
+    }
+    if (locales) {
+      this.locales = merge(this.locales, locales);
+    }
   };
 
   public registerPlugins = (plugins: Plugin[]) => {

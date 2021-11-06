@@ -25,4 +25,6 @@ const systemImports = {
   "@kubed/components": "core:@kubed/components",
 }
 
-module.exports = { config, systemImports };
+const locales = ['en', 'es', 'tc', 'zh'];
+
+module.exports = { config, systemImports, locales };
