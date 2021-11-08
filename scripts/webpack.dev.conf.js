@@ -1,4 +1,4 @@
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -62,6 +62,9 @@ const webpackDevConfig = merge(baseConfig, {
       overlay: false,
     }),
     new FriendlyErrorsPlugin(),
+    new webpack.WatchIgnorePlugin({ paths: [
+      resolve('server'),
+    ] }),
   ],
   optimization: {
     runtimeChunk: 'single',

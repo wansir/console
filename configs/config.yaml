@@ -6,7 +6,7 @@ server:
     static:
       development:
         /public: server/public
-        /assets: src/assets
+        /assets: packages/core/src/assets
         /build: build
         /dist: dist
       production:
