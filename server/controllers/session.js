@@ -48,7 +48,7 @@ const handleLogin = async ctx => {
         Object.assign(error, {
           status: 400,
           reason: 'Internal Server Error',
-          message: 'Wrong username or password, please try again',
+          message: ctx.t('Wrong username or password, please try again'),
         });
       }
     } catch (err) {
@@ -60,28 +60,28 @@ const handleLogin = async ctx => {
           Object.assign(error, {
             status: err.code,
             reason: 'User Not Match',
-            message: 'Wrong username or password, please try again',
+            message: ctx.t('Wrong username or password, please try again'),
           });
           break;
         case 429:
           Object.assign(error, {
             status: err.code,
             reason: 'Too Many Requests',
-            message: 'Too many failed login attempts, please wait!',
+            message: ctx.t('Too many failed login attempts, please wait!'),
           });
           break;
         case 502:
           Object.assign(error, {
             status: err.code,
             reason: 'Internal Server Error',
-            message: 'Unable to access the backend services',
+            message: ctx.t('Unable to access the backend services'),
           });
           break;
         case 'ETIMEDOUT':
           Object.assign(error, {
             status: 400,
             reason: 'Internal Server Error',
-            message: 'Unable to access the api server',
+            message: ctx.t('Unable to access the api server'),
           });
           break;
         default:
@@ -109,21 +109,36 @@ const handleLogin = async ctx => {
   if (user.username === 'system:pre-registration') {
     ctx.cookies.set('defaultUser', user.extraname);
     ctx.cookies.set('defaultEmail', user.email);
-    return ctx.redirect('/login/confirm');
+    ctx.body = {
+      success: true,
+      redirect: '/login/confirm',
+    };
+    return;
   }
 
   if (!user.initialized) {
-    return ctx.redirect('/password/confirm');
+    ctx.body = {
+      success: true,
+      redirect: '/password/confirm',
+    };
+    return;
   }
 
   if (lastToken) {
     const { username } = jwtDecode(lastToken);
     if (username && username !== user.username) {
-      return ctx.redirect('/');
+      ctx.body = {
+        success: true,
+        redirect: '/',
+      };
+      return;
     }
   }
 
-  ctx.redirect(isValidReferer(referer) ? referer : '/');
+  ctx.body = {
+    success: true,
+    redirect: isValidReferer(referer) ? referer : '/',
+  };
 };
 
 const handleLogout = async ctx => {
