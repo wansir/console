@@ -16,14 +16,14 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Login from './containers/Login';
-// import LoginConfirm from './containers/LoginConfirm';
-import PasswordConfirm from './containers/PasswordConfirm';
+import Login from './containers/session/Login';
+import LoginConfirm from './containers/session/LoginConfirm';
+import PasswordConfirm from './containers/session/PasswordConfirm';
 import { RouteConfig } from 'react-router-config';
 
 const routes: RouteConfig[] = [
   { path: '/login', component: Login, exact: true },
-  // { path: '/login/confirm', component: LoginConfirm, exact: true },
+  { path: '/login/confirm', component: LoginConfirm, exact: true },
   { path: '/password/confirm', component: PasswordConfirm, exact: true },
 ];
 
