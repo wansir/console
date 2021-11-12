@@ -48,9 +48,13 @@ const init = async () => {
     {
       lng: 'zh',
       fallbackLng: 'zh',
-      debug: true,
+      debug: false,
       resources: totalLocales,
       // defaultNS: ['common'],
+      interpolation: {
+        prefix: '{',
+        suffix: '}',
+      },
     },
     (err, t) => {
       window.t = t;

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { KubedConfigProvider, CssBaseline } from '@kubed/components';
 import { useLocalStorage } from '@kubed/hooks';
 
+import GlobalStyles from './components/GlobalStyles';
 import { PrefersContext, themes } from './libs/usePrefers';
 
 const App = () => {
@@ -16,7 +18,6 @@ const App = () => {
   useEffect(() => {
     document.documentElement.removeAttribute('style');
     document.body.removeAttribute('style');
-
     if (themes.includes(themeLocalValue)) setThemeType(themeLocalValue);
   }, []);
 
@@ -25,14 +26,24 @@ const App = () => {
     setThemeLocalValue(theme);
   }, []);
 
-  const { routes } = window.globals.context;
-  console.log('routes', routes);
+  const { routes } = globals.context;
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  });
 
   return (
     <KubedConfigProvider themeType={themeType}>
       <CssBaseline />
+      <GlobalStyles />
       <PrefersContext.Provider value={{ themeType, switchTheme }}>
-        <Router>{renderRoutes(routes)}</Router>
+        <QueryClientProvider client={queryClient}>
+          <Router>{renderRoutes(routes)}</Router>
+        </QueryClientProvider>
       </PrefersContext.Provider>
     </KubedConfigProvider>
   );
