@@ -22,10 +22,8 @@ module.exports = {
   'Username or Email': 'Username or Email',
   Captcha: 'Captcha',
   'User does not exist': 'User does not exist',
-  'Wrong username or password, please try again':
-    'Wrong username or password, please try again',
-  'Unable to access the backend services':
-    'Unable to access the backend services',
+  'Wrong username or password, please try again': 'Wrong username or password, please try again',
+  'Unable to access the backend services': 'Unable to access the backend services',
   'Unable to access the api server': 'Unable to access the api server',
 
   'Internal Server Error': 'Internal Server Error',
@@ -34,10 +32,8 @@ module.exports = {
   Reload: 'Reload',
   'Reload Captcha': 'Reload Captcha',
 
-  INTERNAL_SERVER_ERROR_TIP:
-    'An unepected error seems to have occurred. Please refresh your page.',
-  'Too many failed login attempts, please wait!':
-    'Too many failed login attempts, please wait!',
+  INTERNAL_SERVER_ERROR_TIP: 'An unepected error seems to have occurred. Please refresh your page.',
+  'Too many failed login attempts, please wait!': 'Too many failed login attempts, please wait!',
   'Log In with {title}': 'Log In with {title}',
 
   'Please input username or email': 'Please enter your username or email.',
@@ -50,9 +46,7 @@ module.exports = {
 
   'Modify Later': 'Modify Later',
 
-  'Your password must meet the following requirements':
-    'Complexity Requirements',
+  'Your password must meet the following requirements': 'Complexity Requirements',
 
-  CONFIRM_PASSWORD_TIP:
-    'Since you are logging in for the first time, please reset your password.',
-}
+  CONFIRM_PASSWORD_TIP: 'Since you are logging in for the first time, please reset your password.',
+};
