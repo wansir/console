@@ -182,7 +182,7 @@ module.exports = {
   Draining: 'Draining',
   KEY_EXIST_DESC: 'The key already exists.',
   DUPLICATE_KEYS: 'The key already exists. Please enter another key.',
-  'Earliest start time': 'Earliest start time',
+  EARLIEST_START_TIME: 'Earliest Start Time',
   EDIT: 'Edit',
   EDIT_TITLE: 'Edit {title}',
   'Edit ': 'Edit ',
@@ -202,7 +202,7 @@ module.exports = {
   TIPS: 'Tips',
   event: 'event',
   'Event metadata': 'Event metadata',
-  'Event Search': 'Event Search',
+  EVENT_SEARCH: 'Event Search',
   EVENT_DESC: 'EVENT_DESC',
   Events: 'Events',
   events: 'events',
@@ -246,7 +246,7 @@ module.exports = {
   'Load more': 'Load more',
   LOADING: 'Loading...',
   'Log Out': 'Log Out',
-  'Log Search': 'Log Search',
+  LOG_SEARCH: 'Log Search',
   LOGGING: 'Logging',
   RESOURCE_EVENTS: 'Resource Events',
   AUDIT_LOGS: 'Audit Logs',
@@ -264,7 +264,7 @@ module.exports = {
   'MONITORING_&_ALERTING': 'Monitoring & Alerting',
   Monitors: 'Monitors',
   More: 'More',
-  'Most recent start time': 'Most recent start time',
+  LATEST_START_TIME: 'Latest Start Time',
   MULTI_CLUSTER_DEPLOYMENT: 'Multi-cluster Project',
   name: 'name',
   NAME_VALIDATION_FAILED:
@@ -296,7 +296,7 @@ module.exports = {
   'Official Document': 'Official Document',
   OK: 'OK',
   'Operation Account': 'Operation Account',
-  'Operation details': 'Operation details',
+  OPERATION_DETAILS: 'Operation Details',
   OPTIONAL: 'Optional',
   Optional: 'Optional',
   or: 'or',
@@ -455,15 +455,16 @@ module.exports = {
   Task: 'Task',
   TERMINAL: 'Terminal',
   terminated: 'terminated',
-  'Third-party Tools': 'Third-party Tools',
+  THIRD_PARTY_TOOLS: 'Third-party Tools',
   PARAM_REQUIRED: 'This parameter is required.',
   time: 'time',
   SAMPLING_INTERVAL: 'Sampling Interval',
-  'Time Range': 'Time Range',
+  TIME_RANGE: 'Time Range',
+  TIME_RANGE_SCAP: 'Time range',
   To: 'To',
   to: 'to',
   IGNORE_AND_RETRY: 'Ignore and Try Again',
-  Toolbox: 'Toolbox',
+  TOOLBOX: 'Toolbox',
   Total: 'Total',
   TOTAL: 'Total',
   total: 'total',
@@ -472,10 +473,10 @@ module.exports = {
   TRUE: 'True',
   FALSE: 'False',
   TYPE: 'Type',
-  TYPE_CONFIGMAP: 'Type: ConfigMap',
-  TYPE_SECRET: 'Type: Secret',
-  TYPE_EMPTYDIR: 'Type: emptyDir',
-  TYPE_HOSTPATH: 'Type: HostPath',
+  TYPE_CONFIGMAP: 'Volume type: ConfigMap',
+  TYPE_SECRET: 'Volume type: Secret',
+  TYPE_EMPTYDIR: 'Volume type: emptyDir',
+  TYPE_HOSTPATH: 'Volume type: HostPath',
   type: 'type',
   Uncordon: 'Uncordon',
   Undo: 'Undo',
@@ -516,7 +517,7 @@ module.exports = {
   VolumeSnapshot: 'Volume Snapshot',
   VOLUME_SNAPSHOT: 'Volume Snapshot',
   VOLUME_SNAPSHOT_PL: 'Volume Snapshots',
-  VOLUMESNAPSHOT_LOW: 'volume snapshot',
+  VOLUME_SNAPSHOT_LOW: 'volume snapshot',
   waiting: 'waiting',
   warning: 'warning',
   Warning: 'Warning',
@@ -574,18 +575,16 @@ module.exports = {
     'The key and value of a label can contain only letters, numbers, hyphens (-), underscores (_), and dots (.), and must start and end with a letter or number. The maximum length of each key and each label is 63 characters (if the key contains a domain name, the maximum length is 253 characters).',
   add_: 'Add',
 
-  REMOVE_MEMBER_TIP:
-    'Are you sure you want to remove the member <strong>{resource}</strong>?',
+  REMOVE_MEMBER_TIP: 'Are you sure you want to remove the member <strong>{resource}</strong>?',
 
-  REMOVE_GROUP_TIP:
-    'Are you sure you want to remove the group <strong>{resource}</strong>?',
+  REMOVE_GROUP_TIP: 'Are you sure you want to remove the group <strong>{resource}</strong>?',
 
-  ALIAS_DESC:
-    'The alias can contain any characters and the maximum length is 63 characters.',
+  ALIAS_DESC: 'The alias can contain any characters and the maximum length is 63 characters.',
 
   NOT_ENABLE: '{resource} Not Enabled',
   NO_AVAILABLE_RESOURCE_VALUE: 'No Available {resource}',
   NO_RESOURCE_FOUND: 'No Resource Found',
+  NO_SERVICE_FOUND: 'No Service Found',
 
   CREATED_AGO: 'Created {diff}',
   CREATED_TIME: 'Created at {diff}',
@@ -615,7 +614,7 @@ module.exports = {
     '🙇 Sorry, no related resources were found. The system will return to <a href="{link}">Workbench</a> in {time}s.',
   DETAIL_NOT_FOUND_DESC:
     '🙇 Sorry, no related resources were found. Back to <a href="{link}">{title}</a>.',
-  TOOLBOX_DESC: 'Provide log search, metering information and kubectl.',
+  TOOLBOX_DESC: 'Provides cluster analysis and control tools.',
   PATTERN_NAME_INVALID_TIP:
     'Invalid name. The name can contain only lowercase letters, numbers, and hyphens (-).',
   CONTENT_NOT_SAVED_TIPS: 'content has been modified but not saved',
@@ -651,11 +650,9 @@ module.exports = {
   EVENT_CREATE_DESC: 'You can change the search criteria and search again.',
 
   KUBECTL_DESC: 'Command line tool used to control the current cluster.',
-  TOOLBOX_KUBECTL_DESC:
-    'Command line tool used to control the current cluster.',
+  TOOLBOX_KUBECTL_DESC: 'Command line tool used to control the current cluster.',
 
-  KUBECONFIG_DESC:
-    'File used to configure the access information about the current cluster.',
+  KUBECONFIG_DESC: 'File used to configure the access information about the current cluster.',
 
   ENV_PRODUCTION: 'Production',
   ENV_DEVELOPMENT: 'Development',
@@ -675,9 +672,9 @@ module.exports = {
 
   DATA_SOURCE: 'Data Source',
 
-  LOG_SEARCH_DESC: 'A multi-dimensional log search tool for resources.',
+  CONTAINER_LOG_SEARCH_DESC: 'A multi-dimensional container log search tool for resources.',
 
-  EVENT_SEARCH_DESC: 'A multi-dimensional event search tool for resources.',
+  RESOURCE_EVENT_SEARCH_DESC: 'A multi-dimensional resource event search tool for resources.',
 
   EVENT_AGE: 'Occurred',
   EVENT_AGE_DATA: '{lastTime}<br/>({count} times over {duration})',
@@ -689,13 +686,11 @@ module.exports = {
   HOW_TO_MODIFY_PLATFORM_INFO: 'How do I customize platform information?',
   PLATFORM_SETTINGS_SELECTOR_DESC: 'Customized Platform Settings',
 
-  AUDITING_OPERATING_DESC:
-    'A multi-dimensional auditing search tool for resources.',
+  AUDIT_LOG_DESC: 'A multi-dimensional audit log search tool for resources.',
 
   FILE_OVERSIZED_TIP: 'The file uploaded must be less than 2M!',
 
-  MULTI_CLUSTER_PROJECT_TIP:
-    'The project is deployed across multiple clusters.',
+  MULTI_CLUSTER_PROJECT_TIP: 'The project is deployed across multiple clusters.',
 
   NO_HISTORY_TITLE: 'No Recently Accessed Resource Found',
   NO_HISTORY_DESC: 'You can access platform resources.',
@@ -706,8 +701,8 @@ module.exports = {
   GITHUB_ISSUES_DESC: 'Raise an issue in GitHub to get help.',
 
   CREATE_BY_YAML_DESC: 'Customize the app settings in the YAML file.',
-  Bill: 'Metering and Billing',
-  BILLING_OPERATING_DESC: 'Track resource consumption.',
+  RESOURCE_CONSUMPTION_STATISTICS: 'Resource Consumption Statistics',
+  METERING_AND_BILLING_DESC: 'View resource consumption of clusters and workspaces.',
 
   // Workbench
   CLUSTER_COUNT_SI: 'Cluster',
@@ -720,4 +715,13 @@ module.exports = {
   CONTAINER_DETAILS_PAGE_SCAP: 'Container details page.',
   CPU_VALUE: 'CPU: {value}',
   MEMORY_VALUE: 'Memory: {value}',
-}
+
+  // Container Log Search
+  CONTAINER_LOG_SEARCH: 'Container Log Search',
+  RESOURCE_EVENT_SEARCH: 'Resource Event Search',
+  AUDIT_LOG_SEARCH: 'Audit Log Search',
+
+  // Toolbox
+  CONTROL_TOOL: 'Control Tool',
+  ANALYSIS_TOOLS: 'Analysis Tools',
+};
