@@ -167,9 +167,15 @@ const handleLogout = async ctx => {
     });
 
     if (isAppsRoute(refererPath)) {
-      ctx.redirect(refererPath);
+      ctx.body = {
+        success: true,
+        redirect: refererPath,
+      };
     } else {
-      ctx.redirect('/login');
+      ctx.body = {
+        success: true,
+        redirect: '/login',
+      };
     }
   }
 };
@@ -201,10 +207,17 @@ const handleOAuthLogin = async ctx => {
   if (user.username === 'system:pre-registration') {
     ctx.cookies.set('defaultUser', user.extraname);
     ctx.cookies.set('defaultEmail', user.email);
-    return ctx.redirect('/login/confirm');
+    ctx.body = {
+      success: true,
+      redirect: '/login/confirm',
+    };
+    return;
   }
 
-  ctx.redirect('/');
+  ctx.body = {
+    success: true,
+    redirect: '/',
+  };
 };
 
 const handleLoginConfirm = async ctx => {
@@ -221,7 +234,10 @@ const handleLoginConfirm = async ctx => {
 
     ctx.cookies.set('defaultUser', null);
     ctx.cookies.set('defaultEmail', null);
-    ctx.redirect('/');
+    ctx.body = {
+      success: true,
+      redirect: '/',
+    };
   }
 };
 
