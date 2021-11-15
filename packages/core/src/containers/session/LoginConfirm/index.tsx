@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 import { get } from 'lodash';
-import { Button, Card, Alert, Form, FormItem, Input } from '@kubed/components';
-import { request, Pattern } from '@ks-console/shared';
+import { Button, Card, Form, FormItem, Input } from '@kubed/components';
+import { request, Pattern, validator } from '@ks-console/shared';
 
 import {
   LoginHeader,
@@ -12,37 +13,37 @@ import {
   LoginButton,
 } from '../Login/styles';
 
-const emailValidator = (rule: any, value: string) => {
-  console.log(rule, value);
-  // request.get();
+const nameValidator = async (rule: any, value: string) => {
+  const params = {
+    apiVersion: 'kapis/iam.kubesphere.io/v1alpha2',
+    name: value,
+    module: 'users',
+  };
+  return validator.nameValidator(params);
 };
 
 const LoginConfirm = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-
+  const history = useHistory();
   const loginMutation = useMutation(
     data => {
       return request.post('login/confirm', data);
     },
     {
-      onSuccess: data => {
-        console.log(data);
+      onSuccess: (data: any) => {
+        if (data.success) {
+          history.push(data.redirect);
+        }
       },
     },
   );
   return (
     <LoginWrapper>
       <LoginHeader href="/">
-        <img src="/assets/logo.svg" />
+        <img src="/assets/logo.svg" alt="logo" />
       </LoginHeader>
       <Card className="login-box" contentClassName="login-card">
         <WelcomeTitle>{t('Please confirm your account info')}</WelcomeTitle>
         <LoginDivider />
-        {errorMessage && (
-          <Alert className="login-alert" type="error" showIcon={false}>
-            {t(errorMessage)}
-          </Alert>
-        )}
         <Form className="login-form" size="md" onFinish={loginMutation.mutate}>
           <FormItem
             label={t('EMAIL')}
@@ -56,7 +57,7 @@ const LoginConfirm = () => {
                 message: t('INPUT_USERNAME_OR_EMAIL_TIP'),
               },
               { type: 'email', message: t('INVALID_EMAIL') },
-              { validator: emailValidator },
+              { validator: validator.emailValidator },
             ]}
           >
             <Input name="email" placeholder="user@example.com" />
@@ -69,6 +70,7 @@ const LoginConfirm = () => {
             rules={[
               { required: true, message: t('Please input username') },
               { pattern: Pattern.PATTERN_USER_NAME, message: t('USERNAME_INVALID') },
+              { validator: nameValidator, message: t('USERNAME_EXISTS') },
             ]}
           >
             <Input name="username" placeholder="user@example.com" maxLength={32} />
