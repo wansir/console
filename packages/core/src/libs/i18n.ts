@@ -46,9 +46,9 @@ const init = async () => {
 
   await i18next.init(
     {
-      lng: 'zh',
-      fallbackLng: 'zh',
-      debug: false,
+      lng: userLang,
+      fallbackLng: 'en',
+      debug: true,
       resources: totalLocales,
       // defaultNS: ['common'],
       interpolation: {
