@@ -633,5 +633,6 @@
   "AUDIT_LOG_SEARCH": "审计日志查询",
   "CONTROL_TOOL": "控制工具",
   "ANALYSIS_TOOLS": "分析工具",
-  "INVALID_EMAIL": "邮箱地址格式错误。"
+  "INVALID_EMAIL": "邮箱地址格式错误。",
+  "Submit": "提交"
 }

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import qs from 'qs';
+// import qs from 'qs';
 import { set, merge } from 'lodash';
 import { getClusterUrl } from './string';
 
@@ -12,8 +12,20 @@ function getRequestUrl(url: string = '') {
 axios.interceptors.request.use((config: AxiosRequestConfig) => {
   config.url = getRequestUrl(config.url);
 
-  if (config.method === 'POST' && config.data.metadata) {
+  if (config.method?.toUpperCase() === 'POST' && config.data.metadata) {
     set(config.data, 'metadata.annotations["kubesphere.io/creator"]', globals.user.username);
+  }
+
+  if (config.headers) {
+    config.headers = merge(
+      {
+        'content-type':
+          config.method?.toUpperCase() === 'PATCH'
+            ? 'application/merge-patch+json'
+            : 'application/json',
+      },
+      config.headers,
+    );
   }
 
   return config;
