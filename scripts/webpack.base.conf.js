@@ -4,9 +4,12 @@ const resolve = config.resolve;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 const { NODE_ENV } = process.env;
 const isDev = NODE_ENV === 'development';
+const styledComponentsTransformer = createStyledComponentsTransformer();
+const getCustomTransformers = isDev ? () => ({ before: [styledComponentsTransformer] }) : {};
 
 module.exports = {
   entry: {
@@ -44,6 +47,7 @@ module.exports = {
         include: [resolve('plugins'), resolve('packages')],
         options: {
           transpileOnly: true,
+          getCustomTransformers,
           // plugins: isDev ? [require.resolve('react-refresh/babel')] : [],
         },
       },
