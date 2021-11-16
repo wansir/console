@@ -26,3 +26,5 @@ export const PATTERN_IMAGE_TAG = /^(.*?)([0-9a-zA-Z/]*)(:[-.\w]*[0-9a-zA-Z])*$/;
 export const PATTERN_APPTEMPLATE_VERSION =
   /[a-zA-Z0-9](\.?-?[a-zA-Z0-9])+(\s?\[?[a-zA-Z0-9]+\.?-?\]?)*/;
 export const PATTERN_UTC_TIME = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]+Z/;
+export const PATTERN_WORD = /(?=.*?[A-Z])(?=.*?[a-z])/;
+export const PATTERN_NUMBER = /(?=.*?[0-9])/;
