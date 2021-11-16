@@ -22,6 +22,10 @@ export const LoginWrapper = styled.div`
       color: #36435c;
     }
   }
+
+  .mb12 {
+    margin-bottom: 12px;
+  }
 `;
 
 export const LoginHeader = styled.a`

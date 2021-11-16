@@ -11,6 +11,11 @@ const GlobalStyles = createGlobalStyle`
     background-color: #369a6a;
     color: #fff;
   }
+  
+  .kubed-icon__coloured {
+    color: #00aa72;
+    fill: #90e0c5;
+  }
 `;
 
 export default GlobalStyles;
