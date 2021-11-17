@@ -1,4 +1,4 @@
-const getBrowserLang = (): string => {
+export const getBrowserLang = (): string => {
   // @ts-ignore
   const lang = (navigator.language || navigator.browserLanguage).toLowerCase();
 
@@ -14,5 +14,3 @@ const getBrowserLang = (): string => {
 
   return window.globals.config.defaultLang || 'en';
 };
-
-export default getBrowserLang;
