@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { KubedConfigProvider, CssBaseline } from '@kubed/components';
+import { KubedConfigProvider, CssBaseline, Notify } from '@kubed/components';
 import { useLocalStorage } from '@kubed/hooks';
 
 import GlobalStyles from './components/GlobalStyles';
@@ -43,6 +43,7 @@ const App = () => {
       <PrefersContext.Provider value={{ themeType, switchTheme }}>
         <QueryClientProvider client={queryClient}>
           <Router>{renderRoutes(routes)}</Router>
+          <Notify position="top-right" />
         </QueryClientProvider>
       </PrefersContext.Provider>
     </KubedConfigProvider>
