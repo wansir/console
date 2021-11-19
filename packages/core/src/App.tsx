@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { KubedConfigProvider, CssBaseline, Notify } from '@kubed/components';
 import { useLocalStorage } from '@kubed/hooks';
 
 import GlobalStyles from './components/GlobalStyles';
 import { PrefersContext, themes } from './libs/usePrefers';
+
+const Pages = () => {
+  const { routes } = globals.context;
+  return useRoutes(routes);
+};
 
 const App = () => {
   const [themeLocalValue, setThemeLocalValue] = useLocalStorage({
@@ -26,7 +30,6 @@ const App = () => {
     setThemeLocalValue(theme);
   }, []);
 
-  const { routes } = globals.context;
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -42,7 +45,9 @@ const App = () => {
       <GlobalStyles />
       <PrefersContext.Provider value={{ themeType, switchTheme }}>
         <QueryClientProvider client={queryClient}>
-          <Router>{renderRoutes(routes)}</Router>
+          <Router>
+            <Pages />
+          </Router>
           <Notify position="top-right" />
         </QueryClientProvider>
       </PrefersContext.Provider>
