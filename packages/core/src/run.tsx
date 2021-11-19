@@ -4,7 +4,7 @@ import App from './App';
 import plugins from './plugins';
 import loader from './libs/loader';
 import i18n from './libs/i18n';
-import emmiter from './libs/emmiter';
+import emitter from './libs/emitter';
 
 const LoadingComponent = () => <div>Loading</div>;
 
@@ -15,7 +15,7 @@ const run = async () => {
   }
 
   await i18n.init();
-  emmiter.init();
+  emitter.init();
   // load local plugin
   globals.context.registerPlugins(plugins);
 
