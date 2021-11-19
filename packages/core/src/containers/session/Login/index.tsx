@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { get } from 'lodash';
-import { useHistory } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { Button, Card, Alert, Form, FormItem, Input, InputPassword } from '@kubed/components';
 import { cookie, request } from '@ks-console/shared';
@@ -42,7 +41,6 @@ function encrypt(salt: string, str: string) {
 }
 
 const Login = () => {
-  const history = useHistory();
   const [errorMessage, setErrorMessage] = useState('');
   const handleOAuthLogin = (server: Server) => {
     const info = {
@@ -70,7 +68,8 @@ const Login = () => {
         setErrorMessage(data.message);
       }
       if (data.success) {
-        history.push(data.redirect);
+        // history.push(data.redirect);
+        window.location.href = data.redirect;
       }
     },
   });

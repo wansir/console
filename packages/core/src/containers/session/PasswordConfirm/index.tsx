@@ -20,9 +20,17 @@ const LoginConfirm = () => {
   const history = useHistory();
   const name = get(globals, 'user.username');
 
+  const handleRequest = (data: Array<any>) => {
+    return request.patch(`apis/iam.kubesphere.io/v1alpha2/users/${name}`, data, {
+      headers: {
+        'content-type': 'application/json-patch+json',
+      },
+    });
+  };
+
   const resetPasswdMutation = useMutation(
     (data: any) => {
-      return request.patch(`apis/iam.kubesphere.io/v1alpha2/users/${name}`, [
+      return handleRequest([
         {
           op: 'remove',
           path: '/metadata/annotations/iam.kubesphere.io~1uninitialized',
@@ -43,7 +51,7 @@ const LoginConfirm = () => {
 
   const skipMutation = useMutation(
     () => {
-      return request.patch(`apis/iam.kubesphere.io/v1alpha2/users/${name}`, [
+      return handleRequest([
         {
           op: 'remove',
           path: '/metadata/annotations/iam.kubesphere.io~1uninitialized',
