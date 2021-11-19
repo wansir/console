@@ -1219,10 +1219,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kubed/components@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.9.tgz#25154617113e3322a33eb7e073adf7eb28f1a4d0"
-  integrity sha512-KBFUxFk9nvcFW833iGctOFTu+qetmeeswy2F+zh1WsHEMovER7O6q5ovSj03j2mspz9K/QlIj9hKUTUWko3Jyw==
+"@kubed/components@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.12.tgz#0059f1f000eb0046d3605d47fae56e9df8513264"
+  integrity sha512-3HWGPpvEgOpXlEQ82qlYutHRID6/vbtrOh5CSLYi2gzUSoooBjsaCzYk/YQFTe88gQyLA7iDpBil5qeNkYb+fw==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
@@ -6085,6 +6085,11 @@ minimist@^1.1.1, minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+
+mitt@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.0.tgz#69ef9bd5c80ff6f57473e8d89326d01c414be0bd"
+  integrity sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==
 
 mixin-deep@^1.2.0:
   version "1.3.2"
