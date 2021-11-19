@@ -67,5 +67,5 @@ module.exports = {
       // systemjsModuleName: "@org-name/project-name"
     })
   ],
-  externals: ['react', 'react-dom', 'react-router', 'react-router-dom', 'styled-components'],
+  externals: ['react', 'react-dom', 'react-router-dom', 'styled-components'],
 };

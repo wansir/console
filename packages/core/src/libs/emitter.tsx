@@ -8,10 +8,10 @@ const { isAppsPage, isMemberClusterPage } = checker;
 const { WithTitle } = Notify;
 
 const init = () => {
-  globals.emmiter = mitt();
+  globals.emitter = mitt();
 
   // global message handler
-  globals.emmiter.on('globalMsg', (msg: GlobalMessage) => {
+  globals.emitter.on('globalMsg', (msg: GlobalMessage) => {
     if (msg.status === 401 || msg.reason === 'Unauthorized') {
       // session timeout handler, except app store page.
       if (!isAppsPage() && !isMemberClusterPage(location.pathname, msg.message || '')) {

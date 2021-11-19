@@ -19,7 +19,6 @@ const config = {
 const systemImports = {
   "react": "core:react",
   "react-dom": "core:react-dom",
-  "react-router": "core:react-router",
   "react-router-dom": "core:react-router-dom",
   "styled-components": "core:styled-components",
   "@kubed/components": "core:@kubed/components",

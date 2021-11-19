@@ -5,4 +5,3 @@ const pluginConfig = {
 };
 
 export default pluginConfig;
-// window.globals.context.registerPlugin(pluginConfig);

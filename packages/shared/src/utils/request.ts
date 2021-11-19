@@ -49,7 +49,7 @@ axios.interceptors.response.use(
   },
   error => {
     const msg = formatError(error.response);
-    globals.emmiter.emit('globalMsg', msg);
+    globals.emitter.emit('globalMsg', msg);
     console.warn(error);
     return Promise.reject(error);
   },

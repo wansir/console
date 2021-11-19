@@ -15,16 +15,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+import React from 'react';
 import Login from './containers/session/Login';
 import LoginConfirm from './containers/session/LoginConfirm';
 import PasswordConfirm from './containers/session/PasswordConfirm';
-import { RouteConfig } from 'react-router-config';
+import type { RouteObject } from 'react-router-dom';
 
-const routes: RouteConfig[] = [
-  { path: '/login', component: Login, exact: true },
-  { path: '/login/confirm', component: LoginConfirm, exact: true },
-  { path: '/password/confirm', component: PasswordConfirm, exact: true },
+const routes: RouteObject[] = [
+  { path: '/login', element: <Login /> },
+  { path: '/login/confirm', element: <LoginConfirm /> },
+  { path: '/password/confirm', element: <PasswordConfirm /> },
 ];
 
 export default routes;

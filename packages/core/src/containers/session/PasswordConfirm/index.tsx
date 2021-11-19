@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { get } from 'lodash';
 import { Success } from '@kubed/icons';
 import { Button, Card, Form, FormItem, InputPassword, Alert } from '@kubed/components';
@@ -17,7 +17,7 @@ import { PasswordTipWrapper, TipInner, TipItem } from './styles';
 
 const LoginConfirm = () => {
   const [password, setPassword] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
   const name = get(globals, 'user.username');
 
   const handleRequest = (data: Array<any>) => {
@@ -44,7 +44,7 @@ const LoginConfirm = () => {
     },
     {
       onSuccess: () => {
-        history.push('/');
+        navigate('/');
       },
     },
   );
@@ -60,7 +60,7 @@ const LoginConfirm = () => {
     },
     {
       onSuccess: () => {
-        history.push('/');
+        navigate('/');
       },
     },
   );

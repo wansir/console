@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { get } from 'lodash';
 import { Button, Card, Form, FormItem, Input } from '@kubed/components';
 import { request, Pattern, validator } from '@ks-console/shared';
@@ -23,7 +23,7 @@ const nameValidator = async (rule: any, value: string) => {
 };
 
 const LoginConfirm = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const loginMutation = useMutation(
     data => {
       return request.post('login/confirm', data);
@@ -31,7 +31,7 @@ const LoginConfirm = () => {
     {
       onSuccess: (data: any) => {
         if (data.success) {
-          history.push(data.redirect);
+          navigate(data.redirect);
         }
       },
     },
