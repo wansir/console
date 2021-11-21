@@ -16,15 +16,18 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 import React from 'react';
+import type { RouteObject } from 'react-router-dom';
+
 import Login from './containers/session/Login';
 import LoginConfirm from './containers/session/LoginConfirm';
 import PasswordConfirm from './containers/session/PasswordConfirm';
-import type { RouteObject } from 'react-router-dom';
+import BaseLayout from './components/layouts/Base';
 
 const routes: RouteObject[] = [
   { path: '/login', element: <Login /> },
   { path: '/login/confirm', element: <LoginConfirm /> },
   { path: '/password/confirm', element: <PasswordConfirm /> },
+  { path: '/', element: <BaseLayout /> },
 ];
 
 export default routes;
