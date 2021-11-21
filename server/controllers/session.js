@@ -167,15 +167,9 @@ const handleLogout = async ctx => {
     });
 
     if (isAppsRoute(refererPath)) {
-      ctx.body = {
-        success: true,
-        redirect: refererPath,
-      };
+      ctx.redirect(refererPath);
     } else {
-      ctx.body = {
-        success: true,
-        redirect: '/login',
-      };
+      ctx.redirect('/login');
     }
   }
 };
