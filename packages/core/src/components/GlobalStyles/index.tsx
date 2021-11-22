@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { themeUtils } from '@kubed/components';
 
 const GlobalStyles = createGlobalStyle`
   html,
@@ -7,9 +8,21 @@ const GlobalStyles = createGlobalStyle`
     color: #242e42;
   }
   
+  a {
+    color: ${({ theme }) => theme.palette.accents_8};
+    
+    &:hover {
+      color: ${({ theme }) => themeUtils.getPrimaryColor(theme, true)};
+    }
+  }
+  
   ::selection {
     background-color: #369a6a;
     color: #fff;
+  }
+  
+  strong {
+    font-weight: 500;
   }
   
   .kubed-icon__coloured {
