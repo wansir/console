@@ -18,10 +18,10 @@
 import get from 'lodash/get';
 import i18next from 'i18next';
 import { merge } from 'lodash';
-import { cookie, utils, request } from '@ks-console/shared';
+import { cookie, getBrowserLang, request } from '@ks-console/shared';
 
 const init = async () => {
-  const userLang = get(globals.user, 'lang') || utils.getBrowserLang();
+  const userLang = get(globals.user, 'lang') || getBrowserLang();
   if (userLang && cookie('lang') !== userLang) {
     cookie('lang', userLang);
   }

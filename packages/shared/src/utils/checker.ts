@@ -2,6 +2,8 @@ import { get } from 'lodash';
 
 export const isSystemRole = (role: string) => /^system:/.test(role);
 
+export const isPlatformAdmin = () => globals.user.globalrole === 'platform-admin';
+
 /**
  * Check if the page is apps page.
  * @param {String} path
