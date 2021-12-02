@@ -29,6 +29,23 @@ const GlobalStyles = createGlobalStyle`
     color: #00aa72;
     fill: #90e0c5;
   }
+
+  .mb12 {
+    margin-bottom: 12px;
+  }
+
+  .mt12 {
+    margin-top: 12px;
+  }
+
+  .password-tip-dropdown {
+    width: 350px;
+    padding: 0 16px 16px;
+
+    .tip-title {
+      font-weight: 500;
+    }
+  }
 `;
 
 export default GlobalStyles;

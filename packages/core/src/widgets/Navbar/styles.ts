@@ -20,6 +20,10 @@ export const NavbarWrapper = styled.div`
     &:not(:last-child) {
       margin-right: 12px;
     }
+
+    &:hover {
+      color: ${({ theme }) => theme.palette.accents_7};
+    }
   }
 `;
 

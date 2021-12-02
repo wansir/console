@@ -4,6 +4,7 @@ import { Dropdown, Menu, MenuItem, useModal } from '@kubed/components';
 
 import { LoginWrapper, NotLogin } from './styles';
 import About from '../About';
+import UserSetting from '../UserSetting';
 
 interface ProfileMenuProps {
   isLogin: boolean;
@@ -25,18 +26,31 @@ const ProfileMenu = ({ isLogin, isAppsPage }: ProfileMenuProps) => {
   const openAboutModal = () => {
     modal.open({
       title: 'about',
-      header: <div />,
+      header: null,
       closable: false,
-      // @ts-ignore
-      footer: <div />,
+      footer: null,
       content: <About />,
+    });
+  };
+
+  const openUserSettingModal = () => {
+    modal.open({
+      title: t('USER_SETTINGS'),
+      titleIcon: <Wrench />,
+      width: 960,
+      content: <UserSetting />,
+      okButtonProps: { style: { display: 'none' } },
     });
   };
 
   const userMenu = (
     <Menu>
-      <MenuItem icon={<Wrench />}>{t('USER_SETTINGS')}</MenuItem>
-      <MenuItem icon={<Logout />}>{t('LOG_OUT')}</MenuItem>
+      <MenuItem icon={<Wrench />} onClick={openUserSettingModal}>
+        {t('USER_SETTINGS')}
+      </MenuItem>
+      <MenuItem icon={<Logout />} as="a" href="/logout">
+        {t('LOG_OUT')}
+      </MenuItem>
       <MenuItem icon={<Information />} onClick={openAboutModal}>
         {t('ABOUT')}
       </MenuItem>

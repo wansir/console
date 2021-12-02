@@ -634,5 +634,6 @@
   "CONTROL_TOOL": "控制工具",
   "ANALYSIS_TOOLS": "分析工具",
   "INVALID_EMAIL": "邮箱地址格式错误。",
-  "Submit": "提交"
+  "Submit": "提交",
+  "APP_STORE": "应用商店"
 }

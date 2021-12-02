@@ -17,11 +17,16 @@ const Navbar = () => {
   const enableGlobalNav = true; // todo, mock
   const enableAppStore = true;
   const isAppsPage = getIsAppsPage();
+  const { url, api } = globals.config.documents;
 
   const docMenu = (
     <Menu>
-      <MenuItem icon={<Hammer />}>{t('User Manual')}</MenuItem>
-      <MenuItem icon={<Api />}>{t('API Documents')}</MenuItem>
+      <MenuItem icon={<Hammer />} as="a" href={url} target="_blank">
+        {t('User Manual')}
+      </MenuItem>
+      <MenuItem icon={<Api />} as="a" href={api} target="_blank">
+        {t('API Documents')}
+      </MenuItem>
     </Menu>
   );
 

@@ -1,0 +1,128 @@
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import {
+  Form,
+  FormItem,
+  InputPassword,
+  FormInstance,
+  Alert,
+  Dropdown,
+  notify,
+} from '@kubed/components';
+import { useStore } from '@kubed/stook';
+import { Pattern } from '@ks-console/shared';
+import PasswordTip from '../../../../components/PasswordTip';
+import { useModifyPassword } from '../../../../stores/user';
+
+interface WrapperProps {
+  $visible: boolean;
+}
+
+const PasswordWrapper = styled('div')<WrapperProps>`
+  display: ${({ $visible }) => ($visible ? 'flex' : 'none')};
+  flex-direction: column;
+`;
+
+interface PasswordProps {
+  visible: boolean;
+  form: FormInstance;
+}
+
+const Password = ({ visible, form }: PasswordProps) => {
+  const [, setPasswordChanged] = useStore('PasswordChanged');
+  const [password, setPassword] = useState<string>('');
+  const { mutate } = useModifyPassword(globals.user.username, () => {
+    notify.success(t('UPDATE_SUCCESS'));
+    setTimeout(() => {
+      location.href = '/login';
+    }, 1000);
+  });
+
+  const passwordValidator = (rule: any, value: string) => {
+    if (!value) return Promise.reject();
+    if (value !== form.getFieldValue('password')) {
+      return Promise.reject(t('PASSWORD_NOT_SAME_DESC'));
+    }
+
+    return Promise.resolve();
+  };
+
+  const onChange = () => {
+    setPasswordChanged(true);
+  };
+
+  const onValuesChange = (data: any) => {
+    if (data.password) {
+      setPassword(data.password);
+    }
+  };
+
+  const onFinish = (data: any) => {
+    mutate(data);
+  };
+
+  return (
+    <PasswordWrapper $visible={visible}>
+      <div className="form-title">{t('PASSWORD_SETTINGS')}</div>
+      <Form
+        className="setting-form"
+        autoComplete="off"
+        form={form}
+        onChange={onChange}
+        onFinish={onFinish}
+        onValuesChange={onValuesChange}
+      >
+        <FormItem
+          label={t('CURRENT_PASSWORD')}
+          help={t('ENTER_CURRENT_PASSWORD_DESC')}
+          name="currentPassword"
+          rules={[{ required: true, message: t('ENTER_CURRENT_PASSWORD_TIP') }]}
+        >
+          <InputPassword autoComplete="nope" />
+        </FormItem>
+        <Alert type="warning" showIcon={false} style={{ marginBottom: '12px' }}>
+          {t('PASSWORD_DESC')}
+        </Alert>
+        <Dropdown
+          content={<PasswordTip password={password} hasProgress />}
+          hideOnClick={false}
+          maxWidth={350}
+          placement="top"
+          className="password-tip-dropdown"
+          interactive={false}
+        >
+          <div>
+            <FormItem
+              label={t('NEW_PASSWORD')}
+              name="password"
+              rules={[
+                { required: true, message: t('PASSWORD_EMPTY_DESC') },
+                {
+                  pattern: Pattern.PATTERN_PASSWORD,
+                  message: t('PASSWORD_DESC'),
+                },
+              ]}
+              onFocus={() => {
+                console.log('focus');
+              }}
+            >
+              <InputPassword />
+            </FormItem>
+          </div>
+        </Dropdown>
+        <FormItem
+          label={t('CONFIRM_PASSWORD')}
+          name="rePassword"
+          rules={[
+            { required: true, message: t('CONFIRM_PASSWORD_TIP') },
+            { validator: passwordValidator },
+          ]}
+        >
+          <InputPassword />
+        </FormItem>
+      </Form>
+    </PasswordWrapper>
+  );
+};
+
+export default Password;
