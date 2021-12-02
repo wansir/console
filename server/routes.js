@@ -70,7 +70,7 @@ router
   .get('/login', renderLogin)
   .post('/login/confirm', parseBody, handleLoginConfirm)
   .get('/login/confirm', renderLoginConfirm)
-  .post('/logout', handleLogout)
+  .get('/logout', handleLogout)
 
   // oauth
   .get('/oauth/redirect/:name', handleOAuthLogin)

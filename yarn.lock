@@ -1226,14 +1226,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kubed/components@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.12.tgz#0059f1f000eb0046d3605d47fae56e9df8513264"
-  integrity sha512-3HWGPpvEgOpXlEQ82qlYutHRID6/vbtrOh5CSLYi2gzUSoooBjsaCzYk/YQFTe88gQyLA7iDpBil5qeNkYb+fw==
+"@kubed/components@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.19.tgz#a1725982a821103564648ffd11227945aed9d34c"
+  integrity sha512-B+9WyoJa3/Ox/v6HbMuihuDoZLaHNQ7Kt31RjVsYiTJoQn7YkYMqosltKq3iqewXgcIVFdLVD6+qiAk6HyFAGg==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
-    clsx "^1.1.1"
     dayjs "^1.10.7"
     lodash "^4.17.21"
     rc-dialog "^8.6.0"
@@ -1242,7 +1241,6 @@
     rc-motion "^2.4.4"
     rc-picker "^2.5.19"
     rc-select "^13.1.0"
-    react-feather "^2.0.9"
     react-hot-toast "^2.1.1"
     react-textarea-autosize "^8.3.2"
     react-transition-group "^4.4.2"
@@ -1254,10 +1252,18 @@
   resolved "https://registry.yarnpkg.com/@kubed/hooks/-/hooks-0.0.3.tgz#c100f538cb2db55d640f92de15e801e43187e471"
   integrity sha512-3t93OJBiFLKQ4ccRqEuiN/uD+q3scbs2brITma0D5yEfUO10ncQq0ppsc/EkJQi2nEWavixERg/aPyFc2XryDw==
 
-"@kubed/icons@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@kubed/icons/-/icons-0.0.1.tgz#3a2b29bed752d9cb8ff4ea652b954cf360978231"
-  integrity sha512-qyRaLOxxHtnKAHdPjH8pSEsaRkmSYO5bPwx98KP7Aa3Y7V8XIuE4XEaNDdPtG/h+EkTZgVacAndCo7e/c+OcCQ==
+"@kubed/icons@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@kubed/icons/-/icons-0.0.2.tgz#ff309f67b9312ac507dd53e31c50137e2842c864"
+  integrity sha512-Tl8TNlAmWRcySquvIcwUQHqSFnCTs1Xt5KPam1iF32xfu5nauvbt6///hhsgyWGnp6ck1vDhiSGYsV7YUbYOlw==
+
+"@kubed/stook@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@kubed/stook/-/stook-0.0.2.tgz#574a7e35709c771a5ee742c559d5eb84253eaf26"
+  integrity sha512-bH+M62dXD+wlSex6Nx3THiqM0QOd/rjPCqUe15rPJGBMaA7P3kcgX9ErXCog7Jf4JFwGT3ekI2/BiFqv4gcLyg==
+  dependencies:
+    immer "^9.0.5"
+    mitt "^3.0.0"
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
@@ -2756,11 +2762,6 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
-
-clsx@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
-  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 co-body@^6.0.0:
   version "6.1.0"
@@ -4825,6 +4826,11 @@ ignore@^5.1.4, ignore@^5.1.8:
   version "5.1.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.8.tgz#f150a8b50a34289b33e22f5889abd4d8016f0e57"
   integrity sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
+
+immer@^9.0.5:
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.6.tgz#7a96bf2674d06c8143e327cbf73539388ddf1a73"
+  integrity sha512-G95ivKpy+EvVAnAab4fVa4YGYn24J1SpEktnJX7JJ45Bd7xqME/SCplFzYFmTbrkwZbQ4xJK1xMTUYBkN6pWsQ==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -7379,13 +7385,6 @@ react-dom@^17.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     scheduler "^0.20.2"
-
-react-feather@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/react-feather/-/react-feather-2.0.9.tgz#6e42072130d2fa9a09d4476b0e61b0ed17814480"
-  integrity sha512-yMfCGRkZdXwIs23Zw/zIWCJO3m3tlaUvtHiXlW+3FH7cIT6fiK1iJ7RJWugXq7Fso8ZaQyUm92/GOOHXvkiVUw==
-  dependencies:
-    prop-types "^15.7.2"
 
 react-hot-toast@^2.1.1:
   version "2.1.1"

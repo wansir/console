@@ -6,6 +6,8 @@ import { useLocalStorage } from '@kubed/hooks';
 
 import GlobalStyles from './components/GlobalStyles';
 import { PrefersContext, themes } from './libs/usePrefers';
+import get from 'lodash/get';
+import { getBrowserLang } from '@ks-console/shared';
 
 const Pages = () => {
   const { routes } = globals.context;
@@ -18,6 +20,7 @@ const App = () => {
     defaultValue: 'light',
   });
   const [themeType, setThemeType] = useState('light');
+  const userLang = get(globals.user, 'lang') || getBrowserLang();
 
   useEffect(() => {
     document.documentElement.removeAttribute('style');
@@ -40,18 +43,18 @@ const App = () => {
   });
 
   return (
-    <KubedConfigProvider themeType={themeType}>
-      <CssBaseline />
-      <GlobalStyles />
-      <PrefersContext.Provider value={{ themeType, switchTheme }}>
-        <QueryClientProvider client={queryClient}>
-          <Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <KubedConfigProvider themeType={themeType} locale={userLang}>
+          <CssBaseline />
+          <GlobalStyles />
+          <PrefersContext.Provider value={{ themeType, switchTheme }}>
             <Pages />
-          </Router>
-          <Notify position="top-right" />
-        </QueryClientProvider>
-      </PrefersContext.Provider>
-    </KubedConfigProvider>
+            <Notify position="top-right" />
+          </PrefersContext.Provider>
+        </KubedConfigProvider>
+      </Router>
+    </QueryClientProvider>
   );
 };
 

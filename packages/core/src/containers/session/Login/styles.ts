@@ -23,9 +23,13 @@ export const LoginWrapper = styled.div`
     }
   }
 
-  .mb12 {
-    margin-bottom: 12px;
-  }
+  //.mb12 {
+  //  margin-bottom: 12px;
+  //}
+  //
+  //.mt12 {
+  //  margin-top: 12px;
+  //}
 `;
 
 export const LoginHeader = styled.a`

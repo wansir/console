@@ -17,7 +17,7 @@ function formatError(response: AxiosResponse): GlobalMessage {
   return {
     status,
     reason: data.reason,
-    message: data.message,
+    message: data.message || data,
   };
 }
 
