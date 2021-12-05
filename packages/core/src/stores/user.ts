@@ -1,13 +1,6 @@
 import { useQuery, useMutation } from 'react-query';
 import { get } from 'lodash';
-import {
-  Constants,
-  request,
-  cookie,
-  urlHelper,
-  getOriginData,
-  getBaseInfo,
-} from '@ks-console/shared';
+import { Constants, request, urlHelper, getOriginData, getBaseInfo } from '@ks-console/shared';
 
 import type { PathParams } from '@ks-console/shared';
 
@@ -85,7 +78,6 @@ export const useModifyPassword = (name: string, callback?: () => void) => {
 
 export const useUpdate = ({ name, ...params }: PathParams, callback?: (params: any) => void) => {
   const url = `${getDetailUrl({ module, apiVersion, name, ...params })}`;
-  console.log('url', url);
   return useMutation(
     data => {
       return request.put(url, data);
