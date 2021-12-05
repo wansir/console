@@ -17,17 +17,34 @@
  */
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import Login from './containers/session/Login';
 import LoginConfirm from './containers/session/LoginConfirm';
 import PasswordConfirm from './containers/session/PasswordConfirm';
 import BaseLayout from './components/layouts/Base';
 
-const routes: RouteObject[] = [
+const baseRoutes: RouteObject[] = [
   { path: '/login', element: <Login /> },
   { path: '/login/confirm', element: <LoginConfirm /> },
   { path: '/password/confirm', element: <PasswordConfirm /> },
-  { path: '/', element: <BaseLayout /> },
 ];
 
-export default routes;
+const homePage = globals.config.homePage || '/dashboard';
+
+const mergeRoutes = (routes: RouteObject[]) => {
+  const pages = {
+    path: '/',
+    element: <BaseLayout />,
+    children: [
+      ...routes,
+      {
+        index: true,
+        element: <Navigate to={homePage} replace />,
+      },
+    ],
+  };
+  return [pages, ...baseRoutes];
+};
+
+export default mergeRoutes;
