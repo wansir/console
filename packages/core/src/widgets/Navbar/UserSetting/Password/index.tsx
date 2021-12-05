@@ -31,6 +31,8 @@ interface PasswordProps {
 const Password = ({ visible, form }: PasswordProps) => {
   const [, setPasswordChanged] = useStore('PasswordChanged');
   const [password, setPassword] = useState<string>('');
+  const [tipVisible, setTipVisible] = useState(false);
+
   const { mutate } = useModifyPassword(globals.user.username, () => {
     notify.success(t('UPDATE_SUCCESS'));
     setTimeout(() => {
@@ -85,11 +87,11 @@ const Password = ({ visible, form }: PasswordProps) => {
         </Alert>
         <Dropdown
           content={<PasswordTip password={password} hasProgress />}
-          hideOnClick={false}
           maxWidth={350}
           placement="top"
           className="password-tip-dropdown"
           interactive={false}
+          visible={tipVisible}
         >
           <div>
             <FormItem
@@ -102,11 +104,15 @@ const Password = ({ visible, form }: PasswordProps) => {
                   message: t('PASSWORD_DESC'),
                 },
               ]}
-              onFocus={() => {
-                console.log('focus');
-              }}
             >
-              <InputPassword />
+              <InputPassword
+                onFocus={() => {
+                  setTipVisible(true);
+                }}
+                onBlur={() => {
+                  setTipVisible(false);
+                }}
+              />
             </FormItem>
           </div>
         </Dropdown>

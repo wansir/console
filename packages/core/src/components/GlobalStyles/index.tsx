@@ -16,6 +16,11 @@ const GlobalStyles = createGlobalStyle`
     }
   }
   
+  ul, li {
+    margin: 0;
+    padding: 0;
+  }
+  
   ::selection {
     background-color: #369a6a;
     color: #fff;
@@ -30,12 +35,20 @@ const GlobalStyles = createGlobalStyle`
     fill: #90e0c5;
   }
 
+  .mt12 {
+    margin-top: 12px;
+  }
+
+  .mr12 {
+    margin-right: 12px;
+  }
+  
   .mb12 {
     margin-bottom: 12px;
   }
 
-  .mt12 {
-    margin-top: 12px;
+  .ml12 {
+    margin-left: 12px;
   }
 
   .password-tip-dropdown {

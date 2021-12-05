@@ -1,6 +1,6 @@
 import type { RouteObject } from 'react-router-dom';
 import { merge } from 'lodash';
-import routes from '../routes';
+// import routes from '../routes';
 
 type Plugin = {
   routes?: RouteObject[];
@@ -15,7 +15,7 @@ export default class Context {
   public locales: Record<string, any>;
 
   constructor() {
-    this.routes = routes;
+    this.routes = [];
     this.locales = {};
   }
 

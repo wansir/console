@@ -4,13 +4,14 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { KubedConfigProvider, CssBaseline, Notify } from '@kubed/components';
 import { useLocalStorage } from '@kubed/hooks';
 
+import mergeRoutes from './routes';
 import GlobalStyles from './components/GlobalStyles';
 import { PrefersContext, themes } from './libs/usePrefers';
 import get from 'lodash/get';
 import { getBrowserLang } from '@ks-console/shared';
 
 const Pages = () => {
-  const { routes } = globals.context;
+  const routes = mergeRoutes(globals.context.routes);
   return useRoutes(routes);
 };
 
