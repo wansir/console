@@ -48,7 +48,7 @@ const init = async () => {
     {
       lng: userLang,
       fallbackLng: 'en',
-      debug: true,
+      debug: false,
       resources: totalLocales,
       // defaultNS: ['common'],
       interpolation: {
