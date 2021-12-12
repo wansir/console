@@ -1,0 +1,237 @@
+import React, { PropsWithChildren, ReactElement, useMemo, useReducer, useEffect } from 'react';
+import {
+  useTable,
+  useFilters,
+  useSortBy,
+  usePagination,
+  useRowSelect,
+  // useFlexLayout,
+  Hooks,
+  HeaderProps,
+  CellProps,
+} from 'react-table';
+import cx from 'classnames';
+import { get } from 'lodash';
+import { Checkbox, LoadingOverlay } from '@kubed/components';
+import { useLocalStorage, useDebouncedValue } from '@kubed/hooks';
+import TableHead from './TableHead';
+import { TableWrapper, TableMain, Table, TBody } from './styles';
+import { TableFooter } from './TableFooter';
+import { Toolbar } from './Toolbar';
+import { TableEmpty } from './Empty';
+import {
+  prepareColumns,
+  TableProps,
+  Column,
+  useData,
+  getInitialState,
+  useDidUpdate,
+} from './utils';
+import {
+  PAGE_CHANGED,
+  SORTBY_CHANGED,
+  reducer,
+  FILTER_CHANGED,
+  TOTAL_COUNT_CHANGED,
+} from './reducer';
+
+export type { Column, TableProps };
+
+const selectionHook = (hooks: Hooks<any>) => {
+  hooks.allColumns.push(columns => [
+    {
+      id: '_selector',
+      disableResizing: true,
+      disableGroupBy: true,
+      minWidth: 40,
+      width: 40,
+      maxWidth: 40,
+      Aggregated: undefined,
+      className: 'selector',
+      Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<any>) => (
+        <Checkbox {...getToggleAllRowsSelectedProps()} />
+      ),
+      Cell: ({ row }: CellProps<any>) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+    },
+    ...columns,
+  ]);
+};
+
+const hooks = [useFilters, useSortBy, usePagination, useRowSelect];
+
+export function DataTable<T extends Record<string, unknown>>(
+  props: PropsWithChildren<TableProps<T>>,
+): ReactElement {
+  const {
+    columns,
+    // data = [],
+    manualSortBy = true,
+    manualFilters = true,
+    showFooter = true,
+    showToolbar = true,
+    simpleSearch = false,
+    batchActions,
+    rowKey,
+    placeholder,
+    selectType = 'checkbox',
+    url,
+    emptyPlaceholder,
+    tableName,
+    useStorageState,
+  } = props;
+  const [, setStorageState] = useLocalStorage({ key: `tableState:${tableName}` });
+  const initialState = getInitialState(tableName, useStorageState);
+
+  const [{ pageIndex, pageSize, totalCount, filters, sortBy }, dispatch] = useReducer(
+    reducer,
+    initialState,
+  );
+
+  const {
+    isLoading,
+    isSuccess,
+    isFetching,
+    data: serverData,
+    refetch,
+  } = useData(url || '', {
+    pageIndex,
+    pageSize,
+    filters,
+    sortBy,
+  });
+
+  const { formatColumns, suggestions } = useMemo(() => {
+    return prepareColumns<T>(columns);
+  }, []);
+
+  const getRowId = (row: any, relativeIndex: number) => {
+    return get(row, rowKey) || String(relativeIndex);
+  };
+
+  const memoData = useMemo(() => serverData?.items || [], [serverData]);
+
+  if (selectType) {
+    // @ts-ignore
+    hooks.push(selectionHook);
+  }
+
+  const instance = useTable(
+    {
+      columns: formatColumns,
+      data: memoData,
+      manualSortBy,
+      manualFilters,
+      manualPagination: true,
+      getRowId,
+      pageCount: isSuccess ? Math.ceil(totalCount / pageSize) : 1,
+      // @ts-ignore
+      initialState,
+    },
+    ...hooks,
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    // selectedFlatRows,
+  } = instance;
+  const [debouncedState] = useDebouncedValue(state, 500);
+
+  const clearAndRefetch = () => {
+    instance.setAllFilters([]);
+  };
+
+  useEffect(() => {
+    setStorageState(JSON.stringify(debouncedState));
+  }, [setStorageState, debouncedState]);
+
+  useEffect(() => {
+    dispatch({ type: PAGE_CHANGED, payload: state.pageIndex });
+  }, [state.pageIndex]);
+
+  useDidUpdate(() => {
+    instance.gotoPage(0);
+    dispatch({ type: SORTBY_CHANGED, payload: state.sortBy });
+  }, [state.sortBy]);
+
+  useDidUpdate(() => {
+    instance.gotoPage(0);
+    dispatch({ type: FILTER_CHANGED, payload: state.filters });
+  }, [state.filters]);
+
+  useEffect(() => {
+    dispatch({ type: TOTAL_COUNT_CHANGED, payload: serverData?.totalItems });
+  }, [serverData?.totalItems]);
+
+  return (
+    <TableWrapper padding={0}>
+      {showToolbar && (
+        <Toolbar
+          instance={instance}
+          batchActions={batchActions}
+          simpleSearch={simpleSearch}
+          placeholder={placeholder}
+          suggestions={suggestions}
+          refetch={refetch}
+        />
+      )}
+      <TableMain>
+        <Table {...getTableProps()}>
+          {headerGroups.map(headerGroup => {
+            return (
+              <colgroup key={`colgroup-${headerGroup.getHeaderGroupProps().key}`}>
+                {headerGroup.headers.map(column => {
+                  const { key: headerKey } = column.getHeaderProps();
+                  if (column.width) return <col width={column.width} key={`col-${headerKey}`} />;
+                  return <col key={`col-${headerKey}`} />;
+                })}
+              </colgroup>
+            );
+          })}
+          <thead>
+            {headerGroups.map(headerGroup => {
+              return (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => {
+                    const { key: headerKey } = column.getHeaderProps();
+                    return <TableHead column={column} key={headerKey} />;
+                  })}
+                </tr>
+              );
+            })}
+          </thead>
+          <TBody {...getTableBodyProps()}>
+            {rows.map(row => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className={cx({ 'row-selected': row.isSelected })}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        className={cx({ 'table-selector': cell.column.id === '_selector' })}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </TBody>
+        </Table>
+      </TableMain>
+      {(isLoading || totalCount === 0) && (
+        <>
+          {emptyPlaceholder || <TableEmpty clearAndRefetch={clearAndRefetch} refetch={refetch} />}
+        </>
+      )}
+      {showFooter && <TableFooter<T> instance={instance} totalCount={totalCount} />}
+      <LoadingOverlay visible={isFetching} />
+    </TableWrapper>
+  );
+}

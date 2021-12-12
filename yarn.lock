@@ -1226,10 +1226,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kubed/components@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.19.tgz#a1725982a821103564648ffd11227945aed9d34c"
-  integrity sha512-B+9WyoJa3/Ox/v6HbMuihuDoZLaHNQ7Kt31RjVsYiTJoQn7YkYMqosltKq3iqewXgcIVFdLVD6+qiAk6HyFAGg==
+"@kubed/components@^0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.24.tgz#3bfb3ebe6222d43e856089a825893cf31bf5143b"
+  integrity sha512-cQfqhhqDUgAL706zIs+dRnNupxw171Pb04kpEGCn91RJu4/8k/vjn+GQtq17E6KLcQUl+nhCAqOVHCnp5obAVg==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
@@ -1247,10 +1247,10 @@
     scroll-into-view-if-needed "^2.2.28"
     styled-components "^5.3.0"
 
-"@kubed/hooks@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@kubed/hooks/-/hooks-0.0.3.tgz#c100f538cb2db55d640f92de15e801e43187e471"
-  integrity sha512-3t93OJBiFLKQ4ccRqEuiN/uD+q3scbs2brITma0D5yEfUO10ncQq0ppsc/EkJQi2nEWavixERg/aPyFc2XryDw==
+"@kubed/hooks@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@kubed/hooks/-/hooks-0.0.5.tgz#1f7f0dff5f510478574222c3a7a2fbf6c7cbb0d8"
+  integrity sha512-NNKVWIVr5PmZl0kMje6KGZleNtMbgN6PaCcc+i/p42GKqoMMnCiuq+8flg0TPeq0QatYFiT31ItRdBx4LUUJbA==
 
 "@kubed/icons@^0.0.2":
   version "0.0.2"
@@ -1490,6 +1490,13 @@
   integrity sha512-FIX2AVmPTGP30OUJ+0vadeIFJJ07Mh1m+U0rxfgyW34p3rTlXI+nlenvAxNn4BP36YyI9IJ/+UJ7Wu22N1pI7A==
   dependencies:
     "@types/react" "^16"
+
+"@types/react-table@^7.7.8":
+  version "7.7.8"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.8.tgz#b1aa5fb7a54432969262d2306b87fdbb9a5ee647"
+  integrity sha512-OMhbPlf+uUGte3M1WdArEKeBkyQ1XJxKvFYs+o1dGGGyaSVIqxPPQmBZ6Skkw0V9y0F/kOY7rnTD8r9GbfpBOg==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react@*":
   version "17.0.33"
@@ -7326,9 +7333,9 @@ rc-resize-observer@^1.0.0:
     resize-observer-polyfill "^1.5.1"
 
 rc-select@^13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-13.1.0.tgz#11acd2fa70b87eab76648a4d62b11c79e2765e6b"
-  integrity sha512-rhUTQ9BcU1gbwlBCQwpDN0zD6iQqbFS/X2A2x7ptyo7uY98UM1x2gF3QAP4VMUT4voqCYqqsrMNDdgS0yM/FRQ==
+  version "13.2.1"
+  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-13.2.1.tgz#d69675f8bc72622a8f3bc024fa21bfee8d56257d"
+  integrity sha512-L2cJFAjVEeDiNVa/dlOVKE79OUb0J7sUBvWN3Viav3XHcjvv9Ovn4D8J9QhBSlDXeGuczZ81CZI3BbdHD25+Gg==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
@@ -7426,6 +7433,11 @@ react-router@6.0.2:
   integrity sha512-8/Wm3Ed8t7TuedXjAvV39+c8j0vwrI5qVsYqjFr5WkJjsJpEvNSoLRUbtqSEYzqaTUj1IV+sbPJxvO+accvU0Q==
   dependencies:
     history "^5.1.0"
+
+react-table@^7.7.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.7.0.tgz#e2ce14d7fe3a559f7444e9ecfe8231ea8373f912"
+  integrity sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==
 
 react-textarea-autosize@^8.3.2:
   version "8.3.3"
@@ -9192,11 +9204,6 @@ websocket-extensions@>=0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
-
-whatwg-fetch@^3.0.0:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c"
-  integrity sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==
 
 whatwg-url@^5.0.0:
   version "5.0.0"
