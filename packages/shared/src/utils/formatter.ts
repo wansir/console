@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 /**
  * format size, output the value with unit
  * @param {Number} size - the number need to be format
@@ -13,4 +15,8 @@ export const formatSize = (size: number): string => {
   }
 
   return `${size} ${units[index]}`;
+};
+
+export const formatTime = (time: string, format: string = 'YYYY-MM-DD HH:mm:ss') => {
+  return dayjs(time).format(format);
 };

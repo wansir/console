@@ -1,5 +1,21 @@
 import { omit, get, isEmpty } from 'lodash';
 
+export const getServedVersion = (item: any) => {
+  const versions = get(item, 'spec.versions', []);
+  if (versions.length === 0) {
+    return '';
+  }
+  let servedVersion = get(versions[versions.length - 1], 'name');
+  versions.some((ver: any) => {
+    if (get(ver, 'served', false)) {
+      servedVersion = get(ver, 'name', servedVersion);
+      return true;
+    }
+    return false;
+  });
+  return servedVersion;
+};
+
 export const getResourceCreator = (item: any) =>
   get(item, 'metadata.annotations["kubesphere.io/creator"]') ||
   get(item, 'metadata.annotations.creator') ||
