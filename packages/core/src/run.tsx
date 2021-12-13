@@ -1,12 +1,11 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { Loading } from '@kubed/components';
 import App from './App';
 import plugins from './plugins';
 import loader from './libs/loader';
 import i18n from './libs/i18n';
 import emitter from './libs/emitter';
-
-const LoadingComponent = () => <div>Loading</div>;
 
 const run = async () => {
   if (process.env.NODE_ENV === 'production') {
@@ -20,7 +19,7 @@ const run = async () => {
   globals.context.registerPlugins(plugins);
 
   ReactDOM.render(
-    <Suspense fallback={LoadingComponent}>
+    <Suspense fallback={<Loading className="page-loading" />}>
       <App />
     </Suspense>,
     document.getElementById('root'),

@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import cx from 'classnames';
-import { Dashboard, ChevronDown, Appcenter } from '@kubed/icons';
+import { ChevronDown } from '@kubed/icons';
+import { Icon } from '@ks-console/shared';
 import { themeUtils } from '@kubed/components';
 
 const ItemWrapper = styled.li`
@@ -32,6 +33,10 @@ const ItemWrapper = styled.li`
 
   &.is-select {
     color: #55bc8a;
+
+    a {
+      color: #55bc8a;
+    }
 
     .title-wrapper {
       color: ${({ theme }) => themeUtils.getPrimaryColor(theme, true)};
@@ -108,11 +113,13 @@ const InnerItem = styled.li`
 interface NavItemProps {
   item?: any;
   onOpen: (params: any) => void;
+  prefix: string;
   isOpen: boolean;
   current: string;
+  disabled?: boolean;
 }
 
-const NavItem = ({ item, onOpen, isOpen, current }: NavItemProps) => {
+const NavItem = ({ item, onOpen, isOpen, current, prefix }: NavItemProps) => {
   const handleToggle = () => {
     onOpen(item.name);
   };
@@ -133,7 +140,7 @@ const NavItem = ({ item, onOpen, isOpen, current }: NavItemProps) => {
     return (
       <ItemWrapper className={cx({ 'is-open': isOpen, 'is-select': checkSelect(item) })}>
         <TitleWrapper onClick={handleToggle} className="title-wrapper">
-          <Appcenter />
+          <Icon name={item.icon} />
           <span>{t(item.title)}</span>
           <ChevronDown className="open-indicator" />
         </TitleWrapper>
@@ -144,7 +151,7 @@ const NavItem = ({ item, onOpen, isOpen, current }: NavItemProps) => {
                 key={child.name}
                 className={cx('inner-item', { 'is-select': checkSelect(child) })}
               >
-                <Link to="/aa">{t(child.title)}</Link>
+                <Link to={`${prefix}/${child.name}`}>{t(child.title)}</Link>
               </InnerItem>
             );
           })}
@@ -152,10 +159,11 @@ const NavItem = ({ item, onOpen, isOpen, current }: NavItemProps) => {
       </ItemWrapper>
     );
   }
+  console.log('item', item);
   return (
     <ItemWrapper className={cx({ 'is-select': checkSelect(item) })}>
-      <Link to="/bb" className="item-link">
-        <Dashboard />
+      <Link to={`${prefix}/${item.name}`} className="item-link">
+        <Icon name={item.icon} />
         <span>{t(item.title)}</span>
       </Link>
     </ItemWrapper>

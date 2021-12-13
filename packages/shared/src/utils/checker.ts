@@ -2,7 +2,9 @@ import { get } from 'lodash';
 
 export const isSystemRole = (role: string) => /^system:/.test(role);
 
-export const isPlatformAdmin = () => globals.user.globalrole === 'platform-admin';
+export const isPlatformAdmin = (): boolean => globals.user.globalrole === 'platform-admin';
+
+export const isMultiCluster = (): boolean => !!globals.ksConfig?.multicluster;
 
 /**
  * Check if the page is apps page.
@@ -25,4 +27,38 @@ export const isMemberClusterPage = (path = location.pathname, message: string) =
   });
 
   return clusterName !== 'host' && !isTokenOut;
+};
+
+export const compareVersion = (v1 = '', v2 = '') => {
+  const getVersion = (str: string) =>
+    str
+      .split('-')[0]
+      .replace('v', '')
+      .split('.')
+      .map(item => parseInt(item, 10));
+
+  const v1s = getVersion(v1);
+  const v2s = getVersion(v2);
+
+  const len = Math.min(v1s.length, v2s.length);
+  let i = 0;
+  while (i < len) {
+    if (v1s[i] < v2s[i]) {
+      return -1;
+    }
+    if (v1s[i] > v2s[i]) {
+      return 1;
+    }
+    i++;
+  }
+
+  if (v1s.length < v2s.length) {
+    return -1;
+  }
+
+  if (v1s.length > v2s.length) {
+    return 1;
+  }
+
+  return 0;
 };

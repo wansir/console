@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import { trimEnd } from 'lodash';
 import { Wrapper, InnerWrapper } from './NavMenu.styles';
 import NavItem from './NavItem';
-import menuData from './mockData';
 
-const getOpenedNav = (navs: any) => {
+const getOpenedNav = (navs: any, current: string) => {
   let name = '';
-  const current = 'deployments';
   navs.forEach((nav: any) => {
     nav.items.forEach((item: any) => {
       if (
@@ -29,9 +28,22 @@ const getOpenedNav = (navs: any) => {
   return name;
 };
 
-const NavMenu = () => {
-  const navs: any = menuData.clusterNavs;
-  const [openedNav, setOpenedNav] = useState(getOpenedNav(navs));
+const getCurrentPath = (path: string) => {
+  const trimPath = trimEnd(path, '/');
+  const pathArr = trimPath.split('/');
+  return pathArr[pathArr.length - 1];
+};
+
+interface NavMenuProps {
+  navs: any;
+  prefix: string;
+  disabled?: boolean;
+  pathname: string;
+}
+
+const NavMenu = ({ navs, prefix, disabled, pathname }: NavMenuProps) => {
+  const current = getCurrentPath(pathname);
+  const [openedNav, setOpenedNav] = useState(getOpenedNav(navs, current));
 
   const handleToggleItem = (itemName: string) => {
     const newOpenedNav = openedNav === itemName ? '' : itemName;
@@ -48,9 +60,11 @@ const NavMenu = () => {
               <NavItem
                 key={item.name}
                 item={item}
+                prefix={prefix}
                 onOpen={handleToggleItem}
                 isOpen={item.name === openedNav}
-                current="deployments"
+                current={current}
+                disabled={disabled}
               />
             ))}
           </ul>

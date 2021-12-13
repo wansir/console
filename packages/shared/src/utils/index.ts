@@ -1,13 +1,20 @@
 import * as urlHelper from './urlHelper';
 import * as validator from './validator';
-import * as formatter from './formatter';
+// import * as formatter from './formatter';
 import * as parser from './parser';
 import * as checker from './checker';
 // import * as utils from './common';
+import * as nav from './nav';
+import * as apis from './apis';
+// import * as stringUtils from './string';
 
-export { urlHelper, validator, formatter, parser, checker };
+export { urlHelper, validator, parser, checker, nav, apis };
 export { default as request } from './request';
 export { default as cookie } from './cookie';
 // export * from './string';
 export * from './common';
 export * from './getter';
+export * from './formatter';
+export * from './nav';
+export * from './checker';
+export * from './string';

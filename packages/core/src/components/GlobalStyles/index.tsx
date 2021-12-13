@@ -50,6 +50,17 @@ const GlobalStyles = createGlobalStyle`
   .ml12 {
     margin-left: 12px;
   }
+  
+  .page-loading {
+    display: inline-block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    //transform: translate(-50%,-50%);
+    margin-top: -16px;
+    margin-left: -16px;
+    z-index: 1000
+  }
 
   .password-tip-dropdown {
     width: 350px;

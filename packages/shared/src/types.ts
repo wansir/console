@@ -11,4 +11,6 @@ export type PathParams = {
   module?: string;
   dryRun?: boolean;
   name?: string;
+  workspace?: string;
+  devops?: string;
 };
