@@ -1,0 +1,11 @@
+{
+  "name": "@ks-console/clusters",
+  "description": "",
+  "version": "4.0.0",
+  "homepage": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {}
+}
