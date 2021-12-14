@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import get from 'lodash/get';
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { KubedConfigProvider, CssBaseline, Notify } from '@kubed/components';
 import { useLocalStorage } from '@kubed/hooks';
+import { getBrowserLang, useGlobalStore } from '@ks-console/shared';
 
 import mergeRoutes from './routes';
 import GlobalStyles from './components/GlobalStyles';
 import { PrefersContext, themes } from './libs/usePrefers';
-import get from 'lodash/get';
-import { getBrowserLang } from '@ks-console/shared';
 
 const Pages = () => {
   const routes = mergeRoutes(globals.context.routes);
@@ -16,6 +16,7 @@ const Pages = () => {
 };
 
 const App = () => {
+  useGlobalStore(); // init global store.
   const [themeLocalValue, setThemeLocalValue] = useLocalStorage({
     key: 'themeType',
     defaultValue: 'light',

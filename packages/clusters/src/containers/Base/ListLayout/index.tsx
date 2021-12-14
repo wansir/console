@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet, useParams, useLocation, useMatch, useResolvedPath } from 'react-router-dom';
+import { Outlet, useParams, useLocation, useResolvedPath } from 'react-router-dom';
 import { get, cloneDeep, isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { Cluster } from '@kubed/icons';
