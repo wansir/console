@@ -1,7 +1,6 @@
 import { isEmpty, get, set, isArray } from 'lodash';
 import { isMultiCluster } from '../utils/checker';
-import { getMinuteValue, getTimeRange } from '../utils/getter';
-import { fillEmptyMetrics } from '../utils/monitoring';
+import { getMinuteValue, getTimeRange, fillEmptyMetrics } from '../utils/monitoring';
 import request from '../utils/request';
 
 export const apiVersion = (cluster?: string) => {
