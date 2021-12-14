@@ -1,0 +1,13 @@
+{
+  "NODE_PL": "节点",
+  "CLUSTER_NODE_PL": "集群节点",
+  "EDGE_NODE_PL": "边缘节点",
+  "PROJECT_PL": "项目",
+  "NETWORK": "网络",
+  "CRD_PL": "CRD",
+  "STORAGE": "存储",
+  "CLUSTER_SETTINGS": "集群设置",
+  "WORKLOAD_PL": "工作负载",
+  "JOB_PL": "任务",
+  "ROUTE_PL": "应用路由"
+}
