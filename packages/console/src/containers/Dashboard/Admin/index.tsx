@@ -40,12 +40,18 @@ const resources = [
 const getApi = () => `${monitorStore.apiVersion()}/kubesphere`;
 
 const AdminDashboard = () => {
-  const { isFetching, data } = useQuery('dashboard', () => {
-    return monitorStore.fetchMetrics({
-      metrics: Object.values(MetricTypes),
-      getApiFn: getApi,
-    });
-  });
+  const { isLoading, data } = useQuery(
+    'dashboard',
+    () => {
+      return monitorStore.fetchMetrics({
+        metrics: Object.values(MetricTypes),
+        getApiFn: getApi,
+      });
+    },
+    {
+      staleTime: 60 * 1000,
+    },
+  );
 
   const clusterCount = get(data, `${MetricTypes.cluster_count}.data.result[0].value[1]`);
 
@@ -100,7 +106,7 @@ const AdminDashboard = () => {
           <Field label={t('NO_HISTORY_DESC')} value={t('NO_HISTORY_TITLE')} />
         </EmptyHistory>
       </Card>
-      <LoadingOverlay visible={isFetching} />
+      <LoadingOverlay visible={isLoading} />
     </Wrapper>
   );
 };
