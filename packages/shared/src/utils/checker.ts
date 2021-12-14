@@ -6,6 +6,14 @@ export const isPlatformAdmin = (): boolean => globals.user.globalrole === 'platf
 
 export const isMultiCluster = (): boolean => !!globals.ksConfig?.multicluster;
 
+export const hasKSModule = (module: string) => {
+  return get(globals, `ksConfig["${module}"]`);
+};
+
+export const enableAppStore = () => {
+  return hasKSModule('openpitrix.appstore');
+};
+
 /**
  * Check if the page is apps page.
  * @param {String} path

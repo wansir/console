@@ -17,6 +17,6 @@ export const formatSize = (size: number): string => {
   return `${size} ${units[index]}`;
 };
 
-export const formatTime = (time: string, format: string = 'YYYY-MM-DD HH:mm:ss') => {
+export const formatTime = (time: string | number, format: string = 'YYYY-MM-DD HH:mm:ss') => {
   return dayjs(time).format(format);
 };
