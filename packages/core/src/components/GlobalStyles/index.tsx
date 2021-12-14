@@ -5,7 +5,8 @@ const GlobalStyles = createGlobalStyle`
   html,
   body {
     background-color: ${({ theme }) => theme.palette.accents_1};
-    color: #242e42;
+    color: ${({ theme }) => theme.palette.accents_8};
+    line-height: 1.67;
   }
   
   a {
