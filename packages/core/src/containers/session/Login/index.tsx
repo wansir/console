@@ -42,6 +42,7 @@ function encrypt(salt: string, str: string) {
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
+  const [waitRedirect, setWaitRedirect] = useState(false);
   const handleOAuthLogin = (server: Server) => {
     const info = {
       name: server.title,
@@ -68,6 +69,7 @@ const Login = () => {
         setErrorMessage(data.message);
       }
       if (data.success) {
+        setWaitRedirect(true);
         // history.push(data.redirect);
         window.location.href = data.redirect;
       }
@@ -120,7 +122,13 @@ const Login = () => {
             <InputPassword placeholder="Password" />
           </FormItem>
           <LoginButton>
-            <Button color="secondary" block shadow radius="xl" loading={loginMutation.isLoading}>
+            <Button
+              color="secondary"
+              block
+              shadow
+              radius="xl"
+              loading={loginMutation.isLoading || waitRedirect}
+            >
               {t('LOG_IN')}
             </Button>
           </LoginButton>
