@@ -42,6 +42,7 @@ interface NavMenuProps {
 }
 
 const NavMenu = ({ navs, prefix, disabled, pathname }: NavMenuProps) => {
+  if (!navs || navs.length === 0) return null;
   const current = getCurrentPath(pathname);
   const [openedNav, setOpenedNav] = useState(getOpenedNav(navs, current));
 

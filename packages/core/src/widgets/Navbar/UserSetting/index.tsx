@@ -10,6 +10,7 @@ import {
   useForm,
   ActionConfirm,
 } from '@kubed/components';
+import { useUnmount } from '@kubed/hooks';
 import { Paper, Exclamation, Ssh } from '@kubed/icons';
 
 import { UserSettingWrapper, InnerWrapper, TabButtons, TabContent } from './styles';
@@ -23,6 +24,11 @@ const UserSetting = () => {
   const [passwordChanged, setPasswordChange] = useStore<boolean>('PasswordChanged', false);
   const [basicInfoForm] = useForm();
   const [passwordForm] = useForm();
+
+  useUnmount(() => {
+    setPasswordChange(false);
+    setBasicInfoChanged(false);
+  });
 
   const { isLoading, data } = useGetUser({ name: globals.user.username });
   let formData;

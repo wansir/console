@@ -159,7 +159,7 @@ const NavItem = ({ item, onOpen, isOpen, current, prefix }: NavItemProps) => {
       </ItemWrapper>
     );
   }
-  console.log('item', item);
+
   return (
     <ItemWrapper className={cx({ 'is-select': checkSelect(item) })}>
       <Link to={`${prefix}/${item.name}`} className="item-link">
