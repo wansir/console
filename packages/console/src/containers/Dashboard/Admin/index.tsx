@@ -6,6 +6,8 @@ import { Enterprise, Human, Appcenter, Blockchain } from '@kubed/icons';
 import { monitorStore, isMultiCluster, enableAppStore, formatTime } from '@ks-console/shared';
 import { useQuery } from 'react-query';
 
+const { useMonitorStore, apiVersion } = monitorStore;
+
 import { Wrapper, StatTitle, StatItem, EmptyHistory } from './styles';
 
 const MetricTypes = {
@@ -37,15 +39,16 @@ const resources = [
   },
 ];
 
-const getApi = () => `${monitorStore.apiVersion()}/kubesphere`;
+const getApi = () => `${apiVersion()}/kubesphere`;
 
 const AdminDashboard = () => {
+  const { fetchMetrics } = useMonitorStore({ getApiFn: getApi });
+
   const { isLoading, data } = useQuery(
     'dashboard',
     () => {
-      return monitorStore.fetchMetrics({
+      return fetchMetrics({
         metrics: Object.values(MetricTypes),
-        getApiFn: getApi,
       });
     },
     {
