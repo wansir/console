@@ -18,7 +18,7 @@ const PageSide = styled.div`
   top: 88px;
   padding: 0 20px 40px;
   width: 260px;
-  z-index: 201;
+  z-index: 99;
 `;
 
 const PageMain = styled.div`
