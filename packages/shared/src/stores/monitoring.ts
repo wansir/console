@@ -12,6 +12,8 @@ export const apiVersion = (cluster?: string) => {
 
 export const getApi = (cluster?: string) => `${apiVersion(cluster)}/cluster`;
 
+export const handleParams = (params: any) => params;
+
 export const getParams = ({
   // @ts-ignore
   start,
@@ -173,23 +175,68 @@ export const getMoreResult = (newData = {}, origin: Record<string, any> = {}) =>
 };
 
 // todo, need test
-export const fetchMetrics = async ({
-  autoRefresh = false,
-  more = false,
-  fillZero = true,
-  getParamsFn = getParams,
+// export const fetchMetrics = async ({
+//   autoRefresh = false,
+//   more = false,
+//   fillZero = true,
+//   getParamsFn = getParams,
+//   getApiFn = getApi,
+//   ...filters
+// }) => {
+//   let data = {};
+//
+//   const fetchFn = async () => {
+//     if (autoRefresh) {
+//       filters.last = true;
+//     }
+//
+//     // @ts-ignore
+//     const params = getParamsFn(filters);
+//     const api = getApiFn(filters.cluster);
+//
+//     const response = await request(api, { params });
+//
+//     let result = getResult(response);
+//     if (autoRefresh) {
+//       result = getRefreshResult(result, data);
+//     }
+//     if (more) {
+//       result = getMoreResult(result, data);
+//     }
+//
+//     data = fillZero ? fillEmptyMetrics(params, result) : result;
+//
+//     return result;
+//   };
+//
+//   return fetchFn();
+// };
+
+interface MonitorStoreProps {
+  getApiFn?: (params: any) => any;
+  getParamsFn?: (params: any) => any;
+  handleParamsFn?: (params: any) => any;
+}
+
+export const useMonitorStore = ({
   getApiFn = getApi,
-  ...filters
-}) => {
+  handleParamsFn = handleParams,
+  getParamsFn = getParams,
+}: MonitorStoreProps = {}) => {
   let data = {};
 
-  const fetchFn = async () => {
+  const fetchMetrics = async ({
+    autoRefresh = false,
+    more = false,
+    fillZero = true,
+    ...filters
+  }) => {
     if (autoRefresh) {
       filters.last = true;
     }
 
     // @ts-ignore
-    const params = getParamsFn(filters);
+    const params = handleParamsFn(getParamsFn(filters));
     const api = getApiFn(filters.cluster);
 
     const response = await request(api, { params });
@@ -207,5 +254,5 @@ export const fetchMetrics = async ({
     return result;
   };
 
-  return fetchFn();
+  return { fetchMetrics, getApi: getApiFn, getParams: getParamsFn };
 };

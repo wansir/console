@@ -26,6 +26,10 @@ const GlobalStyles = createGlobalStyle`
     background-color: #369a6a;
     color: #fff;
   }
+
+  ::placeholder {
+    font-weight: 400;
+  }
   
   strong {
     font-weight: 500;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Outlet, useParams, useLocation, useResolvedPath } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { get, cloneDeep, isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { Cluster } from '@kubed/icons';
@@ -9,6 +9,7 @@ import {
   checkNavItem,
   hasPermission,
   checkClusterVersionRequired,
+  useGlobalStore,
 } from '@ks-console/shared';
 import { useStore } from '@kubed/stook';
 
@@ -17,7 +18,7 @@ const PageSide = styled.div`
   top: 88px;
   padding: 0 20px 40px;
   width: 260px;
-  z-index: 201;
+  z-index: 99;
 `;
 
 const PageMain = styled.div`
@@ -27,6 +28,7 @@ const PageMain = styled.div`
   overflow-x: hidden;
 `;
 
+const navKey = 'CLUSTER_NAV';
 const getClusterNavs = (cluster?: string) => {
   if (!cluster || !get(globals.user, `clusterRules[${cluster}]`)) {
     return [];
@@ -49,11 +51,17 @@ const getClusterNavs = (cluster?: string) => {
 const ListLayout = () => {
   const { cluster: clusterName } = useParams();
   const location = useLocation();
-  console.log('location', location);
-  const match = useResolvedPath(location);
   const [cluster] = useStore('cluster');
-  const navs = getClusterNavs(clusterName);
-  console.log('navs', navs, match);
+  const { getNav, setNav } = useGlobalStore();
+  let navs = getNav(`${navKey}-${clusterName}`);
+
+  useEffect(() => {
+    if (!navs) {
+      navs = getClusterNavs(clusterName);
+      setNav(`${navKey}-${clusterName}`, navs);
+    }
+  }, []);
+
   return (
     <>
       <PageSide>
