@@ -29,7 +29,6 @@ const BaseLayout = () => {
     },
   ]);
 
-  console.log(result);
   if (result[0].isLoading || result[1].isLoading) {
     return <Loading className="page-loading" />;
   }
