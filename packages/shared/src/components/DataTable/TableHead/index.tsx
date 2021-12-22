@@ -41,12 +41,13 @@ const DropdownWrapper = styled.span`
 
 export interface TableHeadProps<T extends Record<string, unknown>> {
   column: HeaderGroup<T>;
+  selectType: 'checkbox' | 'radio' | boolean;
 }
 
 function TableHead<T extends Record<string, unknown>>({
   column,
+  selectType,
 }: PropsWithChildren<TableHeadProps<T>>) {
-  // @ts-ignore
   const { description, sortable, filterOptions = [], toggleSortBy, setFilter } = column;
 
   const handleSort = (direction: 'ascending' | 'descending') => {
@@ -64,14 +65,14 @@ function TableHead<T extends Record<string, unknown>>({
         <Menu className="filter-menu">
           {sortable && (
             <>
-              <MenuLabel>排序</MenuLabel>
+              <MenuLabel>{t('KUBE_OPERATE')}</MenuLabel>
               <MenuItem
                 icon={<SortAscending />}
                 onClick={() => {
                   handleSort('ascending');
                 }}
               >
-                升序
+                {t('KUBE_ASCENDING_ORDER')}
               </MenuItem>
               <MenuItem
                 icon={<SortDescending />}
@@ -79,13 +80,13 @@ function TableHead<T extends Record<string, unknown>>({
                   handleSort('descending');
                 }}
               >
-                降序
+                {t('KUBE_DESCENDING_ORDER')}
               </MenuItem>
             </>
           )}
           {filterOptions.length && (
             <>
-              <MenuLabel>过滤</MenuLabel>
+              <MenuLabel>{t('KUBE_FILTER')}</MenuLabel>
               {filterOptions.map((option: any) => (
                 <MenuItem
                   key={option.key}
@@ -110,6 +111,8 @@ function TableHead<T extends Record<string, unknown>>({
         </Dropdown>
       );
     }
+
+    if (column.id === '_selector' && selectType === 'radio') return null;
 
     return <>{column.render('Header')}</>;
   };

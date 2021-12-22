@@ -1,6 +1,6 @@
 /* eslint-disable */
 // @ts-nocheck
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 import {
   TableInstance,
   UseColumnOrderInstanceProps,
@@ -103,6 +103,9 @@ declare module 'react-table' {
       UseResizeColumnsColumnOptions<D>,
       UseSortByColumnOptions<D> {
     align?: string;
+    description?: React.ReactNode;
+    sortable?: boolean;
+    filterOptions?: { label: string | React.ReactNode; key: any }[];
   }
 
   export interface ColumnInstance<D extends Record<string, unknown> = Record<string, unknown>>
@@ -120,7 +123,9 @@ declare module 'react-table' {
   export interface Row<D extends object = {}>
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
-      UseRowSelectRowProps<D> {}
+      UseRowSelectRowProps<D> {
+    canSelect?: boolean;
+  }
 
   export interface TableCommonProps {
     title?: string;

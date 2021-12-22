@@ -42,6 +42,7 @@ export interface TableProps<T extends Record<string, unknown>> {
   fetchCallback?: (data: Array<T>) => any;
   batchActions?: React.ReactNode;
   onSelect?: (selectedRowKeys?: string[], selectedRows?: Array<T>) => any;
+  disableRowSelect?: (row?: Record<string, any>) => boolean;
   onFilter?: () => any;
   onSort?: () => any;
   simpleSearch?: boolean;
