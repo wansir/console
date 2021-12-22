@@ -38,6 +38,29 @@ import {
 export type { Column, TableProps };
 
 const selectionHook = (hooks: Hooks<any>) => {
+  hooks.getToggleAllRowsSelectedProps = [
+    (props, { instance }) => {
+      return [
+        props,
+        {
+          onChange: () => {
+            instance.rows.forEach(row => {
+              if (row.canSelect) {
+                return row.toggleRowSelected(
+                  !instance.rows.filter(r => r.canSelect).every(r => r.isSelected),
+                );
+              }
+              return false;
+            });
+          },
+          checked: instance.rows.filter(row => row.canSelect).every(row => row.isSelected),
+          indeterminate: Boolean(
+            !instance.isAllRowsSelected && Object.keys(instance.state.selectedRowIds).length,
+          ),
+        },
+      ];
+    },
+  ];
   hooks.allColumns.push(columns => [
     {
       id: '_selector',
@@ -51,13 +74,16 @@ const selectionHook = (hooks: Hooks<any>) => {
       Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<any>) => (
         <Checkbox {...getToggleAllRowsSelectedProps()} />
       ),
-      Cell: ({ row }: CellProps<any>) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+      Cell: ({ row }: CellProps<any>) => (
+        <Checkbox {...row.getToggleRowSelectedProps()} disabled={!row.canSelect} />
+      ),
     },
     ...columns,
   ]);
 };
 
 const hooks = [useFilters, useSortBy, usePagination, useRowSelect];
+const withSelectionHooks = [...hooks, selectionHook];
 
 export function DataTable<T extends Record<string, unknown>>(
   props: PropsWithChildren<TableProps<T>>,
@@ -78,6 +104,7 @@ export function DataTable<T extends Record<string, unknown>>(
     emptyPlaceholder,
     tableName,
     useStorageState,
+    disableRowSelect,
   } = props;
   const [, setStorageState] = useLocalStorage({ key: `tableState:${tableName}` });
   const initialState = getInitialState(tableName, useStorageState);
@@ -109,11 +136,7 @@ export function DataTable<T extends Record<string, unknown>>(
   };
 
   const memoData = useMemo(() => serverData?.items || [], [serverData]);
-
-  if (selectType) {
-    // @ts-ignore
-    hooks.push(selectionHook);
-  }
+  const tableHooks = selectType ? withSelectionHooks : hooks;
 
   const instance = useTable(
     {
@@ -126,8 +149,9 @@ export function DataTable<T extends Record<string, unknown>>(
       pageCount: isSuccess ? Math.ceil(totalCount / pageSize) : 1,
       // @ts-ignore
       initialState,
+      disableRowSelect,
     },
-    ...hooks,
+    ...tableHooks,
   );
 
   const {
@@ -198,7 +222,7 @@ export function DataTable<T extends Record<string, unknown>>(
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(column => {
                     const { key: headerKey } = column.getHeaderProps();
-                    return <TableHead column={column} key={headerKey} />;
+                    return <TableHead column={column} key={headerKey} selectType={selectType} />;
                   })}
                 </tr>
               );
@@ -207,6 +231,11 @@ export function DataTable<T extends Record<string, unknown>>(
           <TBody {...getTableBodyProps()}>
             {rows.map(row => {
               prepareRow(row);
+              if (disableRowSelect) {
+                row.canSelect = !disableRowSelect(row.original);
+              } else {
+                row.canSelect = true;
+              }
               return (
                 <tr {...row.getRowProps()} className={cx({ 'row-selected': row.isSelected })}>
                   {row.cells.map(cell => {
