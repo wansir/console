@@ -21,6 +21,13 @@ export const enableAppStore = () => {
 export const isAppsPage = (path = location.pathname) =>
   path === '/apps' || path.startsWith('/apps/app-');
 
+export const isComponentsPage = (path = location.pathname) =>
+  path === '/components' || path.startsWith('/components/component-');
+
+export const isDarkHeader = (path = location.pathname) => {
+  return isAppsPage(path) || isComponentsPage(path);
+};
+
 export const isMemberClusterPage = (path = location.pathname, message: string) => {
   const clusterName = get(/\/clusters\/?([-0-9a-z]*)\/?/.exec(path), '1', 'host');
   const rules = ['token used before issued', 'signature is invalid', 'token not found in cache'];
