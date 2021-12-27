@@ -3,9 +3,11 @@ import {
   Constants,
   getBaseInfo,
   getOriginData,
-  urlHelper,
   PathParams,
   isMultiCluster,
+  hasPermission,
+  useUrl,
+  useList,
 } from '@ks-console/shared';
 import { keyBy, get, has, cloneDeep } from 'lodash';
 
@@ -32,18 +34,43 @@ export const clusterMapper = (item: any) => {
   };
 };
 
+const module = 'clusters';
+
+const { getResourceUrl, getPath } = useUrl({ module });
+
 export const fetchDetail = async (params: PathParams) => {
   let detail;
 
   if (!isMultiCluster()) {
     detail = clusterMapper(cloneDeep(Constants.DEFAULT_CLUSTER));
   } else {
-    params.module = 'clusters';
-    const url = `${urlHelper.getResourceUrl(params)}/${params.name}`;
+    const url = `${getResourceUrl(params)}/${params.name}`;
     const result = await request(url);
 
     detail = { ...params, ...clusterMapper(result) };
   }
 
   return detail;
+};
+
+const getTenantUrl = (params = {}) =>
+  `kapis/tenant.kubesphere.io/v1alpha2${getPath(params)}/${module}`;
+
+export const fetchList = (params: Record<string, any>, from?: string) => {
+  if (!isMultiCluster()) {
+    return {
+      data: [Constants.DEFAULT_CLUSTER],
+      loading: false,
+      total: 1,
+      refresh() {},
+      reFetch() {},
+    };
+  }
+
+  const url =
+    from === 'resource' || hasPermission({ module: 'clusters', action: 'view' })
+      ? getResourceUrl()
+      : getTenantUrl();
+
+  return useList({ url, params, format: clusterMapper });
 };

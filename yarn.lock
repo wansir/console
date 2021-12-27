@@ -1082,6 +1082,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.9.2":
+  version "7.16.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.5.tgz#7f3e34bf8bdbbadf03fbb7b1ea0d929569c9487a"
+  integrity sha512-TXWihFIS3Pyv5hzR7j6ihmeLkZfrXGxAr5UfSl8CHf+6q/wpiYDkUau0czckpYG8QmnCIuPpdLtuA9VmuGGyMA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.15.4", "@babel/template@^7.3.3":
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.15.4.tgz#51898d35dcf3faa670c4ee6afcfd517ee139f194"
@@ -1226,10 +1233,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kubed/components@^0.0.24":
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.24.tgz#3bfb3ebe6222d43e856089a825893cf31bf5143b"
-  integrity sha512-cQfqhhqDUgAL706zIs+dRnNupxw171Pb04kpEGCn91RJu4/8k/vjn+GQtq17E6KLcQUl+nhCAqOVHCnp5obAVg==
+"@kubed/components@^0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.31.tgz#c59613b8909327d4433d01eb8bf48388bd910cbb"
+  integrity sha512-I4Cyr5rYP4UwjPoBDdRC6L+NIla+e11oxvIwY4E4Wbub8/r8nWGatjN4cRNDl1vNyIWR6enHKuehbyuT89yXAA==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
@@ -1247,20 +1254,27 @@
     scroll-into-view-if-needed "^2.2.28"
     styled-components "^5.3.0"
 
-"@kubed/hooks@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@kubed/hooks/-/hooks-0.0.5.tgz#1f7f0dff5f510478574222c3a7a2fbf6c7cbb0d8"
-  integrity sha512-NNKVWIVr5PmZl0kMje6KGZleNtMbgN6PaCcc+i/p42GKqoMMnCiuq+8flg0TPeq0QatYFiT31ItRdBx4LUUJbA==
+"@kubed/hooks@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@kubed/hooks/-/hooks-0.0.9.tgz#908f41cef688885394027585348062484081fa03"
+  integrity sha512-l3rF5kCy1fPbiOyLrazPgaJVt4MJn8ire12oxVf6IqC1BRTqiaMOgDE9FAGhZUOey7voLBRknZeKPNBv/BJAsA==
 
 "@kubed/icons@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@kubed/icons/-/icons-0.0.2.tgz#ff309f67b9312ac507dd53e31c50137e2842c864"
   integrity sha512-Tl8TNlAmWRcySquvIcwUQHqSFnCTs1Xt5KPam1iF32xfu5nauvbt6///hhsgyWGnp6ck1vDhiSGYsV7YUbYOlw==
 
-"@kubed/stook@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@kubed/stook/-/stook-0.0.2.tgz#574a7e35709c771a5ee742c559d5eb84253eaf26"
-  integrity sha512-bH+M62dXD+wlSex6Nx3THiqM0QOd/rjPCqUe15rPJGBMaA7P3kcgX9ErXCog7Jf4JFwGT3ekI2/BiFqv4gcLyg==
+"@kubed/stook-devtools@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@kubed/stook-devtools/-/stook-devtools-0.0.1.tgz#b044c9ebe025f5b1688c36e7bf46b8b570ae257a"
+  integrity sha512-krg38THxuzEfK2UrThHOkPhmLl903UyywHGxHwBDC4D2AYIqApgILyNXGSZVNDj8wKNlUFpmWkqBbXV8smv84g==
+  dependencies:
+    redux "^4.1.0"
+
+"@kubed/stook@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@kubed/stook/-/stook-0.0.4.tgz#7d3a8db1b2bb8e6c8f8ccf09c45dc91f22fd0960"
+  integrity sha512-xAbeN9jhRNvoR+aGVfyUzpl3jK95f6eY4kMxlDU6Qq1JADi5U9x9WcTsWZNbX+AomiN2y2b4uLu0AnIPNnxdAQ==
   dependencies:
     immer "^9.0.5"
     mitt "^3.0.0"
@@ -7535,6 +7549,13 @@ rechoir@^0.7.0:
   integrity sha512-/njmZ8s1wVeR6pjTZ+0nCnv8SpZNRMT2D1RLOJQESlYFDBvwpTA4KWJpZ+sBJ4+vhjILRcK7JIFdGCdxEAAitg==
   dependencies:
     resolve "^1.9.0"
+
+redux@^4.1.0:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.2.tgz#140f35426d99bb4729af760afcf79eaaac407104"
+  integrity sha512-SH8PglcebESbd/shgf6mii6EIoRM0zrQyjcuQ+ojmfxjTtE0z9Y8pa62iA/OJ58qjP6j27uyW4kUF4jl/jd6sw==
+  dependencies:
+    "@babel/runtime" "^7.9.2"
 
 regenerate-unicode-properties@^9.0.0:
   version "9.0.0"
