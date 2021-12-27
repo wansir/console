@@ -14,6 +14,31 @@ export const NavbarWrapper = styled.div`
   background-color: ${({ theme }) => theme.palette.accents_1};
   padding: 0 20px;
 
+  &.is-dark {
+    background-color: rgba(24, 29, 40, 0.2);
+
+    .global-nav {
+      color: #fff;
+
+      &:hover {
+        color: #242e42;
+      }
+    }
+
+    .username,
+    .caret-down {
+      color: #fff;
+    }
+
+    &.is-scroll {
+      background-color: rgba(24, 29, 40);
+    }
+  }
+
+  &.is-scroll {
+    box-shadow: 0 4px 8px 0 rgba(36, 46, 66, 0.06);
+  }
+
   .global-nav {
     padding: 0 11px;
 
