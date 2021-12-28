@@ -8,10 +8,9 @@ import UserSetting from '../UserSetting';
 
 interface ProfileMenuProps {
   isLogin: boolean;
-  isAppsPage: boolean;
 }
 
-const ProfileMenu = ({ isLogin, isAppsPage }: ProfileMenuProps) => {
+const ProfileMenu = ({ isLogin }: ProfileMenuProps) => {
   const modal = useModal();
 
   if (!isLogin) {
@@ -62,7 +61,7 @@ const ProfileMenu = ({ isLogin, isAppsPage }: ProfileMenuProps) => {
       <LoginWrapper>
         <Human />
         <span className="username">{globals.user.username}</span>
-        <CaretDown />
+        <CaretDown className="caret-down" />
       </LoginWrapper>
     </Dropdown>
   );

@@ -8,8 +8,11 @@
     "lib"
   ],
   "dependencies": {
+    "ace-builds": "^1.4.13",
     "axios": "^0.24.0",
     "debounce-promise": "^3.1.2",
+    "react-ace": "^9.5.0",
+    "react-markdown": "^7.1.1",
     "react-table": "^7.7.0"
   }
 }

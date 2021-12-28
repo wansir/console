@@ -136,7 +136,7 @@ export function useList<T>(options: UseListOptions<T>): UseListInstance<T> {
   }
 
   return {
-    loading: isFetching,
+    isLoading: isFetching,
     isFirst,
     isLast,
     data: state.items,

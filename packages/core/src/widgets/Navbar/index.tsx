@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { cloneDeep } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { NavbarWrapper, NavbarBottom, NavbarLeft, LogoWrapper, NavbarRight } fro
 import ProfileMenu from './ProfileMenu';
 import GlobalNav from './GlobalNav';
 
-const { isAppsPage: getIsAppsPage } = checker;
+const { isAppsPage: getIsAppsPage, isDarkHeader: getIsDarkHeader } = checker;
 
 const navKey = 'GLOBAL_NAV';
 const getGlobalNavs = () => {
@@ -30,9 +30,11 @@ const getGlobalNavs = () => {
 };
 
 const Navbar = () => {
+  const [isScroll, setIsScroll] = useState(false);
   const logo = globals.config.logo || '/assets/logo.svg';
   const isLogin = !!globals.user;
   const isAppsPage = getIsAppsPage();
+  const isDarkHeader = getIsDarkHeader();
   const { url, api } = globals.config.documents;
 
   const { getNav, setNav, setNavOpen } = useGlobalStore();
@@ -42,6 +44,10 @@ const Navbar = () => {
       navs = getGlobalNavs();
       setNav(navKey, navs);
     }
+
+    const scrollHandler = () => setIsScroll(document.documentElement.scrollTop > 10);
+    document.addEventListener('scroll', scrollHandler);
+    return () => document.removeEventListener('scroll', scrollHandler);
   }, []);
   const enableGlobalNav = navs?.length > 0;
 
@@ -57,7 +63,7 @@ const Navbar = () => {
   );
 
   return (
-    <NavbarWrapper className={cx({ 'is-dark': isAppsPage })}>
+    <NavbarWrapper className={cx({ 'is-dark': isDarkHeader, 'is-scroll': isScroll })}>
       <NavbarLeft>
         {isLogin && (
           <>
@@ -92,7 +98,7 @@ const Navbar = () => {
       </NavbarLeft>
       <LogoWrapper>
         <Link to={isAppsPage && !isLogin ? '/apps' : '/'} className="logo">
-          <img src={logo} alt="" />
+          <img src={isDarkHeader ? '/assets/login-logo.svg' : logo} alt="" />
         </Link>
       </LogoWrapper>
       <NavbarRight>
@@ -103,9 +109,9 @@ const Navbar = () => {
             </Button>
           </Dropdown>
         )}
-        <ProfileMenu isAppsPage={isAppsPage} isLogin={isLogin} />
+        <ProfileMenu isLogin={isLogin} />
       </NavbarRight>
-      <NavbarBottom />
+      {isDarkHeader ? null : <NavbarBottom />}
       {enableGlobalNav && <GlobalNav navs={navs} />}
     </NavbarWrapper>
   );
