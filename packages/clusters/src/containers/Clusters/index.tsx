@@ -21,7 +21,7 @@ import { ClustersWrapper, Toolbar, Main, ClusterList } from './styles';
 const Clusters = () => {
   const [name, setName] = useState('');
   const {
-    loading: hostLoading,
+    isLoading: hostLoading,
     data: hostData = [],
     refresh: hostRefresh,
     reFetch: hostReFetch,
@@ -31,7 +31,7 @@ const Clusters = () => {
   });
 
   const {
-    loading,
+    isLoading,
     data = [],
     refresh,
     total,
@@ -112,11 +112,11 @@ const Clusters = () => {
   );
 
   const renderList = () => {
-    if (loading || hostLoading) {
+    if (isLoading || hostLoading) {
       return <Loading className="page-loading" />;
     }
 
-    if (!loading && !hostLoading && !name && isEmpty(data) && isEmpty(hostData)) {
+    if (!isLoading && !hostLoading && !name && isEmpty(data) && isEmpty(hostData)) {
       return (
         <Card padding={32}>
           <Empty
@@ -133,7 +133,7 @@ const Clusters = () => {
       );
     }
 
-    if (!loading && !hostLoading && isEmpty(data) && isEmpty(hostData)) {
+    if (!isLoading && !hostLoading && isEmpty(data) && isEmpty(hostData)) {
       return (
         <Card className="mt12" padding={32} sectionTitle={noResultTitle}>
           <Empty

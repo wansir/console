@@ -15,7 +15,7 @@ export type UseListState<T> = List<T>;
 
 export interface UseListOptions<T> extends Partial<List<T>> {
   mode?: ListMode;
-  loading?: boolean;
+  isLoading?: boolean;
   url: string;
   params?: Record<string, any>;
   autoFetch?: boolean;
@@ -23,7 +23,7 @@ export interface UseListOptions<T> extends Partial<List<T>> {
 }
 
 export interface UseListInstance<T> extends UseListState<T> {
-  loading: boolean;
+  isLoading: boolean;
   isFirst: boolean;
   isLast: boolean;
   data?: T[];
