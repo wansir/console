@@ -3,6 +3,7 @@ const path = require('path');
 const { exec } = require('child_process');
 const fs = require('fs-extra');
 const createPlugin = require('./libs/plugin/create-plugin');
+const publishPlugin = require('./libs/plugin/publish-plugin');
 
 const pluginsDir = path.resolve(process.cwd(), 'plugins');
 const publishDir = path.resolve(process.cwd(), 'server/public/plugins');
@@ -24,18 +25,27 @@ const argv = yargs
       console.log(data);
     });
   })
+  // .command(
+  //   'publish <name>',
+  //   'Publish plugin',
+  //   (yargs) => { return yargs.option('name', { description: 'Plugin name' })},
+  //   (argv) => {
+  //     const pluginDir = path.resolve(pluginsDir, argv.name);
+  //     const destDir = path.resolve(publishDir, argv.name);
+  //     // fs.pathExistsSync(path.resolve(pluginDir, './dist/s.g'), (err, exists) => {
+  //     //   console.log(err, exists);
+  //     // });
+  //     fs.emptyDirSync(destDir);
+  //     fs.copySync(pluginDir, destDir);
+  //     console.log('publish success');
+  //   })
   .command(
     'publish <name>',
     'Publish plugin',
     (yargs) => { return yargs.option('name', { description: 'Plugin name' })},
     (argv) => {
-      const pluginDir = path.resolve(pluginsDir, argv.name);
-      const destDir = path.resolve(publishDir, argv.name);
-      // fs.pathExistsSync(path.resolve(pluginDir, './dist/s.g'), (err, exists) => {
-      //   console.log(err, exists);
-      // });
-      fs.emptyDirSync(destDir);
-      fs.copySync(pluginDir, destDir);
-      console.log('publish success');
-    })
+      publishPlugin(argv.name);
+    }
+  )
+
   .help().argv;

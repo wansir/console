@@ -17,12 +17,17 @@
  */
 
 const Router = require('koa-router');
+const RouterProxy = require('koa-router-proxy');
 const convert = require('koa-convert');
 const bodyParser = require('koa-bodyparser');
 
 const proxy = require('./middlewares/proxy');
 const checkToken = require('./middlewares/checkToken');
 const checkIfExist = require('./middlewares/checkIfExist');
+
+const { getServerConfig } = require('./libs/utils');
+
+const { server: serverConfig } = getServerConfig();
 
 const { k8sResourceProxy, devopsWebhookProxy, b2iFileProxy } = require('./proxy');
 
@@ -77,6 +82,19 @@ router
 
   // terminal
   .get('/terminal(.*)', renderTerminal)
+
+  // plugin static files proxy.
+  .get(
+    '/pstatic/(.*)',
+    RouterProxy('(.*)', {
+      target: serverConfig.apiServer.url,
+      changeOrigin: true,
+      rewrite: path => {
+        return path.replace('/pstatic', '');
+      },
+    }),
+  )
+
   // page entry
   .all('(.*)', renderView);
 
