@@ -2,6 +2,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
+const {config} = require('./config');
+const resolve = config.resolve;
 
 module.exports = {
   entry: {
@@ -15,7 +17,7 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css'],
+    extensions: ['.ts', '.js', '.jsx', '.css'],
   },
   module: {
     rules: [
@@ -26,6 +28,15 @@ module.exports = {
           cacheDirectory: true,
           rootMode: 'upward',
           // plugins: ['@babel/plugin-transform-modules-systemjs']
+        },
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        include: [resolve('plugins'), resolve('packages')],
+        options: {
+          transpileOnly: true,
+          // plugins: isDev ? [require.resolve('react-refresh/babel')] : [],
         },
       },
       {
@@ -67,5 +78,5 @@ module.exports = {
       // systemjsModuleName: "@org-name/project-name"
     })
   ],
-  externals: ['react', 'react-dom', 'react-router-dom', 'styled-components'],
+  externals: ['react', 'react-dom', 'react-router-dom', 'styled-components', '@kubed/components', '@kubed/hooks', '@kubed/icons', '@ks-console/shared', 'lodash'],
 };
