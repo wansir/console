@@ -1,0 +1,19 @@
+{
+  "name": "@ks-console/demo",
+  "displayName": "Demo",
+  "description": "this is a demo plugin",
+  "keywords": [
+    "Performance"
+  ],
+  "author": "Wayne",
+  "version": "1.0.0",
+  "homepage": "",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "webpack --config ../../scripts/webpack.plugin.conf.js --output-path ./dist"
+  },
+  "dependencies": []
+}
