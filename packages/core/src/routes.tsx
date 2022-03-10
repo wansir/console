@@ -19,10 +19,12 @@ import React from 'react';
 import type { RouteObject } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 
+import BaseLayout from './components/layouts/Base';
 import Login from './containers/session/Login';
 import LoginConfirm from './containers/session/LoginConfirm';
 import PasswordConfirm from './containers/session/PasswordConfirm';
-import BaseLayout from './components/layouts/Base';
+import Marketplace from './containers/component/Marketplace';
+import MarketplaceDetail from './containers/component/Marketplace/Detail';
 
 const baseRoutes: RouteObject[] = [
   { path: '/login', element: <Login /> },
@@ -38,6 +40,8 @@ const mergeRoutes = (routes: RouteObject[]) => {
     element: <BaseLayout />,
     children: [
       ...routes,
+      { path: '/components', element: <Marketplace /> },
+      { path: '/components/:componentId', element: <MarketplaceDetail /> },
       {
         index: true,
         element: <Navigate to={homePage} replace />,

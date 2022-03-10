@@ -1,19 +1,18 @@
 import { createGlobalStyle } from 'styled-components';
-import { themeUtils } from '@kubed/components';
 
 const GlobalStyles = createGlobalStyle`
   html,
   body {
-    background-color: ${({ theme }) => theme.palette.accents_1};
-    color: ${({ theme }) => theme.palette.accents_8};
+    background-color: #eff4f9;
+    color: #242e42;
     line-height: 1.67;
   }
   
   a {
-    color: ${({ theme }) => theme.palette.accents_8};
+    color: #242e42;
     
     &:hover {
-      color: ${({ theme }) => themeUtils.getPrimaryColor(theme, true)};
+      color: #55bc8a;
     }
   }
   
