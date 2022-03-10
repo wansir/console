@@ -1,7 +1,7 @@
 {
-  "name": "@ks-plugin/demo",
+  "name": "@ks-plugin/devops",
   "displayName": "Demo",
-  "description": "this is demo plugin",
+  "description": "this is devops plugin",
   "keywords": [
     "Performance"
   ],
