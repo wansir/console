@@ -60,7 +60,7 @@ export const fetchList = (params: Record<string, any>, from?: string) => {
   if (!isMultiCluster()) {
     return {
       data: [Constants.DEFAULT_CLUSTER],
-      loading: false,
+      isLoading: false,
       total: 1,
       refresh() {},
       reFetch() {},
