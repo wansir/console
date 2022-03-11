@@ -1,0 +1,10 @@
+apiVersion: extensions.kubesphere.io/v1alpha1
+kind: JSBundle
+metadata:
+  name: demo.kubesphere.io
+spec:
+  rawFrom:
+    url: http://{{ include "demo.fullname" . }}.{{ .Release.Namespace }}.svc
+status:
+  enabled: true
+  link: /dist/demo.kubesphere.io/v1alpha2/index.js
