@@ -13,7 +13,8 @@
     "lib"
   ],
   "scripts": {
-    "build": "webpack --config ../../scripts/webpack.plugin.conf.js --output-path ./dist"
+    "build": "webpack --config ../../scripts/webpack.plugin.conf.js --output-path ./dist",
+    "serve": "node server/app.js"
   },
-  "dependencies": []
+  "dependencies": {}
 }
