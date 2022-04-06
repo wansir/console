@@ -29,7 +29,7 @@ const init = async () => {
   const locales: Record<string, any> = {};
   let localePath;
   if (process.env.NODE_ENV === 'production') {
-    localePath = globals.manifest[`locale-${userLang}.json`];
+    localePath = `dist/${globals.manifest[`locales-${userLang}`]}`;
   } else {
     localePath = `locales/${userLang}.json`;
   }

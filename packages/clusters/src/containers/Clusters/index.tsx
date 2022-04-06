@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Cluster, Refresh } from '@kubed/icons';
 import {
   Banner,
@@ -11,7 +12,7 @@ import {
   Group,
   Loading,
 } from '@kubed/components';
-import { getActions } from '@ks-console/shared';
+import { getActions, isMultiCluster } from '@ks-console/shared';
 import { isEmpty } from 'lodash';
 import { fetchList } from '../../stores/cluster';
 import ClusterCard from '../../components/ClusterCard';
@@ -19,6 +20,18 @@ import ClusterCard from '../../components/ClusterCard';
 import { ClustersWrapper, Toolbar, Main, ClusterList } from './styles';
 
 const Clusters = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isMultiCluster()) {
+      navigate('/clusters/default/overview');
+    }
+  }, []);
+
+  if (!isMultiCluster()) {
+    return null;
+  }
+
   const [name, setName] = useState('');
   const {
     isLoading: hostLoading,

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const EditorWrapper = styled.div`
+  height: 100%;
   .ace_editor {
     min-height: 500px;
     border-radius: 4px;

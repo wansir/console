@@ -22,7 +22,7 @@ export const isAppsPage = (path = location.pathname) =>
   path === '/apps' || path.startsWith('/apps/app-');
 
 export const isComponentsPage = (path = location.pathname) =>
-  path === '/components' || path.startsWith('/components/component-');
+  path === '/components' || path.startsWith('/components/com-');
 
 export const isDarkHeader = (path = location.pathname) => {
   return isAppsPage(path) || isComponentsPage(path);

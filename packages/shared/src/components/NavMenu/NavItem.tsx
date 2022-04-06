@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import cx from 'classnames';
 import { ChevronDown } from '@kubed/icons';
 import { Icon } from '@ks-console/shared';
-import { themeUtils } from '@kubed/components';
 
 const ItemWrapper = styled.li`
   transition: all 0.2s ease-in-out;
@@ -39,7 +38,7 @@ const ItemWrapper = styled.li`
     }
 
     .title-wrapper {
-      color: ${({ theme }) => themeUtils.getPrimaryColor(theme, true)};
+      color: #55bc8a;
     }
 
     .kubed-icon {
@@ -101,7 +100,7 @@ const InnerItem = styled.li`
 
   &.is-select {
     a {
-      color: ${({ theme }) => themeUtils.getPrimaryColor(theme, true)};
+      color: #55bc8a;
     }
   }
 

@@ -9,8 +9,7 @@ const AboutWrapper = styled.div`
 
 const IntroArea = styled.div`
   padding: 24px 20px 24px 24px;
-  background: url('/assets/about-bg.svg') no-repeat left top / auto 100%
-    ${({ theme }) => theme.palette.accents_0};
+  background: url('/assets/about-bg.svg') no-repeat left top / auto 100% #f9fbfd;
 
   .description {
     margin: 0 0 12px 0;

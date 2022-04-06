@@ -150,7 +150,15 @@ const getManifest = () => {
       const dataStream = fs.readFileSync(root('dist/manifest.json'));
       data = safeParseJSON(dataStream.toString(), {});
     } catch (error) {}
-    manifestCache = pick(data, ['main.js', 'vendor.js', 'staticPlugins.js']);
+    manifestCache = pick(data, [
+      'main.js',
+      'vendor.js',
+      'staticPlugins.js',
+      'locales-en',
+      'locales-zh',
+      'locales-tc',
+      'locales-ts',
+    ]);
     cache.set(MANIFEST_CACHE_KEY, manifestCache);
   }
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Field, DefaultProps, addColorAlpha, Tooltip } from '@kubed/components';
+import { Field, DefaultProps, Tooltip } from '@kubed/components';
 
 const Wrapper = styled.div`
   padding: 12px;
   cursor: pointer;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.palette.accents_8};
+  background-color: #242e42;
   box-shadow: 0 8px 16px 0 rgba(36, 46, 66, 0.2);
 
   .field-content {
@@ -14,14 +14,14 @@ const Wrapper = styled.div`
   }
 
   .field-value {
-    color: ${({ theme }) => theme.palette.background};
+    color: #fff;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-wrap: normal;
     overflow: hidden;
     font-size: 14px;
     line-height: 1.43;
-    text-shadow: 0 4px 8px ${({ theme }) => addColorAlpha(theme.palette.accents_8, 0.1)};
+    text-shadow: 0 4px 8px rgba(36, 46, 66, 0.1);
   }
 
   .field-label {

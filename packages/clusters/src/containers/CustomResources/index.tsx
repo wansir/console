@@ -1,11 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Banner, Button, Field } from '@kubed/components';
 import { Select } from '@kubed/icons';
-import { DataTable, Column, getServedVersion, formatTime } from '@ks-console/shared';
+import { DataTable, Column, getServedVersion, formatTime, useUrl } from '@ks-console/shared';
+import { get } from 'lodash';
 
 const CustomResources = () => {
-  const url = '/kapis/clusters/host/resources.kubesphere.io/v1alpha3/customresourcedefinitions';
+  const { cluster } = useParams();
+  const { getResourceUrl } = useUrl({ module: 'customresourcedefinitions' });
+  const url = getResourceUrl();
 
   const columns: Column[] = [
     {
@@ -16,7 +19,7 @@ const CustomResources = () => {
           value={value}
           label={`${row.spec.group}/${getServedVersion(row)}`}
           as={Link}
-          to="/adsf"
+          to={`/clusters/${cluster}/customresources/${row.metadata.name}`}
         />
       ),
     },
@@ -43,6 +46,9 @@ const CustomResources = () => {
   ];
 
   const batchActions = <Button color="error">删除</Button>;
+  const disableRowSelect = (row: any) => {
+    return get(row, 'metadata.name') === 'jvmchaos.chaos-mesh.org';
+  };
 
   return (
     <>
@@ -53,7 +59,8 @@ const CustomResources = () => {
         rowKey="name"
         url={url}
         batchActions={batchActions}
-        useStorageState={true}
+        useStorageState={false}
+        disableRowSelect={disableRowSelect}
       />
     </>
   );

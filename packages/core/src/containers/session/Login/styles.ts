@@ -19,7 +19,7 @@ export const LoginWrapper = styled.div`
     label {
       height: 30px;
       font-weight: 600;
-      color: #36435c;
+      color: ${({ theme }) => theme.palette.accents_7};
     }
   }
 

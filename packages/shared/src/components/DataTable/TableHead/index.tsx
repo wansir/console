@@ -11,7 +11,7 @@ const TWrapper = styled.div`
   justify-content: center;
 
   .sort-indicator {
-    color: ${({ theme }) => theme.palette.accents_5};
+    color: #79879c;
   }
 
   .kubed-icon {
@@ -20,14 +20,14 @@ const TWrapper = styled.div`
 
   .filter-menu {
     .menu-label {
-      color: ${({ theme }) => theme.palette.accents_5};
+      color: #79879c;
     }
     button {
       color: #4a5974;
     }
 
     .kubed-icon {
-      color: ${({ theme }) => theme.palette.accents_5};
+      color: #79879c;
       fill: #b6c2cd;
     }
   }
