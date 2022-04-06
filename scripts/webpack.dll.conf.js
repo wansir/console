@@ -21,12 +21,12 @@ const config = {
       'react-dom',
       'react-router-dom',
       'react-query',
-      'styled-components',
       'lodash',
       '@kubed/components',
       '@kubed/hooks',
       '@kubed/icons',
       '@ks-console/shared',
+      'styled-components',
     ],
   },
   output: {
