@@ -64,8 +64,6 @@ const Navbar = () => {
 
   const topbarNavs = globals.config.topbarNavs.children;
 
-  console.log(enableAppStore());
-
   return (
     <NavbarWrapper className={cx({ 'is-dark': isDarkHeader, 'is-scroll': isScroll })}>
       <NavbarLeft>

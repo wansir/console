@@ -1,11 +1,11 @@
 import routes from './routes';
 
 const menu = {
-  parent: 'topbar',
+  parent: 'cluster',
   name: 'demo',
   title: 'Demo',
   icon: 'cluster',
-  order: 4,
+  order: 1,
   desc: 'this is demo plugin',
   skipAuth: true,
 };
