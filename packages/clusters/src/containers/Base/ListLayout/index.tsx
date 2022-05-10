@@ -35,16 +35,15 @@ const getClusterNavs = (cluster?: string) => {
   }
 
   const navs: string[] = [];
-  cloneDeep(globals.config.clusterNavs).forEach((nav: any) => {
-    const filteredItems = nav.items.filter((item: any) => {
-      item.cluster = cluster;
-      return checkNavItem(item, params => hasPermission({ ...params, cluster }));
-    });
-    if (!isEmpty(filteredItems)) {
-      checkClusterVersionRequired(filteredItems, cluster);
-      navs.push({ ...nav, items: filteredItems });
-    }
+  const clusterNavs = cloneDeep(globals.config.clusterNavs);
+  const filteredItems = clusterNavs.children.filter((item: any) => {
+    item.cluster = cluster;
+    return checkNavItem(item, params => hasPermission({ ...params, cluster }));
   });
+  if (!isEmpty(filteredItems)) {
+    checkClusterVersionRequired(filteredItems, cluster);
+    navs.push({ ...clusterNavs, items: filteredItems });
+  }
   return navs;
 };
 

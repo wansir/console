@@ -6,7 +6,7 @@ import NavItem from './NavItem';
 const getOpenedNav = (navs: any, current: string) => {
   let name = '';
   navs.forEach((nav: any) => {
-    nav.items.forEach((item: any) => {
+    nav.children.forEach((item: any) => {
       if (
         item.children &&
         item.children.some((child: any) => {
@@ -54,7 +54,7 @@ const NavMenu = ({ navs, prefix, disabled, pathname }: NavMenuProps) => {
   return (
     <Wrapper>
       {navs.map((nav: any) => (
-        <InnerWrapper key={nav.cate}>
+        <InnerWrapper key={nav.name}>
           {nav.title && <p>{t(nav.title)}</p>}
           <ul>
             {nav.items.map((item: any) => (
