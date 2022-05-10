@@ -38,7 +38,7 @@ const init = async () => {
     locales[userLang] = await request(`${localePath}`);
   }
 
-  const totalLocales: Record<string, any> = {};
+  const totalLocales: Record<string, any> = { [userLang]: { translation: locales[userLang] } };
   const { locales: pluginLocales } = globals.context;
   Object.keys(pluginLocales).forEach(key => {
     totalLocales[key] = { translation: merge(locales[key], pluginLocales[key]) };
