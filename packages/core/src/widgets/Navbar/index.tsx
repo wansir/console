@@ -18,10 +18,10 @@ import GlobalNav from './GlobalNav';
 
 const { isAppsPage: getIsAppsPage, isDarkHeader: getIsDarkHeader } = checker;
 
-const navKey = 'GLOBAL_NAV';
+const platformNavKey = 'GLOBAL_NAV';
 const getGlobalNavs = () => {
   const navs: string[] = [];
-  cloneDeep(globals.config.globalNavs).forEach((nav: any) => {
+  cloneDeep(globals.config.globalNavs.children).forEach((nav: any) => {
     if (checkNavItem(nav, params => hasPermission(params))) {
       navs.push(nav);
     }
@@ -38,11 +38,11 @@ const Navbar = () => {
   const { url, api } = globals.config.documents;
 
   const { getNav, setNav, setNavOpen } = useGlobalStore();
-  let navs = getNav(navKey);
+  let navs = getNav(platformNavKey);
   useEffect(() => {
     if (!navs) {
       navs = getGlobalNavs();
-      setNav(navKey, navs);
+      setNav(platformNavKey, navs);
     }
 
     const scrollHandler = () => setIsScroll(document.documentElement.scrollTop > 10);
@@ -62,37 +62,76 @@ const Navbar = () => {
     </Menu>
   );
 
+  const topbarNavs = globals.config.topbarNavs.children;
+
+  console.log(enableAppStore());
+
   return (
     <NavbarWrapper className={cx({ 'is-dark': isDarkHeader, 'is-scroll': isScroll })}>
       <NavbarLeft>
         {isLogin && (
           <>
-            {enableGlobalNav && (
-              <Button
-                variant="text"
-                className="global-nav"
-                leftIcon={<Cogwheel />}
-                onClick={() => {
-                  setNavOpen(true);
-                }}
-              >
-                {t('Platform')}
-              </Button>
-            )}
-            {enableAppStore() && (
-              <Button
-                variant="text"
-                as={Link}
-                className="global-nav"
-                to="/apps"
-                leftIcon={<Appcenter />}
-              >
-                {t('APP_STORE')}
-              </Button>
-            )}
-            <Button variant="text" as={Link} className="global-nav" to="/" leftIcon={<Dashboard />}>
-              {t('Workbench')}
-            </Button>
+            {topbarNavs.map((nav: any) => {
+              if (nav.name === 'platform') {
+                return (
+                  enableGlobalNav && (
+                    <Button
+                      key={nav.name}
+                      variant="text"
+                      className="global-nav"
+                      leftIcon={<Cogwheel />}
+                      onClick={() => {
+                        setNavOpen(true);
+                      }}
+                    >
+                      {t('Platform')}
+                    </Button>
+                  )
+                );
+              }
+              if (nav.name === 'app_store') {
+                return (
+                  enableAppStore() && (
+                    <Button
+                      key={nav.name}
+                      variant="text"
+                      as={Link}
+                      className="global-nav"
+                      to="/apps"
+                      leftIcon={<Appcenter />}
+                    >
+                      {t('APP_STORE')}
+                    </Button>
+                  )
+                );
+              }
+              if (nav.name === 'workbench') {
+                return (
+                  <Button
+                    key={nav.name}
+                    variant="text"
+                    as={Link}
+                    className="global-nav"
+                    to="/"
+                    leftIcon={<Dashboard />}
+                  >
+                    {t('Workbench')}
+                  </Button>
+                );
+              }
+              return (
+                <Button
+                  key={nav.name}
+                  variant="text"
+                  as={Link}
+                  className="global-nav"
+                  to={nav.name}
+                  leftIcon={<Dashboard />}
+                >
+                  {t(nav.title)}
+                </Button>
+              );
+            })}
           </>
         )}
       </NavbarLeft>

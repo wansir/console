@@ -63,27 +63,42 @@ client:
       value: "es"
   defaultLang: "en"
 
+  # top-bar navigations
+  topbarNavs:
+    name: topbar
+    children:
+      - name: platform
+        title: Platform
+        icon: cogwheel
+      - name: app_store
+        title: APP_STORE
+        icon: appcenter
+      - name: workbench
+        title: Workbench
+        icon: dashboard
   # platform management navigations
   globalNavs:
-    - name: clusters
-      title: CLUSTERS_MANAGEMENT
-      desc: CLUSTERS_MANAGE_DESC
-      icon: cluster
-    - name: access
-      title: ACCESS_CONTROL
-      icon: key
-      authKey: users|roles|workspaces
-    - name: apps-manage
-      title: APP_STORE_MANAGEMENT
-      icon: openpitrix
-      authKey: app-templates
-      authAction: manage
-      ksModule: openpitrix.appstore
-    - name: settings
-      title: PLATFORM_SETTINGS
-      icon: cogwheel
-      authKey: platform-settings
-      authAction: manage
+    name: platform
+    children:
+      - name: clusters
+        title: CLUSTERS_MANAGEMENT
+        desc: CLUSTERS_MANAGE_DESC
+        icon: cluster
+      - name: access
+        title: ACCESS_CONTROL
+        icon: key
+        authKey: users|roles|workspaces
+      - name: apps-manage
+        title: APP_STORE_MANAGEMENT
+        icon: openpitrix
+        authKey: app-templates
+        authAction: manage
+        ksModule: openpitrix.appstore
+      - name: settings
+        title: PLATFORM_SETTINGS
+        icon: cogwheel
+        authKey: platform-settings
+        authAction: manage
 
   clusterNavs:
     name: cluster
