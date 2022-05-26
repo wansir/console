@@ -9,6 +9,8 @@ node_modules
 # production
 /dist
 dist
+cjs
+esm
 
 # misc
 .DS_Store

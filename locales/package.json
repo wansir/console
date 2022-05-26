@@ -1,0 +1,11 @@
+{
+  "name": "@ks-console/locales",
+  "description": "",
+  "version": "4.0.0-alpha.0",
+  "homepage": "",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+  }
+}
