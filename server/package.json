@@ -1,12 +1,15 @@
 {
   "name": "@ks-console/server",
-  "version": "4.0.0",
+  "version": "4.0.0-alpha.0",
   "description": "BFF of KubeSphere Console",
   "homepage": "",
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "git@git@github.com:kubesphere/console.git"
+  },
+  "bin": {
+    "ksc-server": "./bin/index.js"
   },
   "dependencies": {
     "dayjs": "^1.10.7",

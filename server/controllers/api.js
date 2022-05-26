@@ -31,10 +31,7 @@ const handleSampleData = async ctx => {
   let resources = cache.get(sampleName);
   if (!resources) {
     try {
-      resources = yaml.safeLoadAll(
-        fs.readFileSync(root(`server/sample/${sampleName}.yaml`)),
-        'utf8',
-      );
+      resources = yaml.safeLoadAll(fs.readFileSync(root(`sample/${sampleName}.yaml`)), 'utf8');
       cache.set(sampleName, resources);
     } catch (error) {
       console.error(error);

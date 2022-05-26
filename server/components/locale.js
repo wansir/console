@@ -34,6 +34,6 @@ module.exports = function (app) {
       'en-uk': 'en',
       'en-us': 'en',
     },
-    dirs: [root('server/locales')],
+    dirs: [root('locales')],
   });
 };
