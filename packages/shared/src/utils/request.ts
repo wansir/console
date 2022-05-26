@@ -1,10 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 // import qs from 'qs';
 import { set, merge } from 'lodash';
-import { urlHelper } from './';
+import { getClusterUrl } from './urlHelper';
 import { GlobalMessage } from '../types';
-
-const { getClusterUrl } = urlHelper;
 
 function getRequestUrl(url: string = '') {
   if (url.startsWith('http')) return url;
