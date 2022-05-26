@@ -1,6 +1,5 @@
 const { config } = require('./config');
 const WebpackBar = require('webpackbar');
-const resolve = config.resolve;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -10,6 +9,8 @@ const { NODE_ENV } = process.env;
 const isDev = NODE_ENV === 'development';
 const styledComponentsTransformer = createStyledComponentsTransformer();
 const getCustomTransformers = isDev ? () => ({ before: [styledComponentsTransformer] }) : {};
+
+const { resolve } = config;
 
 module.exports = {
   entry: {
@@ -21,13 +22,14 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.ts', '.tsx', '.json'],
-    modules: [
-      resolve('plugins'),
-      resolve('packages'),
-      resolve('node_modules'),
-    ],
+    modules: [resolve('plugins'), resolve('packages'), 'node_modules'],
     alias: {
-      '@ks-console/shared': resolve('packages/shared/src'),
+      // '@ks-console/shared': resolve('packages/shared/src'),
+      // '@ks-console/core': resolve('packages/core/src'),
+      // '@ks-console/console': resolve('packages/console/src'),
+      // '@ks-console/clusters': resolve('packages/clusters/src'),
+      // '@ks-console/apps': resolve('packages/apps/src'),
+      'styled-components': resolve('node_modules/styled-components'),
     },
   },
   module: {
@@ -44,7 +46,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        include: [resolve('plugins'), resolve('packages')],
+        include: [resolve('plugins'), resolve('packages'), resolve('node_modules')],
         options: {
           transpileOnly: true,
           getCustomTransformers,
@@ -63,19 +65,17 @@ module.exports = {
           },
         ],
       },
-    ]
+    ],
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: `${config.assetsPath}`, to: `${config.distAssetsPath}` }
-      ]
+      patterns: [{ from: `${config.assetsPath}`, to: `${config.distAssetsPath}` }],
     }),
     new WebpackBar({
       name: NODE_ENV || 'webpack-bar',
       color: 'green',
       profile: !isDev,
     }),
-  ]
+  ],
 };

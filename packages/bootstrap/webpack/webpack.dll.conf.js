@@ -5,9 +5,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const {config: configShared} = require('./config');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { config: configShared } = require('./config');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const resolveShared = configShared.resolve;
+const absResolve = configShared.absResolve;
 
 const resolve = dir => path.join(__dirname, '../dist', dir);
 
@@ -30,17 +31,13 @@ const config = {
     ],
   },
   output: {
-    path: resolve('dll'),
+    path: resolveShared('dist/dll'),
     filename: '[name].dll.js',
     library: '[name]',
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.ts', '.tsx', '.json'],
-    // modules: [
-    //   resolve('plugins'),
-    //   resolve('packages'),
-    //   resolve('node_modules'),
-    // ],
+    modules: [absResolve('packages'), 'node_modules'],
     alias: {
       '@ks-console/shared': resolveShared('packages/shared/src'),
     },
@@ -53,7 +50,6 @@ const config = {
         include: [resolveShared('shared'), resolveShared('packages')],
         options: {
           cacheDirectory: true,
-          // plugins: isDev ? [require.resolve('react-refresh/babel')] : [],
         },
       },
       {
@@ -62,8 +58,6 @@ const config = {
         include: [resolveShared('shared'), resolveShared('packages')],
         options: {
           transpileOnly: true,
-          // getCustomTransformers,
-          // plugins: isDev ? [require.resolve('react-refresh/babel')] : [],
         },
       },
       // {
@@ -78,13 +72,11 @@ const config = {
       //     },
       //   ],
       // },
-    ]
+    ],
   },
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-    ],
+    minimizer: [new TerserPlugin()],
   },
   plugins: [
     new WebpackBar({
@@ -99,7 +91,7 @@ const config = {
       clearConsole: false,
     }),
     new webpack.DllPlugin({
-      path: resolve('dll/[name]-manifest.json'),
+      path: resolveShared('dist/dll/[name]-manifest.json'),
       name: '[name]',
     }),
   ],

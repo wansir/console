@@ -8,7 +8,10 @@ const baseConfig = require('./webpack.base.conf');
 const resolve = config.resolve;
 
 const localePatterns = locales.map(locale => {
-  return { pattern: `./packages/**/src/locales/${locale}/*.json`, to: `./locales/${locale}.json` }
+  return {
+    pattern: `./node_modules/@ks-console/locales/dist/${locale}/*.json`,
+    to: `./locales/${locale}.json`,
+  };
 });
 
 const webpackDevConfig = merge(baseConfig, {
@@ -16,7 +19,7 @@ const webpackDevConfig = merge(baseConfig, {
   devtool: 'eval-cheap-module-source-map',
   entry: {
     main: config.webIndex,
-    plugins: './plugins/entry.ts',
+    plugins: resolve('plugins/entry.ts'),
   },
   output: {
     path: resolve('dist'),
@@ -52,9 +55,6 @@ const webpackDevConfig = merge(baseConfig, {
     ],
   },
   plugins: [
-    // new webpack.DllReferencePlugin({
-    //   manifest: resolve('dist/dll/common-manifest.json'),
-    // }),
     new MergeJsonPlugin({
       groups: localePatterns,
     }),
@@ -62,9 +62,7 @@ const webpackDevConfig = merge(baseConfig, {
       overlay: false,
     }),
     new FriendlyErrorsPlugin(),
-    new webpack.WatchIgnorePlugin({ paths: [
-      resolve('server'),
-    ] }),
+    new webpack.WatchIgnorePlugin({ paths: [resolve('server')] }),
   ],
   optimization: {
     runtimeChunk: 'single',

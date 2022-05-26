@@ -9,10 +9,13 @@ const MergeJsonPlugin = require('webpack-merge-json-plugin');
 
 const { config, systemImports, locales } = require('./config');
 const baseWebpackConfig = require('./webpack.base.conf');
-const resolve = config.resolve;
+const { resolve, absResolve } = config;
 
 const localePatterns = locales.map(locale => {
-  return { pattern: `./packages/**/src/locales/${locale}/*.json`, to: `./locales/${locale}.[chunkhash:8].json` }
+  return {
+    pattern: `./node_modules/@ks-console/locales/dist/${locale}/*.json`,
+    to: `./locales/${locale}.[chunkhash:8].json`,
+  };
 });
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -25,13 +28,13 @@ const webpackConfig = merge(baseWebpackConfig, {
     filename: 'js/[name].[chunkhash:8].js',
   },
   module: {
-    rules:[
+    rules: [
       { parser: { system: false } },
       {
         resource: config.webIndex,
         use: [
           {
-            loader: resolve("scripts/libs/systemjs-imports-loader.js"),
+            loader: absResolve('webpack/systemjs-imports-loader.js'),
             options: { importsMap: systemImports },
           },
         ],
@@ -55,7 +58,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           options: {
             limit: 10,
             name: 'assets/fonts/[name].[hash:8].[ext]',
-            esModule: false
+            esModule: false,
           },
         },
       },
@@ -86,8 +89,8 @@ const webpackConfig = merge(baseWebpackConfig, {
           name: 'main',
           test: /\/src\/(.*)\.scss$/,
           chunks: 'all',
-          enforce: true
-        }
+          enforce: true,
+        },
       },
     },
     chunkIds: 'named',
@@ -119,7 +122,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       entrypoints: false,
       writeToDisk: true,
-      output: '../dist/manifest.json',
+      output: resolve('dist/manifest.json'),
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[chunkhash:8].css',
@@ -132,18 +135,4 @@ if (process.env.bundleAnalyzerReport) {
   webpackConfig.plugins.push(new BundleAnalyzerPlugin());
 }
 
-webpack(webpackConfig, function(error, stats) {
-  if (error) {
-    throw error;
-  }
-
-  process.stdout.write(stats.toString({
-    colors: true,
-    modules: false,
-    children: false,
-    chunks: false,
-    chunkModules: false
-  }) + '\n\n');
-
-  console.log('  Webpack Finished\n');
-});
+module.exports = webpackConfig;
