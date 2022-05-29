@@ -45,7 +45,7 @@ module.exports = function (app) {
       if (
         /(\.hot-update\.)|(\.(ttf|otf|eot|woff2?)(\?.+)?$)|(\.js$)/.test(ctx.url) ||
         /\/locales\/[a-z]+\.json$/.test(ctx.url) ||
-        /\/assets\/[a-z]+\.(svg|png|jpg)$/.test(ctx.url)
+        /\/assets\/[a-z-0-9]+\.(svg|png|jpg|ico)$/.test(ctx.url)
       ) {
         ctx.redirect(`http://${ctx.hostname}:8001${ctx.url}`);
       } else {
