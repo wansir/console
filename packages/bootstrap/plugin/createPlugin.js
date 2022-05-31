@@ -42,29 +42,6 @@ async function createPlugin() {
     },
     {
       type: 'list',
-      name: 'keywords',
-      message: 'Keywords',
-      choices: [
-        {
-          name: 'Performance',
-          value: 'Performance',
-        },
-        {
-          name: 'Monitoring',
-          value: 'Monitoring',
-        },
-        {
-          name: 'Logging',
-          value: 'Logging',
-        },
-        {
-          name: 'Messaging',
-          value: 'Messaging',
-        },
-      ],
-    },
-    {
-      type: 'list',
       name: 'language',
       message: 'Language',
       choices: [
@@ -97,7 +74,6 @@ async function createPlugin() {
       ? path.resolve(__dirname, './templates/ts')
       : path.resolve(__dirname, './templates/js');
 
-  console.log(templateDir, pluginDir, pluginName);
   copyDirectory({
     path: templateDir,
     target: pluginDir,

@@ -1,9 +1,6 @@
 {
   "name": "{{pluginName}}",
   "description": "{{description}}",
-  "keywords": [
-    "Performance"
-  ],
   "author": "{{author}}",
   "version": "1.0.0",
   "homepage": "",

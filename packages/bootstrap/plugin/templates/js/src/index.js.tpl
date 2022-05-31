@@ -4,7 +4,7 @@ import locales from './locales';
 const menu = {
   parent: 'topbar',
   name: '{{pluginName}}',
-  title: t('{{displayName}}'),
+  title: '{{displayName}}',
   icon: 'cluster',
   order: 0,
   desc: '{{description}}',
