@@ -123,7 +123,7 @@ const Navbar = () => {
                   variant="text"
                   as={Link}
                   className="global-nav"
-                  to={nav.name}
+                  to={nav.link || nav.name}
                   leftIcon={<Dashboard />}
                 >
                   {t(nav.title)}
