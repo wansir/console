@@ -23,9 +23,19 @@ const argv = yargs
   .command('build:prod', 'Build production', {}, () => {
     buildProd();
   })
-  .command('build:dll', 'Build DLL', {}, () => {
-    buildDll();
-  })
+  .command(
+    'build:dll',
+    'Build DLL',
+    {
+      setAlias: {
+        alias: 's',
+        default: 'false',
+      },
+    },
+    args => {
+      buildDll(args.setAlias);
+    },
+  )
   .command('create:plugin', 'Create a new plugin', {}, () => {
     createPlugin();
   })

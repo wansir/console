@@ -60,7 +60,16 @@ function buildProd() {
   runWebpack(webpackProdConfig);
 }
 
-function buildDll() {
+function buildDll(setAlias) {
+  const dllAlias = {
+    '@ks-console/shared': resolve('packages/shared/src'),
+  };
+  if (setAlias === 'true') {
+    webpackDllConfig.resolve.alias = {
+      ...webpackDevConfig.resolve.alias,
+      ...dllAlias,
+    };
+  }
   runWebpack(webpackDllConfig);
 }
 

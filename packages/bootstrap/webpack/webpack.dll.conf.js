@@ -39,7 +39,7 @@ const config = {
     extensions: ['.js', '.jsx', '.css', '.ts', '.tsx', '.json'],
     modules: [absResolve('packages'), 'node_modules'],
     alias: {
-      '@ks-console/shared': resolveShared('packages/shared/src'),
+      // '@ks-console/shared': resolveShared('packages/shared/src'),
     },
   },
   module: {
