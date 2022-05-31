@@ -132,12 +132,16 @@ function DataTableComponent<T extends Record<string, unknown>>(
     isFetching,
     data: serverData,
     refetch,
-  } = useData(url || '', {
-    pageIndex,
-    pageSize,
-    filters,
-    sortBy,
-  });
+  } = useData(
+    url || '',
+    {
+      pageIndex,
+      pageSize,
+      filters,
+      sortBy,
+    },
+    tableName,
+  );
 
   const { formatColumns, suggestions } = useMemo(() => {
     return prepareColumns<T>(columns);

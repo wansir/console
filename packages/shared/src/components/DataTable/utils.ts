@@ -112,11 +112,10 @@ const transformRequestParams = (params: State) => {
   return ret;
 };
 
-export const useData = (url: string, params: State) => {
-  // console.log(params);
+export const useData = (url: string, params: State, queryKey?: string) => {
   const requestParams = transformRequestParams(params);
   return useQuery(
-    ['key', params.pageIndex, params.filters, params.sortBy],
+    ['key', queryKey, params.pageIndex, params.filters, params.sortBy],
     async () => {
       const data = await request(url, { params: requestParams });
       return data as any;
