@@ -1257,21 +1257,6 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@ks-console/shared@4.0.0-alpha.1":
-  version "4.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@ks-console/shared/-/shared-4.0.0-alpha.1.tgz#c97e386829c64b0bfc7ed659f6ad911950ee36f9"
-  integrity sha512-b7cmIO90i2TV9tbSBPfMxS0lzWkwgzQROw+n46tBQpZvVXLcK2ksKBGqVdSG+acIiCQ7ABdOeZjZ466qupEw7Q==
-  dependencies:
-    ace-builds "^1.4.13"
-    axios "^0.24.0"
-    debounce-promise "^3.1.2"
-    file-saver "^2.0.5"
-    js-yaml "^3.13.1"
-    react-ace "^9.5.0"
-    react-markdown "^7.1.1"
-    react-table "^7.7.0"
-    remark-gfm "^3.0.1"
-
 "@kubed/components@^0.0.31":
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.31.tgz#c59613b8909327d4433d01eb8bf48388bd910cbb"

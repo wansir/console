@@ -1,6 +1,6 @@
 {
   "name": "@ks-console/server",
-  "version": "4.0.0-alpha.0",
+  "version": "4.0.0-alpha.3",
   "description": "BFF of KubeSphere Console",
   "homepage": "",
   "license": "AGPL-3.0",
