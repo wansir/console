@@ -105,7 +105,7 @@ const config = {
   },
 };
 
-if (process.env.npm_config_report) {
+if (process.env.bundleAnalyzerReport) {
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerPort: 3002 }));
 }
 
