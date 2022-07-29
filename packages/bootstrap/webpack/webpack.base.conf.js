@@ -1,5 +1,7 @@
 const { config } = require('./config');
+const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
+const fs = require('fs-extra');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -11,6 +13,9 @@ const styledComponentsTransformer = createStyledComponentsTransformer();
 const getCustomTransformers = isDev ? () => ({ before: [styledComponentsTransformer] }) : {};
 
 const { resolve } = config;
+
+const configFile = fs.pathExistsSync(resolve('configs/console.config.js'));
+const configs = configFile ? require(resolve('configs/console.config.js')) : {};
 
 module.exports = {
   entry: {
@@ -71,6 +76,9 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [{ from: `${config.assetsPath}`, to: `${config.distAssetsPath}` }],
+    }),
+    new webpack.DefinePlugin({
+      __ENABLED_PLUGINS__: JSON.stringify(configs.enabledPlugins),
     }),
     new WebpackBar({
       name: NODE_ENV || 'webpack-bar',
