@@ -5,7 +5,6 @@ export default function loader(plugins: string[]) {
   if (!isEmpty(plugins)) {
     plugins.forEach(plugin => {
       const { link } = plugin;
-      console.log('link', link);
       promises.push(System.import(`/pstatic${link}`));
     });
   }

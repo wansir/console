@@ -17,19 +17,21 @@
  */
 
 const fs = require('fs');
+const path = require('path');
 const yaml = require('js-yaml/dist/js-yaml');
 const NodeCache = require('node-cache');
-// const get = require('lodash/get');
 const merge = require('lodash/merge');
 const isEmpty = require('lodash/isEmpty');
 const pick = require('lodash/pick');
-const { systemImports } = require('../../scripts/config');
+const systemImports = require('../configs/systemImports');
 
 const MANIFEST_CACHE_KEY = 'MANIFEST_CACHE_KEY';
 const LOCALE_MANIFEST_CACHE_KEY = 'LOCALE_MANIFEST_CACHE_KEY';
 const SERVER_CONF_KEY = 'pitrix-server-conf-key';
 
-const root = dir => `${global.APP_ROOT}/${dir}`.replace(/(\/+)/g, '/');
+// const root = dir => `${global.APP_ROOT}/${dir}`.replace(/(\/+)/g, '/');
+const root = dir => path.resolve(global.SERVER_ROOT, dir);
+const cwdResolve = absolutePath => path.resolve(process.cwd(), absolutePath);
 
 const cache = global._pitrixCache || new NodeCache();
 if (!global._pitrixCache) {
@@ -59,10 +61,20 @@ const getServerConfig = key => {
   if (!config) {
     // parse config yaml
     config = loadYaml(root('configs/config.yaml')) || {};
-    const tryFile = root('configs/local_config.yaml');
+
+    const tryFile = cwdResolve('configs/config.yaml');
     if (fs.existsSync(tryFile)) {
       // merge local_config
       const localConfig = loadYaml(tryFile);
+      if (typeof localConfig === 'object') {
+        merge(config, localConfig);
+      }
+    }
+
+    const tryLocalFile = cwdResolve('configs/local_config.yaml');
+    if (fs.existsSync(tryLocalFile)) {
+      // merge local_config
+      const localConfig = loadYaml(tryLocalFile);
       if (typeof localConfig === 'object') {
         merge(config, localConfig);
       }
@@ -147,7 +159,7 @@ const getManifest = () => {
   if (!manifestCache) {
     let data = {};
     try {
-      const dataStream = fs.readFileSync(root('dist/manifest.json'));
+      const dataStream = fs.readFileSync(cwdResolve('dist/manifest.json'));
       data = safeParseJSON(dataStream.toString(), {});
     } catch (error) {}
     manifestCache = pick(data, [
@@ -171,7 +183,7 @@ const getLocaleManifest = () => {
   if (!manifestCache) {
     let data = {};
     try {
-      const dataStream = fs.readFileSync(root('dist/manifest.locale.json'));
+      const dataStream = fs.readFileSync(cwdResolve('dist/manifest.locale.json'));
       data = safeParseJSON(dataStream.toString(), {});
     } catch (error) {}
     manifestCache = pick(
@@ -190,6 +202,7 @@ const getImportMap = () => {
 
 module.exports = {
   root,
+  cwdResolve,
   loadYaml,
   getCache,
   getManifest,

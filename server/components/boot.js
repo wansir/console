@@ -21,7 +21,7 @@ const mount = require('koa-mount');
 const render = require('koa-ejs');
 const serve = require('koa-static');
 
-const { getServerConfig, root } = require('../libs/utils');
+const { getServerConfig, root, cwdResolve } = require('../libs/utils');
 
 const serverConfig = getServerConfig().server;
 
@@ -37,14 +37,15 @@ module.exports = function (app) {
   // serve static files
   const httpStatic = serverConfig.http.static[process.env.NODE_ENV];
   for (const [k, v] of Object.entries(httpStatic)) {
-    app.use(mount(k, serve(root(v), { index: false, maxage: 604800000 })));
+    app.use(mount(k, serve(cwdResolve(v), { index: false, maxage: 604800000 })));
   }
 
   if (global.MODE_DEV) {
     app.use(async (ctx, next) => {
       if (
         /(\.hot-update\.)|(\.(ttf|otf|eot|woff2?)(\?.+)?$)|(\.js$)/.test(ctx.url) ||
-        /\/locales\/[a-z]+\.json$/.test(ctx.url)
+        /\/locales\/[a-z]+\.json$/.test(ctx.url) ||
+        /\/assets\/[a-z-0-9]+\.(svg|png|jpg|ico)$/.test(ctx.url)
       ) {
         ctx.redirect(`http://${ctx.hostname}:8001${ctx.url}`);
       } else {
@@ -54,7 +55,7 @@ module.exports = function (app) {
   }
 
   render(app, {
-    root: root('server/views'),
+    root: root('views'),
     cache: !global.MODE_DEV,
     layout: false,
   });

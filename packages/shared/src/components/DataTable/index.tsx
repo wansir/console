@@ -1,4 +1,13 @@
-import React, { PropsWithChildren, ReactElement, useMemo, useReducer, useEffect } from 'react';
+import React, {
+  PropsWithChildren,
+  ReactElement,
+  useMemo,
+  useReducer,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import {
   useTable,
   useFilters,
@@ -85,8 +94,9 @@ const selectionHook = (hooks: Hooks<any>) => {
 const hooks = [useFilters, useSortBy, usePagination, useRowSelect];
 const withSelectionHooks = [...hooks, selectionHook];
 
-export function DataTable<T extends Record<string, unknown>>(
+function DataTableComponent<T extends Record<string, unknown>>(
   props: PropsWithChildren<TableProps<T>>,
+  ref: React.Ref<unknown> | undefined,
 ): ReactElement {
   const {
     columns,
@@ -97,6 +107,8 @@ export function DataTable<T extends Record<string, unknown>>(
     showToolbar = true,
     simpleSearch = false,
     batchActions,
+    toolbarLeft,
+    toolbarRight,
     rowKey,
     placeholder,
     selectType = 'checkbox',
@@ -120,12 +132,16 @@ export function DataTable<T extends Record<string, unknown>>(
     isFetching,
     data: serverData,
     refetch,
-  } = useData(url || '', {
-    pageIndex,
-    pageSize,
-    filters,
-    sortBy,
-  });
+  } = useData(
+    url || '',
+    {
+      pageIndex,
+      pageSize,
+      filters,
+      sortBy,
+    },
+    tableName,
+  );
 
   const { formatColumns, suggestions } = useMemo(() => {
     return prepareColumns<T>(columns);
@@ -191,12 +207,22 @@ export function DataTable<T extends Record<string, unknown>>(
     dispatch({ type: TOTAL_COUNT_CHANGED, payload: serverData?.totalItems });
   }, [serverData?.totalItems]);
 
+  const tableRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    refetch: () => {
+      refetch();
+    },
+  }));
+
   return (
-    <TableWrapper padding={0}>
+    <TableWrapper padding={0} ref={tableRef}>
       {showToolbar && (
         <Toolbar
           instance={instance}
           batchActions={batchActions}
+          toolbarLeft={toolbarLeft}
+          toolbarRight={toolbarRight}
           simpleSearch={simpleSearch}
           placeholder={placeholder}
           suggestions={suggestions}
@@ -264,3 +290,5 @@ export function DataTable<T extends Record<string, unknown>>(
     </TableWrapper>
   );
 }
+
+export const DataTable = forwardRef(DataTableComponent);

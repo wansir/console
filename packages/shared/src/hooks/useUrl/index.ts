@@ -1,4 +1,6 @@
-import { isMultiCluster, PathParams, Constants } from '../../index';
+import { isMultiCluster } from '../../utils/checker';
+import type { PathParams } from '../../types';
+import { Constants } from '../../constants';
 
 export const getPath = ({
   cluster,

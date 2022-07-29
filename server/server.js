@@ -26,6 +26,7 @@ Koa.prototype.apply = function (module, ...rest) {
 
 global.MODE_DEV = process.env.NODE_ENV === 'development';
 global.APP_ROOT = path.resolve(__dirname, '../');
+global.SERVER_ROOT = path.resolve(__dirname, './');
 
 const { getServerConfig } = require('./libs/utils');
 const boot = require('./components/boot');

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import cx from 'classnames';
 import { ChevronDown } from '@kubed/icons';
-import { Icon } from '@ks-console/shared';
+import Icon from '../Icon';
 
 const ItemWrapper = styled.li`
   transition: all 0.2s ease-in-out;

@@ -1,8 +1,7 @@
 // http://eslint.org/docs/user-guide/configuring
+const path = require('path');
 
-const { config } = require('./scripts/config');
-
-const { resolve } = config;
+const resolve = dir => path.resolve(__dirname, dir);
 
 module.exports = {
   root: true,
@@ -24,7 +23,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: resolve('scripts/webpack.base.conf.js'),
+        config: resolve('packages/bootstrap/webpack/webpack.base.conf.js'),
       },
     },
     react: {

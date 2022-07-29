@@ -1,4 +1,5 @@
-import { isMultiCluster, PathParams } from '../index';
+import { isMultiCluster } from './checker';
+import type { PathParams } from '../types';
 
 export const getPath = ({
   cluster,

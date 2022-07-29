@@ -32,10 +32,11 @@ const GlobalNav = ({ navs }: GlobalNavProps) => {
         {navs.map(nav => {
           const { name, icon, title, desc } = nav;
           const isActive = activeNav === name;
+          const to = nav.link || `/${name}`;
           return (
             <NavItem
               as={Link}
-              to={`/${name}`}
+              to={to}
               key={name}
               $active={isActive}
               onMouseEnter={() => {

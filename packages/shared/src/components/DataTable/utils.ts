@@ -49,6 +49,8 @@ export interface TableProps<T extends Record<string, unknown>> {
   placeholder?: string;
   selectType?: 'checkbox' | 'radio' | boolean;
   useStorageState?: boolean;
+  toolbarLeft?: React.ReactNode;
+  toolbarRight?: React.ReactNode;
 }
 
 export function prepareColumns<T extends Record<string, unknown>>(
@@ -110,11 +112,10 @@ const transformRequestParams = (params: State) => {
   return ret;
 };
 
-export const useData = (url: string, params: State) => {
-  // console.log(params);
+export const useData = (url: string, params: State, queryKey?: string) => {
   const requestParams = transformRequestParams(params);
   return useQuery(
-    ['key', params.pageIndex, params.filters, params.sortBy],
+    ['key', queryKey, params.pageIndex, params.filters, params.sortBy],
     async () => {
       const data = await request(url, { params: requestParams });
       return data as any;
@@ -130,7 +131,7 @@ export const getInitialState = (tableName: string, useStorageState?: boolean) =>
   const [storageState] = useLocalStorage({ key: `tableState:${tableName}` });
   const parsedStorageState: State = JSON.parse(storageState);
   if (!useStorageState) {
-    return { ...initialState, hiddenColumns: parsedStorageState?.hiddenColumns };
+    return { ...initialState, hiddenColumns: parsedStorageState?.hiddenColumns || [] };
   }
 
   const mergedState = merge(initialState, parsedStorageState);
