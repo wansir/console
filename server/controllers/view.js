@@ -32,7 +32,7 @@ const { client: clientConfig } = getServerConfig();
 
 const renderIndex = async (ctx, params) => {
   const manifest = getManifest();
-  const installedPlugins = await getInstalledPlugins();
+  const installedPlugins = await getInstalledPlugins(ctx);
   const importMap = getImportMap();
 
   await ctx.render('index', {
