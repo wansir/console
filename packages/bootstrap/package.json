@@ -13,6 +13,7 @@
     "serve": "ksc-server"
   },
   "dependencies": {
+    "@ks-console/access": "4.0.0-alpha.2",
     "@ks-console/apps": "4.0.0-alpha.2",
     "@ks-console/clusters": "4.0.0-alpha.2",
     "@ks-console/console": "4.0.0-alpha.2",
@@ -24,11 +25,7 @@
   "devDependencies": {
     "@kubed/stook-devtools": "^0.0.1"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"

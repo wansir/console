@@ -14,6 +14,7 @@ const alias = {
   '@ks-console/console': resolve('packages/console/src'),
   '@ks-console/clusters': resolve('packages/clusters/src'),
   '@ks-console/apps': resolve('packages/apps/src'),
+  '@ks-console/access': resolve('packages/access/src'),
 };
 
 function devServer(setAlias) {
