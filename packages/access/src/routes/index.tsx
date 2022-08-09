@@ -1,9 +1,22 @@
 import React from 'react';
-import Demo from '../containers/Demo';
+
+import ListLayout from '../containers/Base/ListLayout';
+import Accounts from '../containers/Accounts';
+import Roles from '../containers/Roles';
 
 export default [
   {
     path: '/access',
-    element: <Demo />,
+    element: <ListLayout />,
+    children: [
+      {
+        path: 'accounts',
+        element: <Accounts />,
+      },
+      {
+        path: 'roles',
+        element: <Roles />,
+      },
+    ],
   },
 ];
