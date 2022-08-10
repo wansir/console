@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { cloneDeep, isEmpty } from 'lodash';
 import styled from 'styled-components';
 import { Key } from '@kubed/icons';
-import { NavTitle, NavMenu, checkNavItem, hasPermission, useGlobalStore } from '@ks-console/shared';
+import { NavTitle, NavMenu, useGlobalStore } from '@ks-console/shared';
+
+import { getAccessNavs } from '../../../utils/navs';
 
 const PageSide = styled.div`
   position: fixed;
@@ -21,17 +22,6 @@ const PageMain = styled.div`
 `;
 
 const navKey = 'ACCESS_NAVS';
-const getAccessNavs = () => {
-  const navs: string[] = [];
-  const accessNavs = cloneDeep(globals.config.accessNavs);
-  const filteredItems = accessNavs.children.filter((item: any) => {
-    return checkNavItem(item, params => hasPermission({ ...params }));
-  });
-  if (!isEmpty(filteredItems)) {
-    navs.push({ ...accessNavs, items: filteredItems });
-  }
-  return navs;
-};
 
 function ListLayout() {
   const location = useLocation();
@@ -42,8 +32,6 @@ function ListLayout() {
     if (!navs) {
       navs = getAccessNavs();
       setNav(navKey, navs);
-
-      console.log('access', navs);
     }
   }, []);
 
