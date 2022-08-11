@@ -22,7 +22,7 @@ const PageMain = styled.div`
   overflow-x: hidden;
 `;
 
-function PlatformLayout(): JSX.Element {
+function PlatformSettingsLayout(): JSX.Element {
   const location = useLocation();
   const { getNav, setNav } = useGlobalStore();
   let navs = getNav(NAV_KEY);
@@ -52,4 +52,4 @@ function PlatformLayout(): JSX.Element {
   );
 }
 
-export default PlatformLayout;
+export default PlatformSettingsLayout;

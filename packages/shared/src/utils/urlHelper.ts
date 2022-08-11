@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 import { isMultiCluster } from './checker';
 import type { PathParams } from '../types';
 
@@ -63,4 +65,21 @@ export const getClusterUrl = (url: string): string => {
   }
 
   return requestURL.replace(/\/\/+/, '/');
+};
+
+export const getWebsiteUrl = () => {
+  const useLang = get(globals, 'user.lang', 'en');
+  const lang = useLang === 'zh' ? 'zh' : 'en';
+  return globals.config.documents[lang];
+};
+
+export const getDocsUrl = (module: any) => {
+  const { url: prefix } = getWebsiteUrl();
+  const docUrl = get(globals.config, `resourceDocs[${module}]`, '');
+
+  if (!docUrl) {
+    return '';
+  }
+
+  return `${prefix}${docUrl}`;
 };
