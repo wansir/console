@@ -20,7 +20,7 @@ interface BaseColumn {
   maxWidth?: number;
 }
 
-type Render = (value: any, row: Record<string, any>) => any;
+type Render = (value: any, row: Record<string, any>) => React.ReactNode;
 
 interface RequiredFieldColumn {
   field: string;
