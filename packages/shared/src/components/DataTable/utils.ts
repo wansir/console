@@ -7,10 +7,9 @@ import request from '../../utils/request';
 import { initialState, State } from './reducer';
 import { merge } from 'lodash';
 
-export interface Column {
+interface BaseColumn {
   title: string | React.ReactNode;
   description?: { title?: string; content?: React.ReactNode };
-  field: string;
   id?: string;
   searchable?: boolean;
   sortable?: boolean;
@@ -19,8 +18,21 @@ export interface Column {
   width?: number | string;
   minWidth?: number;
   maxWidth?: number;
-  render?: (value: any, row: Record<string, any>) => any;
 }
+
+type Render = (value: any, row: Record<string, any>) => React.ReactNode;
+
+interface RequiredFieldColumn {
+  field: string;
+  render?: Render;
+}
+
+interface RequiredRenderColumn {
+  field?: string;
+  render: Render;
+}
+
+export type Column = BaseColumn & (RequiredFieldColumn | RequiredRenderColumn);
 
 export interface TableProps<T extends Record<string, unknown>> {
   columns: Column[];
