@@ -4022,6 +4022,11 @@ eslint-config-airbnb-typescript@^14.0.1:
   dependencies:
     eslint-config-airbnb-base "14.2.1"
 
+eslint-config-kubesphere@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-kubesphere/-/eslint-config-kubesphere-1.0.0.tgz#f849ab2a0d159bfc36ca37c86b31b0cad0e98b97"
+  integrity sha512-97a2MJYewztsHNwfVKyYrfo2ID5BkHCfB9Kudd0wIk407dfQkFlD17yhCJMaKASVrX3McdOL0YuWoJ3AJH0efw==
+
 eslint-config-prettier@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-7.2.0.tgz#f4a4bd2832e810e8cc7c1411ec85b3e85c0c53f9"
