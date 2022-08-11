@@ -33,7 +33,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        include: [resolve('plugins'), resolve('packages')],
+        include: [resolve('extensions'), resolve('packages')],
         options: {
           transpileOnly: true,
           // plugins: isDev ? [require.resolve('react-refresh/babel')] : [],
@@ -74,9 +74,6 @@ module.exports = {
       // optional: defaults to 1
       // If you need the webpack public path to "chop off" some of the directories in the current module's url, you can specify a "root directory level". Note that the root directory level is read from right-to-left, with `1` indicating "current directory" and `2` indicating "up one directory":
       rootDirectoryLevel: 1,
-
-      // ONLY NEEDED FOR WEBPACK 1-4. Not necessary for webpack@5
-      // systemjsModuleName: "@org-name/project-name"
     }),
   ],
   externals: [

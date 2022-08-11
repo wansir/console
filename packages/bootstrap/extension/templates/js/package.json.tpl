@@ -1,5 +1,5 @@
 {
-  "name": "{{pluginName}}",
+  "name": "{{extensionName}}",
   "description": "{{description}}",
   "author": "{{author}}",
   "version": "1.0.0",

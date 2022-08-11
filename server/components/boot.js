@@ -43,7 +43,8 @@ module.exports = function (app) {
   if (global.MODE_DEV) {
     app.use(async (ctx, next) => {
       if (
-        /(\.hot-update\.)|(\.(ttf|otf|eot|woff2?)(\?.+)?$)|(\.js$)/.test(ctx.url) ||
+        (/(\.hot-update\.)|(\.(ttf|otf|eot|woff2?)(\?.+)?$)|(\.js$)/.test(ctx.url) &&
+          !ctx.url.startsWith('/api')) ||
         /\/locales\/[a-z]+\.json$/.test(ctx.url) ||
         /\/assets\/[a-z-0-9]+\.(svg|png|jpg|ico)$/.test(ctx.url)
       ) {

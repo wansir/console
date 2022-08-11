@@ -7,5 +7,5 @@ const Wrapper = styled.h3`
 `;
 
 export default function App() {
-  return <Wrapper>This is {{pluginName}} plugin</Wrapper>;
+  return <Wrapper>Hello World! This is {{extensionName}}</Wrapper>;
 }

@@ -101,9 +101,6 @@ const webpackConfig = merge(baseWebpackConfig, {
     providedExports: true,
   },
   plugins: [
-    // new webpack.DllReferencePlugin({
-    //   manifest: resolve('dist/dll/common-manifest.json'),
-    // }),
     new CleanWebpackPlugin({
       root: resolve('dist'),
       cleanOnceBeforeBuildPatterns: ['**/*', '!dll/**'],

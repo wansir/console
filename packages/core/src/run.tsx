@@ -9,7 +9,7 @@ import emitter from './libs/emitter';
 const run = async () => {
   if (process.env.NODE_ENV === 'production') {
     // load remote plugin
-    await loader(globals.installedPlugins);
+    await loader(globals.installedExtensions);
   }
 
   await i18n.init();

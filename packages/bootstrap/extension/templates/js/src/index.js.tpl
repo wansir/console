@@ -3,7 +3,7 @@ import locales from './locales';
 
 const menu = {
   parent: 'topbar',
-  name: '{{pluginName}}',
+  name: '{{extensionName}}',
   title: '{{displayName}}',
   icon: 'cluster',
   order: 0,
