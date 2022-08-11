@@ -2,8 +2,8 @@
 
 const yargs = require('yargs');
 
-const { devServer, buildProd, buildDll, buildPlugin } = require('./webpack');
-const createPlugin = require('../plugin/createPlugin');
+const { devServer, buildProd, buildDll, buildExtension } = require('./webpack');
+const createExtension = require('../extension/createExtension');
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const argv = yargs
@@ -20,9 +20,19 @@ const argv = yargs
       devServer(args.setAlias);
     },
   )
-  .command('build:prod', 'Build production', {}, () => {
-    buildProd();
-  })
+  .command(
+    'build:prod',
+    'Build production',
+    {
+      setAlias: {
+        alias: 's',
+        default: 'false',
+      },
+    },
+    args => {
+      buildProd(args.setAlias);
+    },
+  )
   .command(
     'build:dll',
     'Build DLL',
@@ -36,17 +46,17 @@ const argv = yargs
       buildDll(args.setAlias);
     },
   )
-  .command('create:plugin', 'Create a new plugin', {}, () => {
-    createPlugin();
+  .command('create:ext', 'Create a new extension', {}, () => {
+    createExtension();
   })
   .command(
-    'build:plugin <name>',
-    'Build plugin',
+    'build:ext <name>',
+    'Build extension',
     args => {
-      return args.option('name', { description: 'Plugin name' });
+      return args.option('name', { description: 'Extension name' });
     },
     args => {
-      buildPlugin(args.name);
+      buildExtension(args.name);
     },
   )
   .help().argv;

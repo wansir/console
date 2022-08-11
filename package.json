@@ -5,7 +5,7 @@
   "license": "AGPL-3.0",
   "workspaces": [
     "packages/*",
-    "plugins/*",
+    "extensions/*",
     "server",
     "locales"
   ],
@@ -19,9 +19,9 @@
     "dev:client": "ksc dev -s true",
     "dev:server": "ksc-server",
     "build:dll": "ksc build:dll -s true",
-    "build:prod": "cross-env dll=true ksc build:prod",
-    "build:plugin": "ksc build:plugin",
-    "create:plugin": "ksc create:plugin",
+    "build:prod": "cross-env dll=true ksc build:prod -s true",
+    "build:ext": "ksc build:ext",
+    "create:ext": "ksc create:ext",
     "build:packages": "esno scripts/build-packages.js",
     "build:locales": "esno scripts/build-locales.js",
     "clean": "rimraf packages/*/{esm,cjs,lib,dist} packages/**/*.tsbuildinfo locales/dist"

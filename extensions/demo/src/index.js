@@ -5,7 +5,7 @@ const menu = {
   name: 'demo',
   title: 'Demo',
   icon: 'cluster',
-  order: 1,
+  order: 0,
   desc: 'this is demo plugin',
   skipAuth: true,
 };
