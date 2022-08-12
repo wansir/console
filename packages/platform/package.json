@@ -1,7 +1,7 @@
 {
   "name": "@ks-console/platform",
   "description": "",
-  "version": "4.0.0-alpha.2",
+  "version": "4.0.0-alpha.4",
   "homepage": "",
   "main": "cjs/index.js",
   "module": "esm/index.js",
