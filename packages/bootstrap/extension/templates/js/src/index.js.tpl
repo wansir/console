@@ -11,9 +11,10 @@ const menu = {
   skipAuth: true,
 };
 
-const pluginConfig = {
+const extensionConfig = {
   routes,
   menus: [menu],
   locales,
 };
-globals.context.registerPlugin(pluginConfig);
+
+globals.context.registerExtension(extensionConfig);

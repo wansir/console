@@ -1,7 +1,7 @@
 {
   "name": "@ks-console/bootstrap",
   "description": "",
-  "version": "4.0.0-alpha.5",
+  "version": "4.0.0-alpha.8",
   "homepage": "",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -13,13 +13,13 @@
     "serve": "ksc-server"
   },
   "dependencies": {
-    "@ks-console/access": "4.0.0-alpha.2",
-    "@ks-console/apps": "4.0.0-alpha.2",
-    "@ks-console/clusters": "4.0.0-alpha.2",
-    "@ks-console/console": "4.0.0-alpha.2",
-    "@ks-console/core": "4.0.0-alpha.2",
+    "@ks-console/access": "4.0.0-alpha.4",
+    "@ks-console/apps": "4.0.0-alpha.4",
+    "@ks-console/clusters": "4.0.0-alpha.4",
+    "@ks-console/console": "4.0.0-alpha.4",
+    "@ks-console/core": "4.0.0-alpha.6",
     "@ks-console/locales": "4.0.0-alpha.1",
-    "@ks-console/server": "4.0.0-alpha.3",
+    "@ks-console/server": "4.0.0-alpha.4",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
