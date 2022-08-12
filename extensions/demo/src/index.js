@@ -6,12 +6,13 @@ const menu = {
   title: 'Demo',
   icon: 'cluster',
   order: 0,
-  desc: 'this is demo plugin',
+  desc: 'this is demo extension',
   skipAuth: true,
 };
 
-const pluginConfig = {
+const extensionConfig = {
   routes,
   menus: [menu],
 };
-globals.context.registerPlugin(pluginConfig);
+
+globals.context.registerExtension(extensionConfig);
