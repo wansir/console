@@ -2,7 +2,7 @@ import type { RouteObject } from 'react-router-dom';
 import { merge } from 'lodash';
 // import routes from '../routes';
 
-export interface PluginMenu {
+export interface ExtensionMenu {
   parent: string;
   name: string;
   title: string;
@@ -10,16 +10,16 @@ export interface PluginMenu {
   order?: number;
   desc?: string;
   skipAuth?: boolean;
-  children?: PluginMenu[];
+  children?: ExtensionMenu[];
 }
 
-type Plugin = {
+type Extension = {
   routes?: RouteObject[];
   locales?: any;
-  menus?: PluginMenu[];
+  menus?: ExtensionMenu[];
 };
 
-export { Plugin };
+export { Extension };
 
 export default class Context {
   public routes: RouteObject[];
@@ -42,9 +42,9 @@ export default class Context {
     array.splice(index, 1, item);
   }
 
-  private registerMenu(menus: PluginMenu[]) {
+  private registerMenu(menus: ExtensionMenu[]) {
     const { config: globalConfig } = globals;
-    menus.forEach((menu: PluginMenu) => {
+    menus.forEach((menu: ExtensionMenu) => {
       const { parent, name, order } = menu;
       if (!parent) {
         const menuScope = `${name}Navs`;
@@ -101,10 +101,10 @@ export default class Context {
     });
   }
 
-  public registerPlugin = (plugin: Plugin) => {
-    const { routes: pluginRoutes, locales, menus } = plugin;
-    if (pluginRoutes) {
-      this.registerRoutes(pluginRoutes);
+  public registerExtension = (extension: Extension) => {
+    const { routes: extensionRoutes, locales, menus } = extension;
+    if (extensionRoutes) {
+      this.registerRoutes(extensionRoutes);
     }
     if (locales) {
       this.locales = merge(this.locales, locales);
@@ -114,9 +114,9 @@ export default class Context {
     }
   };
 
-  public registerPlugins = (plugins: Plugin[]) => {
-    plugins.forEach(plugin => {
-      this.registerPlugin(plugin);
+  public registerExtensions = (extensions: Extension[]) => {
+    extensions.forEach(extension => {
+      this.registerExtension(extension);
     });
   };
 }

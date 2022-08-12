@@ -1,7 +1,7 @@
 {
   "name": "@ks-console/bootstrap",
   "description": "",
-  "version": "4.0.0-alpha.5",
+  "version": "4.0.0-alpha.8",
   "homepage": "",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -13,10 +13,11 @@
     "serve": "ksc-server"
   },
   "dependencies": {
-    "@ks-console/apps": "4.0.0-alpha.2",
-    "@ks-console/clusters": "4.0.0-alpha.2",
-    "@ks-console/console": "4.0.0-alpha.2",
-    "@ks-console/core": "4.0.0-alpha.2",
+    "@ks-console/access": "4.0.0-alpha.4",
+    "@ks-console/apps": "4.0.0-alpha.4",
+    "@ks-console/clusters": "4.0.0-alpha.4",
+    "@ks-console/console": "4.0.0-alpha.4",
+    "@ks-console/core": "4.0.0-alpha.6",
     "@ks-console/locales": "4.0.0-alpha.1",
     "@ks-console/server": "4.0.0-alpha.4",
     "@ks-console/platform": "4.0.0-alpha.4",
@@ -25,11 +26,7 @@
   "devDependencies": {
     "@kubed/stook-devtools": "^0.0.1"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"

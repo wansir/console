@@ -27,13 +27,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css', '.ts', '.tsx', '.json'],
-    modules: [resolve('plugins'), resolve('packages'), 'node_modules'],
+    modules: [resolve('extensions'), resolve('packages'), 'node_modules'],
     alias: {
-      // '@ks-console/shared': resolve('packages/shared/src'),
-      // '@ks-console/core': resolve('packages/core/src'),
-      // '@ks-console/console': resolve('packages/console/src'),
-      // '@ks-console/clusters': resolve('packages/clusters/src'),
-      // '@ks-console/apps': resolve('packages/apps/src'),
       'styled-components': resolve('node_modules/styled-components'),
     },
   },
@@ -42,7 +37,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        include: [resolve('plugins'), resolve('packages')],
+        include: [resolve('extensions'), resolve('packages')],
         options: {
           cacheDirectory: true,
           plugins: isDev ? [require.resolve('react-refresh/babel')] : [],
@@ -51,7 +46,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        include: [resolve('plugins'), resolve('packages'), resolve('node_modules')],
+        include: [resolve('extensions'), resolve('packages'), resolve('node_modules')],
         options: {
           transpileOnly: true,
           getCustomTransformers,
@@ -78,7 +73,7 @@ module.exports = {
       patterns: [{ from: `${config.assetsPath}`, to: `${config.distAssetsPath}` }],
     }),
     new webpack.DefinePlugin({
-      __ENABLED_PLUGINS__: JSON.stringify(configs.enabledPlugins),
+      __ENABLED_EXTENSIONS__: JSON.stringify(configs.enabledExtensions),
     }),
     new WebpackBar({
       name: NODE_ENV || 'webpack-bar',

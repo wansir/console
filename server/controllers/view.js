@@ -18,7 +18,7 @@
 
 const { getCurrentUser, getKSConfig, getOAuthInfo } = require('../services/session');
 
-const { getInstalledPlugins } = require('../services/plugin');
+const { getInstalledExtensions } = require('../services/plugin');
 
 const {
   getServerConfig,
@@ -32,7 +32,7 @@ const { client: clientConfig } = getServerConfig();
 
 const renderIndex = async (ctx, params) => {
   const manifest = getManifest();
-  const installedPlugins = await getInstalledPlugins(ctx);
+  const installedExtensions = await getInstalledExtensions(ctx);
   const importMap = getImportMap();
 
   await ctx.render('index', {
@@ -43,7 +43,7 @@ const renderIndex = async (ctx, params) => {
     importMap: JSON.stringify(importMap),
     globals: JSON.stringify({
       config: clientConfig,
-      installedPlugins,
+      installedExtensions,
       manifest,
       ...params,
     }),

@@ -1,7 +1,7 @@
 interface Globals {
   app?: any;
   config?: any;
-  installedPlugins?: any;
+  installedExtensions?: any;
   context?: any;
   run?: any;
   user?: any;

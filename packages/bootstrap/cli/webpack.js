@@ -3,7 +3,7 @@ const wds = require('webpack-dev-server');
 const webpackDevConfig = require('../webpack/webpack.dev.conf');
 const webpackProdConfig = require('../webpack/webpack.prod.conf');
 const webpackDllConfig = require('../webpack/webpack.dll.conf');
-const webpackPluginConfig = require('../webpack/webpack.plugin.conf');
+const webpackExtensionConfig = require('../webpack/webpack.extension.conf');
 const path = require('path');
 const fs = require('fs-extra');
 
@@ -15,6 +15,7 @@ const alias = {
   '@ks-console/clusters': resolve('packages/clusters/src'),
   '@ks-console/platform': resolve('packages/platform/src'),
   '@ks-console/apps': resolve('packages/apps/src'),
+  '@ks-console/access': resolve('packages/access/src'),
 };
 
 function devServer(setAlias) {
@@ -57,7 +58,14 @@ function runWebpack(config, env = 'production') {
   });
 }
 
-function buildProd() {
+function buildProd(setAlias) {
+  if (setAlias === 'true') {
+    console.log('set alias', setAlias);
+    webpackProdConfig.resolve.alias = {
+      ...webpackProdConfig.resolve.alias,
+      ...alias,
+    };
+  }
   runWebpack(webpackProdConfig);
 }
 
@@ -74,24 +82,24 @@ function buildDll(setAlias) {
   runWebpack(webpackDllConfig);
 }
 
-function buildPlugin(plugin) {
-  const pluginSrcDir = path.resolve(process.cwd(), `plugins/${plugin}/src`);
-  const entries = fs.readdirSync(pluginSrcDir).filter(function (file) {
+function buildExtension(extension) {
+  const extensionSrcDir = path.resolve(process.cwd(), `extensions/${extension}/src`);
+  const entries = fs.readdirSync(extensionSrcDir).filter(function (file) {
     return file.match(/index\.[t,j]sx?$/);
   });
   if (entries.length < 1) {
-    console.warn('error: plugin entry is empty');
+    console.warn('error: extension entry is empty');
     return;
   }
 
-  webpackPluginConfig.entry.index = path.resolve(pluginSrcDir, entries[0]);
-  webpackPluginConfig.output.path = path.resolve(process.cwd(), `plugins/${plugin}/dist`);
-  runWebpack(webpackPluginConfig);
+  webpackExtensionConfig.entry.index = path.resolve(extensionSrcDir, entries[0]);
+  webpackExtensionConfig.output.path = path.resolve(process.cwd(), `extensions/${extension}/dist`);
+  runWebpack(webpackExtensionConfig);
 }
 
 module.exports = {
   devServer,
   buildProd,
   buildDll,
-  buildPlugin,
+  buildExtension,
 };

@@ -1,7 +1,7 @@
 {
   "name": "@ks-console/core",
   "description": "",
-  "version": "4.0.0-alpha.2",
+  "version": "4.0.0-alpha.6",
   "homepage": "",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -12,12 +12,12 @@
     "lib"
   ],
   "peerDependencies": {
-    "@ks-console/shared": "4.0.0-alpha.3"
+    "@ks-console/shared": "4.0.0-alpha.4"
   },
   "dependencies": {
-    "@kubed/components": "^0.0.31",
+    "@kubed/components": "^0.0.39",
     "@kubed/hooks": "^0.0.9",
-    "@kubed/icons": "^0.0.2",
+    "@kubed/icons": "^0.0.3",
     "@kubed/stook": "^0.0.4",
     "i18next": "^21.4.0",
     "lodash": "^4.17.20",
