@@ -73,7 +73,7 @@ module.exports = {
       patterns: [{ from: `${config.assetsPath}`, to: `${config.distAssetsPath}` }],
     }),
     new webpack.DefinePlugin({
-      __ENABLED_PLUGINS__: JSON.stringify(configs.enabledPlugins),
+      __ENABLED_EXTENSIONS__: JSON.stringify(configs.enabledExtensions),
     }),
     new WebpackBar({
       name: NODE_ENV || 'webpack-bar',
