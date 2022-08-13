@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Banner, Navs, Card } from '@kubed/components';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import type { NavType } from './type';
+import type { NavType } from '../../types';
 import { NOTIFICATION_CONF_NAV_LOCALS_MAP } from '../../constants';
 import { getNotificationConfigurationTabs } from '../../utils/navs';
 

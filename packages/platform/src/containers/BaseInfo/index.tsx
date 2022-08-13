@@ -1,11 +1,13 @@
 import React from 'react';
 import { Home, Image } from '@kubed/icons';
+import { useUrl } from '@ks-console/shared';
 import { Banner, Card, Field } from '@kubed/components';
 
-import { getDocsUrl } from '../../utils';
 import { Header, Content, ImageWrapper, Details } from './styles';
 
 function PlatformBaseInfo(): JSX.Element {
+  const { getDocsUrl } = useUrl({ module: 'custom_console' });
+
   return (
     <>
       <Banner
@@ -21,7 +23,7 @@ function PlatformBaseInfo(): JSX.Element {
             value={window.location.host}
             label={t('PLATFORM_ADDRESS')}
           />
-          <a href={getDocsUrl('custom_console')} target="_blank" rel="noreferrer noopener">
+          <a href={getDocsUrl()} target="_blank" rel="noreferrer noopener">
             {t('HOW_TO_MODIFY_PLATFORM_INFO')}
           </a>
         </Header>
