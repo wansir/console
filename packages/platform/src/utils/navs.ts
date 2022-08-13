@@ -1,23 +1,27 @@
 import { get, cloneDeep } from 'lodash';
 
-export function getPlatformSettingsNavs() {
-  const platformSettingsNavs = cloneDeep(globals.config.platformSettingsNavs);
+import type { NavItem } from '../types';
+
+export function getPlatformSettingsNavs(): Array<NavItem> {
+  const platformSettingsNavs: NavItem = cloneDeep(globals.config.platformSettingsNavs);
 
   return [{ ...platformSettingsNavs }];
 }
 
-export function getNotificationManagementNav() {
+export function getNotificationManagementNav(): NavItem | undefined {
   const platformSettingsNavs = getPlatformSettingsNavs().pop();
-  const notificationManagementNavs = platformSettingsNavs.children.find((item: any) => {
-    return item.name === 'notification-management';
-  });
+  const notificationManagementNavs: NavItem | undefined = platformSettingsNavs?.children?.find(
+    ({ name }: NavItem) => {
+      return name === 'notification-management';
+    },
+  );
 
-  return cloneDeep(notificationManagementNavs);
+  return notificationManagementNavs;
 }
 
-export function getNotificationConfigurationTabs() {
+export function getNotificationConfigurationTabs(): Array<NavItem> {
   const notificationManagementNav = getNotificationManagementNav();
-  const tabs: Array<any> = get(notificationManagementNav, 'children', []).pop().tabs;
+  const tabs: Array<NavItem> = get(notificationManagementNav ?? {}, 'children[0].tabs', []);
 
   return tabs;
 }

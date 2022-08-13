@@ -9,7 +9,7 @@ import NotificationConfiguration from '../containers/NotificationConfiguration';
 import NotificationConfigurationRoutes from './notification-configuration';
 
 const navs = getPlatformSettingsNavs();
-const indexRoutePath = get(navs, '[0].children[0].name');
+const indexRoutePath = get(navs, '[0].children[0].name', '/404');
 
 export default [
   {

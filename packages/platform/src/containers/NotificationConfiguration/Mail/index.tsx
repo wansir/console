@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Loading } from '@kubed/components';
 
 function Mail(): JSX.Element {
-  const isLoading = true;
+  const isLoading = false;
 
   useEffect(() => {
     console.log('should fetch data');

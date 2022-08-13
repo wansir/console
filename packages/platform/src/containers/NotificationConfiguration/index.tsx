@@ -1,10 +1,11 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import { Bell } from '@kubed/icons';
 import styled from 'styled-components';
 import { Banner, Navs, Card } from '@kubed/components';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import type { NavType } from '../../types';
+import type { LabelValue, NavItem } from '../../types';
 import { NOTIFICATION_CONF_NAV_LOCALS_MAP } from '../../constants';
 import { getNotificationConfigurationTabs } from '../../utils/navs';
 
@@ -14,8 +15,8 @@ const PageHeader = styled.div`
 
 function NotificationConfiguration(): JSX.Element {
   const navigate = useNavigate();
-  const tabs = getNotificationConfigurationTabs();
-  const navs: NavType = tabs.map(item => ({
+  const tabs: NavItem[] = getNotificationConfigurationTabs();
+  const navs: Array<LabelValue> = tabs.map((item: any) => ({
     label: t(NOTIFICATION_CONF_NAV_LOCALS_MAP[item.name]),
     value: item.name,
   }));
@@ -33,7 +34,7 @@ function NotificationConfiguration(): JSX.Element {
           title={t('NOTIFICATION_CONFIGURATION')}
           description={t('NOTIFICATION_CONFIGURATION_DESC')}
         />
-        <Navs onChange={handleNavsChange} data={navs} />
+        {!isEmpty(navs) && <Navs onChange={handleNavsChange} data={navs} />}
       </PageHeader>
       <Card>
         <Outlet />
