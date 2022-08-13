@@ -1,14 +1,23 @@
-import { cloneDeep, isEmpty } from 'lodash';
-import { checkNavItem, hasPermission } from '@ks-console/shared';
+import { get, cloneDeep } from 'lodash';
 
 export function getPlatformSettingsNavs() {
-  const navs = [];
   const platformSettingsNavs = cloneDeep(globals.config.platformSettingsNavs);
-  const filteredItems = platformSettingsNavs.children.filter((item: any) => {
-    return checkNavItem(item, params => hasPermission({ ...params }));
+
+  return [{ ...platformSettingsNavs }];
+}
+
+export function getNotificationManagementNav() {
+  const platformSettingsNavs = getPlatformSettingsNavs().pop();
+  const notificationManagementNavs = platformSettingsNavs.children.find((item: any) => {
+    return item.name === 'notification-management';
   });
-  if (!isEmpty(filteredItems)) {
-    navs.push({ ...platformSettingsNavs, items: filteredItems });
-  }
-  return navs;
+
+  return cloneDeep(notificationManagementNavs);
+}
+
+export function getNotificationConfigurationTabs() {
+  const notificationManagementNav = getNotificationManagementNav();
+  const tabs: Array<any> = get(notificationManagementNav, 'children', []).pop().tabs;
+
+  return tabs;
 }

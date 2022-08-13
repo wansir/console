@@ -2,13 +2,14 @@ import React from 'react';
 import { get } from 'lodash';
 import { Navigate } from 'react-router-dom';
 
-import Mail from '../containers/Mail';
 import BaseInfo from '../containers/BaseInfo';
 import { getPlatformSettingsNavs } from '../utils/navs';
 import SettingsLayout from '../containers/SettingsLayout';
+import NotificationConfiguration from '../containers/NotificationConfiguration';
+import NotificationConfigurationRoutes from './notification-configuration';
 
 const navs = getPlatformSettingsNavs();
-const indexRoutePath = get(navs, '[0].items[0].name');
+const indexRoutePath = get(navs, '[0].children[0].name');
 
 export default [
   {
@@ -24,12 +25,9 @@ export default [
         element: <BaseInfo />,
       },
       {
-        path: 'mail',
-        element: <Mail />,
-      },
-      {
         path: 'notification-configuration',
-        element: <Navigate to="/settings/mail" replace />,
+        element: <NotificationConfiguration />,
+        children: NotificationConfigurationRoutes,
       },
     ],
   },
