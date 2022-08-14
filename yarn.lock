@@ -1264,10 +1264,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kubed/components@^0.0.39":
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.39.tgz#c077fbdc886ff5d292ae712b2d3c147aeec1a918"
-  integrity sha512-+bMuYJ1OAKgGSo6/hkVnMDCaOlkMhhGS3ngUuMM9p/BOFcRe9b/qGXNVe6yYlmDnVQH2N3mLhnjuUQ68L7joYA==
+"@kubed/components@^0.0.40":
+  version "0.0.40"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.40.tgz#d54af67cb4edbc7bd7fafa2fa3c1ac080097bcd2"
+  integrity sha512-6v9o/WPqm6qFUZ1Nc95wwo1N8n/JeGDx652wvjnuFubMFciFj79errgRfmpRd4qO3iIOcEl7Ghcc4OH7ASJCTA==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
