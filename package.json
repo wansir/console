@@ -58,7 +58,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@babel/runtime": "^7.15.4",
-    "@kubed/components": "^0.0.39",
+    "@kubed/components": "^0.0.40",
     "@kubed/hooks": "^0.0.9",
     "@kubed/icons": "^0.0.3",
     "@kubed/stook": "^0.0.4",
