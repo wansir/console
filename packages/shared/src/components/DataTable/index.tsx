@@ -83,9 +83,17 @@ const selectionHook = (hooks: Hooks<any>) => {
       Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<any>) => (
         <Checkbox {...getToggleAllRowsSelectedProps()} />
       ),
-      Cell: ({ row }: CellProps<any>) => (
-        <Checkbox {...row.getToggleRowSelectedProps()} disabled={!row.canSelect} />
-      ),
+      Cell: ({ row }: CellProps<any>) => {
+        const disabled = !row.canSelect;
+
+        return (
+          <Checkbox
+            {...row.getToggleRowSelectedProps()}
+            disabled={disabled}
+            style={disabled ? { cursor: 'not-allowed' } : undefined}
+          />
+        );
+      },
     },
     ...columns,
   ]);
