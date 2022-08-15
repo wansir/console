@@ -4,4 +4,4 @@ export { default as Icon } from './Icon';
 export * from './DataTable';
 export * from './CodeEditor';
 export { default as CodeViewer } from './CodeViewer';
-export { default as Status } from './Status';
+export { default as StatusIndicator } from './StatusIndicator';

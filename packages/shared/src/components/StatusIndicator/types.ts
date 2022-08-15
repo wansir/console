@@ -70,7 +70,7 @@ export interface ColorAlias {
 
 type LowerCaseType = BlueAlias | SuccessAlias | WarningAlias | ErrorAlias | DefaultAlias;
 
-export interface StatusProps extends Omit<StatusDotProps, 'color'> {
+export interface StatusIndicatorProps extends Omit<StatusDotProps, 'color'> {
   type?: LowerCaseType | Uppercase<LowerCaseType> | Capitalize<LowerCaseType>;
   color?: Exclude<StatusDotProps['color'], Exclude<keyof ColorAlias, 'blue'>>;
   children?: ReactNode;

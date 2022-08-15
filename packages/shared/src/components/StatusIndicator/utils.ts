@@ -1,6 +1,7 @@
 import { findKey } from 'lodash';
+import type { StatusDotProps } from '@kubed/components';
 
-import type { ColorAlias, StatusProps } from './types';
+import type { ColorAlias, StatusIndicatorProps } from './types';
 
 const COLOR_ALIAS: ColorAlias = {
   blue: ['draft', 'pending-review', 'to-be-reviewed', 'creating'],
@@ -63,7 +64,9 @@ const COLOR_ALIAS: ColorAlias = {
   ],
 };
 
-export function getColor(options?: Pick<StatusProps, 'type' | 'color'>): StatusProps['color'] {
+export function getStatusDotColor(
+  options?: Pick<StatusIndicatorProps, 'type' | 'color'>,
+): StatusDotProps['color'] {
   const color = options?.color;
   const type = options?.type;
 
