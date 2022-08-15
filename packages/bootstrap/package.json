@@ -20,6 +20,7 @@
     "@ks-console/core": "4.0.0-alpha.6",
     "@ks-console/locales": "4.0.0-alpha.1",
     "@ks-console/server": "4.0.0-alpha.4",
+    "@ks-console/platform": "4.0.0-alpha.4",
     "mustache": "^4.2.0"
   },
   "devDependencies": {

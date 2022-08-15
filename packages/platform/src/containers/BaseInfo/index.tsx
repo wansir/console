@@ -1,0 +1,45 @@
+import React from 'react';
+import { Home, Image } from '@kubed/icons';
+import { Banner, Card, Field } from '@kubed/components';
+
+import { getDocsUrl } from '../../utils';
+import { Header, Content, ImageWrapper, Details } from './styles';
+
+function PlatformBaseInfo(): JSX.Element {
+  return (
+    <>
+      <Banner
+        icon={<Home />}
+        className="mb12"
+        title={t('PLATFORM_INFORMATION')}
+        description={t('PLATFORM_INFORMATION_DESC')}
+      />
+      <Card sectionTitle={t('BASIC_INFORMATION')}>
+        <Header>
+          <Field
+            avatar={<Image size={40} />}
+            value={window.location.host}
+            label={t('PLATFORM_ADDRESS')}
+          />
+          <a href={getDocsUrl('custom_console')} target="_blank" rel="noreferrer noopener">
+            {t('HOW_TO_MODIFY_PLATFORM_INFO')}
+          </a>
+        </Header>
+        <Content>
+          <ImageWrapper>
+            <img src="/assets/logo.svg" alt="" />
+          </ImageWrapper>
+          <Details>
+            <Field value={globals.config.title} label={t('PLATFORM_TITLE')} />
+            <Field
+              value={globals.config.description || t('KS_DESCRIPTION')}
+              label={t('PLATFORM_DESCRIPTION')}
+            />
+          </Details>
+        </Content>
+      </Card>
+    </>
+  );
+}
+
+export default PlatformBaseInfo;

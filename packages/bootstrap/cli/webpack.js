@@ -13,6 +13,7 @@ const alias = {
   '@ks-console/core': resolve('packages/core/src'),
   '@ks-console/console': resolve('packages/console/src'),
   '@ks-console/clusters': resolve('packages/clusters/src'),
+  '@ks-console/platform': resolve('packages/platform/src'),
   '@ks-console/apps': resolve('packages/apps/src'),
   '@ks-console/access': resolve('packages/access/src'),
 };
