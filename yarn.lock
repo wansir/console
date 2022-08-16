@@ -1264,10 +1264,25 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kubed/components@^0.0.40":
-  version "0.0.40"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.40.tgz#d54af67cb4edbc7bd7fafa2fa3c1ac080097bcd2"
-  integrity sha512-6v9o/WPqm6qFUZ1Nc95wwo1N8n/JeGDx652wvjnuFubMFciFj79errgRfmpRd4qO3iIOcEl7Ghcc4OH7ASJCTA==
+"@ks-console/shared@4.0.0-alpha.3":
+  version "4.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@ks-console/shared/-/shared-4.0.0-alpha.3.tgz#1e1877de4ff28a3aa413ac72b2cd56bf4723ac67"
+  integrity sha512-/LV/03Zt/4Bs+1Ct++fJCW34PQdN4XV1XJRJrQ/FzAray1+TfUC3KSzPA2rd3d4e64ontbZk9unsvQt24uhdxw==
+  dependencies:
+    ace-builds "^1.4.13"
+    axios "^0.24.0"
+    debounce-promise "^3.1.2"
+    file-saver "^2.0.5"
+    js-yaml "^3.13.1"
+    react-ace "^9.5.0"
+    react-markdown "^7.1.1"
+    react-table "^7.7.0"
+    remark-gfm "^3.0.1"
+
+"@kubed/components@^0.0.41":
+  version "0.0.41"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.41.tgz#a9285a57d792847277223d2b1fca3baf8a444402"
+  integrity sha512-5RAmZrFbMHNJoDPRYkHETyyshv/nKEvgclLZr0S0sQSq2rFsqfuOW6KTHhNeckPrFU8VLgSFbAsMpky64ubE9Q==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
