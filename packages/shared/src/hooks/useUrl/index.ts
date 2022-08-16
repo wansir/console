@@ -1,6 +1,8 @@
-import { isMultiCluster } from '../../utils/checker';
-import type { PathParams } from '../../types';
+import { get } from 'lodash';
+
 import { Constants } from '../../constants';
+import type { PathParams } from '../../types';
+import { isMultiCluster } from '../../utils/checker';
 
 export const getPath = ({
   cluster,
@@ -75,6 +77,17 @@ export const useUrl = ({ getPathFn = getPath, module }: UseUrlOptions) => {
     return `${getListUrl(params)}/${params.name}`;
   };
 
+  const getDocsUrl = () => {
+    const { url: prefix } = globals.config.documents;
+    const docUrl = get(globals.config, `resourceDocs[${module}]`, '');
+
+    if (!docUrl) {
+      return '';
+    }
+
+    return `${prefix}${docUrl}`;
+  };
+
   return {
     getPath: getPathFn,
     getClusterUrl,
@@ -82,5 +95,6 @@ export const useUrl = ({ getPathFn = getPath, module }: UseUrlOptions) => {
     getWatchUrl,
     getListUrl,
     getDetailUrl,
+    getDocsUrl,
   };
 };

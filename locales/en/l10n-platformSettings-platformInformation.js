@@ -23,6 +23,7 @@ module.exports = {
   HOW_TO_MODIFY_PLATFORM_INFO: 'How do I customize platform information?',
   PLATFORM_INFORMATION: 'Platform Information',
   PLATFORM_DESCRIPTION: 'Platform description',
+  PLATFORM_INFORMATION_DESC: 'View platform title, description and other information',
   PLATFORM_TITLE: 'Platform title',
   PLATFORM_ADDRESS: 'Platform address',
 }
