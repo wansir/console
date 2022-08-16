@@ -76,7 +76,7 @@ async function buildPackage(packageName, options) {
 
 function build() {
   const packages = ['@ks-console/shared', '@ks-console/apps', '@ks-console/clusters', '@ks-console/console',
-    '@ks-console/access', '@ks-console/core'];
+    '@ks-console/access', '@ks-console/core', '@ks-console/platform'];
   packages.forEach((packageName) => {
     buildPackage(packageName, {
       formats: ['es', 'cjs'],
