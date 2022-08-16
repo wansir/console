@@ -77,7 +77,12 @@ async function createExtension() {
   copyDirectory({
     path: templateDir,
     target: extDir,
-    context: { extensionName, author, description, displayName },
+    context: {
+      extensionName,
+      author,
+      description: description || `Hello ${extensionName}`,
+      displayName,
+    },
   });
 }
 

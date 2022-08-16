@@ -1,13 +1,13 @@
 {
   "name": "@ks-console/access",
   "description": "",
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0-alpha.6",
   "homepage": "",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/src/index.d.ts",
   "files": ["cjs", "esm", "lib"],
   "dependencies": {
-    "@ks-console/shared": "4.0.0-alpha.4"
+    "@ks-console/shared": "4.0.0-alpha.5"
   }
 }

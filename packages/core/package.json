@@ -1,14 +1,14 @@
 {
   "name": "@ks-console/core",
   "description": "",
-  "version": "4.0.0-alpha.6",
+  "version": "4.0.0-alpha.7",
   "homepage": "",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/src/index.d.ts",
   "files": ["cjs", "esm", "lib"],
   "peerDependencies": {
-    "@ks-console/shared": "4.0.0-alpha.4"
+    "@ks-console/shared": "4.0.0-alpha.5"
   },
   "dependencies": {
     "@kubed/components": "^0.0.41",
