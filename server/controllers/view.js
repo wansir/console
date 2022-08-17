@@ -16,7 +16,14 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const { getCurrentUser, getKSConfig, getOAuthInfo } = require('../services/session');
+const {
+  getCurrentUser,
+  getKSConfig,
+  getOAuthInfo,
+  getK8sRuntime,
+  getClusterRole,
+  getSupportGpuList,
+} = require('../services/session');
 
 const { getInstalledExtensions } = require('../services/plugin');
 
@@ -26,6 +33,7 @@ const {
   getLocaleManifest,
   getImportMap,
   isValidReferer,
+  safeBase64,
 } = require('../libs/utils');
 
 const { client: clientConfig } = getServerConfig();
@@ -85,7 +93,11 @@ const renderViewErr = async (ctx, err) => {
 const renderTerminal = async ctx => {
   try {
     const manifest = getManifest('terminalEntry');
-    const [user, ksConfig] = await Promise.all([getCurrentUser(ctx), getKSConfig()]);
+    const [user, ksConfig, runtime] = await Promise.all([
+      getCurrentUser(ctx),
+      getKSConfig(),
+      getK8sRuntime(ctx),
+    ]);
     const localeManifest = getLocaleManifest();
 
     await ctx.render('terminal', {
@@ -97,6 +109,7 @@ const renderTerminal = async ctx => {
         localeManifest,
         user,
         ksConfig,
+        runtime,
       }),
     });
   } catch (err) {
@@ -107,14 +120,25 @@ const renderTerminal = async ctx => {
 const renderMarkdown = async ctx => {
   await ctx.render('blank_markdown');
 };
-
 const renderView = async ctx => {
   try {
-    const [user, ksConfig] = await Promise.all([getCurrentUser(ctx), getKSConfig()]);
+    const clusterRole = await getClusterRole(ctx);
+    const [user, ksConfig, runtime, supportGpuType] = await Promise.all([
+      getCurrentUser(ctx, clusterRole),
+      getKSConfig(),
+      getK8sRuntime(ctx),
+      getSupportGpuList(ctx),
+    ]);
 
-    await renderIndex(ctx, { ksConfig, user });
+    await renderIndex(ctx, {
+      ksConfig,
+      user,
+      runtime,
+      clusterRole,
+      config: { ...clientConfig, supportGpuType },
+    });
   } catch (err) {
-    await renderViewErr(ctx, err);
+    renderViewErr(ctx, err);
   }
 };
 
@@ -133,9 +157,10 @@ const renderLogin = async ctx => {
 };
 
 const renderLoginConfirm = async ctx => {
+  const usrName = ctx.cookies.get('defaultUser') || '';
   await renderIndex(ctx, {
     user: {
-      username: ctx.cookies.get('defaultUser'),
+      username: safeBase64.safeAtob(usrName),
       email: ctx.cookies.get('defaultEmail'),
     },
   });

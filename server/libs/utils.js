@@ -87,12 +87,27 @@ const getServerConfig = key => {
 
 const getCache = () => cache;
 
-const isValidReferer = path => !isEmpty(path) && path !== '/' && path.indexOf('/login') === -1;
+const URL_PATTEN =
+  /^(https|http|ftp|rtsp|mms){0,1}:?(\/)+(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\\/])+$/;
+
+// eslint-disable-next-line @typescript-eslint/no-shadow
+const isValidReferer = path => {
+  if (isEmpty(path)) {
+    return false;
+  }
+  const referer = decodeURIComponent(path);
+  const isUrl = URL_PATTEN.test(referer);
+
+  const isJsScript = referer.indexOf('javascript:') < 0;
+
+  return referer !== '/' && referer.indexOf('/login') === -1 && !isUrl && isJsScript;
+};
 
 /**
  *
  * @param path  koa ctx.path
  */
+// eslint-disable-next-line @typescript-eslint/no-shadow
 const isAppsRoute = path => {
   return path === '/apps' || /^\/apps\/?(app-([-0-9a-z]*)\/?)?$/.exec(path);
 };
@@ -151,6 +166,21 @@ const safeParseJSON = (json, defaultValue) => {
     return defaultValue;
   }
   return result;
+};
+
+const safeBase64 = {
+  safeBtoa: str => {
+    if (typeof str !== 'string') {
+      return '';
+    }
+    return Buffer.from(str).toString('base64');
+  },
+  safeAtob: str => {
+    if (typeof str !== 'string') {
+      return '';
+    }
+    return Buffer.from(str, 'base64').toString('utf-8');
+  },
 };
 
 const getManifest = () => {
@@ -213,4 +243,5 @@ module.exports = {
   decryptPassword,
   safeParseJSON,
   getImportMap,
+  safeBase64,
 };

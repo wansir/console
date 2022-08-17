@@ -18,8 +18,20 @@
 
 const isEmpty = require('lodash/isEmpty');
 const jwtDecode = require('jwt-decode');
+const omit = require('lodash/omit');
+const { getServerConfig } = require('../libs/utils');
+
+const { client: clientConfig } = getServerConfig();
+
 const { login, oAuthLogin, getNewToken, createUser } = require('../services/session');
-const { isValidReferer, isAppsRoute, decryptPassword, safeParseJSON } = require('../libs/utils');
+const {
+  isValidReferer,
+  isAppsRoute,
+  decryptPassword,
+  safeParseJSON,
+  safeBase64,
+} = require('../libs/utils');
+
 const { sendGatewayRequest } = require('../libs/request');
 
 const handleLogin = async ctx => {
@@ -41,13 +53,15 @@ const handleLogin = async ctx => {
 
   if (isEmpty(error)) {
     try {
-      params.password = decryptPassword(params.encrypt, 'kubesphere');
+      const encryptKey = clientConfig.encryptKey || 'kubesphere';
+      params.password = decryptPassword(params.encrypt, encryptKey);
 
       user = await login(params, { 'x-client-ip': ctx.request.ip });
+
       if (!user) {
         Object.assign(error, {
-          status: 400,
-          reason: 'Internal Server Error',
+          status: 401,
+          reason: 'Unauthorized',
           message: ctx.t('Wrong username or password, please try again'),
         });
       }
@@ -59,7 +73,7 @@ const handleLogin = async ctx => {
         case 401:
           Object.assign(error, {
             status: err.code,
-            reason: 'User Not Match',
+            reason: 'Unauthorized',
             message: ctx.t('Wrong username or password, please try again'),
           });
           break;
@@ -73,22 +87,22 @@ const handleLogin = async ctx => {
         case 502:
           Object.assign(error, {
             status: err.code,
-            reason: 'Internal Server Error',
+            reason: 'Bad Gateway',
             message: ctx.t('Unable to access the backend services'),
           });
           break;
         case 'ETIMEDOUT':
           Object.assign(error, {
-            status: 400,
+            status: 500,
             reason: 'Internal Server Error',
             message: ctx.t('Unable to access the api server'),
           });
           break;
         default:
           Object.assign(error, {
-            status: err.code,
+            status: 500,
             reason: err.statusText,
-            message: err.message,
+            message: ctx.t(err.message),
           });
       }
     }
@@ -107,7 +121,8 @@ const handleLogin = async ctx => {
   ctx.cookies.set('referer', null);
 
   if (user.username === 'system:pre-registration') {
-    ctx.cookies.set('defaultUser', user.extraname);
+    const extraname = safeBase64.safeBtoa(user.extraname);
+    ctx.cookies.set('defaultUser', extraname);
     ctx.cookies.set('defaultEmail', user.email);
     ctx.body = {
       success: true,
@@ -144,6 +159,8 @@ const handleLogin = async ctx => {
 const handleLogout = async ctx => {
   const oAuthLoginInfo = safeParseJSON(decodeURIComponent(ctx.cookies.get('oAuthLoginInfo')));
 
+  const token = ctx.cookies.get('token');
+
   ctx.cookies.set('token', null);
   ctx.cookies.set('expire', null);
   ctx.cookies.set('refreshToken', null);
@@ -164,6 +181,7 @@ const handleLogout = async ctx => {
     await sendGatewayRequest({
       method: 'GET',
       url: '/oauth/logout',
+      token,
     });
 
     if (isAppsRoute(refererPath)) {
@@ -177,10 +195,14 @@ const handleLogout = async ctx => {
 const handleOAuthLogin = async ctx => {
   let user = null;
   const error = {};
+  const oauthParams = omit(ctx.query, ['redirect_url', 'state']);
 
   try {
-    user = await oAuthLogin({ ...ctx.query, oauthName: ctx.params.name });
+    user = await oAuthLogin({ ...oauthParams, oauthName: ctx.params.name });
   } catch (err) {
+    /* eslint-disable no-console */
+    console.log(err);
+
     ctx.app.emit('error', err);
     Object.assign(error, {
       status: err.code,
@@ -199,7 +221,8 @@ const handleOAuthLogin = async ctx => {
   ctx.cookies.set('refreshToken', user.refreshToken);
 
   if (user.username === 'system:pre-registration') {
-    ctx.cookies.set('defaultUser', user.extraname);
+    const extraname = safeBase64.safeBtoa(user.extraname);
+    ctx.cookies.set('defaultUser', extraname);
     ctx.cookies.set('defaultEmail', user.email);
     ctx.body = {
       success: true,
@@ -208,10 +231,39 @@ const handleOAuthLogin = async ctx => {
     return;
   }
 
-  ctx.body = {
-    success: true,
-    redirect: '/',
-  };
+  const state = ctx.query.state;
+  const redirectUrl = ctx.query.redirect_url;
+
+  if (state) {
+    try {
+      const stateObject = jwtDecode(state, { header: true });
+      const stateUrl = stateObject.redirect_url;
+      if (stateUrl) {
+        ctx.body = {
+          success: true,
+          redirect: stateUrl,
+        };
+      }
+    } catch (err) {
+      /* eslint-disable no-console */
+      console.log(err);
+    }
+  }
+
+  if (redirectUrl) {
+    const redirectHost = new URL(redirectUrl).host;
+    if (redirectHost === ctx.headers.host) {
+      ctx.body = {
+        success: true,
+        redirect: redirectUrl,
+      };
+    }
+  } else {
+    ctx.body = {
+      success: true,
+      redirect: '/',
+    };
+  }
 };
 
 const handleLoginConfirm = async ctx => {
