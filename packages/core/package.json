@@ -11,9 +11,9 @@
     "@ks-console/shared": "4.0.0-alpha.5"
   },
   "dependencies": {
-    "@kubed/components": "^0.0.41",
+    "@kubed/components": "^0.0.42",
     "@kubed/hooks": "^0.0.9",
-    "@kubed/icons": "^0.0.3",
+    "@kubed/icons": "^0.0.4",
     "@kubed/stook": "^0.0.4",
     "i18next": "^21.4.0",
     "lodash": "^4.17.20",
