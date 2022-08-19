@@ -44,7 +44,9 @@ interface DeleteConfirmModalProps extends Omit<ModalProps, OmitProps> {
   onCancel: () => void;
 }
 
-export default function DeleteConfirmModal({
+export type { DeleteConfirmModalProps };
+
+export function DeleteConfirmModal({
   type,
   resource: resourceProp,
   deleteCluster,
