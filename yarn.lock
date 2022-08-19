@@ -1264,25 +1264,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@ks-console/shared@4.0.0-alpha.3":
-  version "4.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@ks-console/shared/-/shared-4.0.0-alpha.3.tgz#1e1877de4ff28a3aa413ac72b2cd56bf4723ac67"
-  integrity sha512-/LV/03Zt/4Bs+1Ct++fJCW34PQdN4XV1XJRJrQ/FzAray1+TfUC3KSzPA2rd3d4e64ontbZk9unsvQt24uhdxw==
-  dependencies:
-    ace-builds "^1.4.13"
-    axios "^0.24.0"
-    debounce-promise "^3.1.2"
-    file-saver "^2.0.5"
-    js-yaml "^3.13.1"
-    react-ace "^9.5.0"
-    react-markdown "^7.1.1"
-    react-table "^7.7.0"
-    remark-gfm "^3.0.1"
-
-"@kubed/components@^0.0.41":
-  version "0.0.41"
-  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.41.tgz#a9285a57d792847277223d2b1fca3baf8a444402"
-  integrity sha512-5RAmZrFbMHNJoDPRYkHETyyshv/nKEvgclLZr0S0sQSq2rFsqfuOW6KTHhNeckPrFU8VLgSFbAsMpky64ubE9Q==
+"@kubed/components@^0.0.42":
+  version "0.0.42"
+  resolved "https://registry.yarnpkg.com/@kubed/components/-/components-0.0.42.tgz#542f185771ec312d8d5d8de880136acc3b970505"
+  integrity sha512-67r/SJz8NJe5JYGSHqXH6agF69dICfDDRtDo9/0SmPXFtZO9r9HN3gJ6t3c4LEftbE/kQc7zysyOOxkHts/y4A==
   dependencies:
     "@tippyjs/react" "^4.2.5"
     classnames "^2.3.1"
@@ -1307,10 +1292,10 @@
   resolved "https://registry.yarnpkg.com/@kubed/hooks/-/hooks-0.0.9.tgz#908f41cef688885394027585348062484081fa03"
   integrity sha512-l3rF5kCy1fPbiOyLrazPgaJVt4MJn8ire12oxVf6IqC1BRTqiaMOgDE9FAGhZUOey7voLBRknZeKPNBv/BJAsA==
 
-"@kubed/icons@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@kubed/icons/-/icons-0.0.3.tgz#9bc3dd01f87f79c05da4207b90fd441f5e8cd4e7"
-  integrity sha512-rtOKY69qrq7HGF/cOTUZHxzKVuj3ZTPNDIZq4eBDnk8vtgm2PIPafRQW/+dr+1kv61qdKmVL3IRhnO4TFkerPw==
+"@kubed/icons@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@kubed/icons/-/icons-0.0.4.tgz#30d81976c506a9181b5687ea76a97c41f2842f39"
+  integrity sha512-uPXnclqE151ERE3kLiJlg4S39qfEr+QZJDdfbCHYtIUQcQkawlPry9MTehDZdpcakhTFZQU8ZNLqxr903a2aIQ==
 
 "@kubed/stook-devtools@^0.0.1":
   version "0.0.1"
