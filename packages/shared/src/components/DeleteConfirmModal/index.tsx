@@ -32,7 +32,7 @@ type OmitProps =
   | 'cancelButtonProps'
   | 'closeIcon';
 
-interface DeleteModalProps extends Omit<ModalProps, OmitProps> {
+interface DeleteConfirmModalProps extends Omit<ModalProps, OmitProps> {
   type?: string;
   resource?: string | number | string[] | number[];
   deleteCluster?: boolean;
@@ -43,8 +43,6 @@ interface DeleteModalProps extends Omit<ModalProps, OmitProps> {
   onOk: () => void;
   onCancel: () => void;
 }
-
-export type { DeleteModalProps };
 
 export default function DeleteConfirmModal({
   type,
@@ -57,7 +55,7 @@ export default function DeleteConfirmModal({
   onCancel,
   onOk,
   ...rest
-}: DeleteModalProps) {
+}: DeleteConfirmModalProps) {
   const typeKey = type || undefined;
   const typeKeyLow = type ? `${type}_LOW` : undefined;
   const typeKeyPl = type ? `${type}_PL` : undefined;
