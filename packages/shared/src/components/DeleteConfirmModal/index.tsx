@@ -1,6 +1,6 @@
-import React from 'react';
-import type { ReactNode } from 'react';
-import { Modal, Form, FormItem, Input, Button } from '@kubed/components';
+import React, { useState } from 'react';
+import type { ReactNode, ChangeEvent } from 'react';
+import { Modal } from '@kubed/components';
 import type { ModalProps } from '@kubed/components';
 import { Close } from '@kubed/icons';
 
@@ -11,17 +11,37 @@ import {
   CloseIconWrapper,
   Content,
   Tip,
+  StyledInput,
   Footer,
   StyledButton,
 } from './styles';
 
-interface DeleteModalProps extends Omit<ModalProps, 'title'> {
+type OmitProps =
+  | 'confirmLoading'
+  | 'title'
+  | 'description'
+  | 'titleIcon'
+  | 'closable'
+  | 'onOk'
+  | 'onCancel'
+  | 'header'
+  | 'footer'
+  | 'okText'
+  | 'cancelText'
+  | 'okButtonProps'
+  | 'cancelButtonProps'
+  | 'closeIcon';
+
+interface DeleteModalProps extends Omit<ModalProps, OmitProps> {
   type?: string;
   resource?: string | number | string[] | number[];
   deleteCluster?: boolean;
   app?: any;
   title?: ReactNode;
   tip?: ReactNode;
+  confirmLoading?: boolean;
+  onOk: () => void;
+  onCancel: () => void;
 }
 
 export type { DeleteModalProps };
@@ -34,6 +54,8 @@ export default function DeleteConfirmModal({
   title: titleProp,
   tip: tipProp,
   confirmLoading,
+  onCancel,
+  onOk,
   ...rest
 }: DeleteModalProps) {
   const typeKey = type || undefined;
@@ -97,36 +119,46 @@ export default function DeleteConfirmModal({
     return t('DELETE_DESC', { resource, type: '' });
   })();
 
+  const [confirmResource, setConfirmResource] = useState('');
+  const handleConfirmResourceChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setConfirmResource(value);
+  };
+
   return (
-    <Modal visible={true} width={504} header={null} footer={null} closable={false} {...rest}>
-      <Form>
-        <Body>
-          <Header>
-            <CloseIconWrapper>
-              <Close variant="light" size={16} />
-            </CloseIconWrapper>
-            <Title as="h5">{title}</Title>
-          </Header>
-          <Content>
-            <Tip as="p" dangerouslySetInnerHTML={{ __html: tip }} />
-            <FormItem name="confirm">
-              <Input name="confirm" placeholder={resource} autoFocus={true} />
-            </FormItem>
-          </Content>
-        </Body>
-        <Footer>
-          <StyledButton>{t('CANCEL')}</StyledButton>
-          <StyledButton
-            type="submit"
-            color="error"
-            shadow
-            loading={confirmLoading}
-            disabled={confirmLoading || (resource ? true : false)}
-          >
-            {t('OK')}
-          </StyledButton>
-        </Footer>
-      </Form>
+    <Modal width={504} header={null} footer={null} closable={false} {...rest}>
+      <Body>
+        <Header>
+          <CloseIconWrapper>
+            <Close variant="light" size={16} />
+          </CloseIconWrapper>
+          <Title as="h5">{title}</Title>
+        </Header>
+        <Content>
+          <Tip as="p" dangerouslySetInnerHTML={{ __html: tip }} />
+          {resource && (
+            <StyledInput
+              name="confirmResource"
+              placeholder={resource}
+              autoFocus={true}
+              value={confirmResource}
+              onChange={handleConfirmResourceChange}
+            />
+          )}
+        </Content>
+      </Body>
+      <Footer>
+        <StyledButton onClick={onCancel}>{t('CANCEL')}</StyledButton>
+        <StyledButton
+          color="error"
+          shadow
+          loading={confirmLoading}
+          disabled={confirmLoading || (resource ? resource !== confirmResource : false)}
+          onClick={onOk}
+        >
+          {t('OK')}
+        </StyledButton>
+      </Footer>
     </Modal>
   );
 }

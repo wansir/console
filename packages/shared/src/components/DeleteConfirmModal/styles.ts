@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Text, Button } from '@kubed/components';
+import { Text, Input, Button } from '@kubed/components';
 
 export const Body = styled.div`
   padding: 12px;
@@ -32,14 +32,6 @@ export const Content = styled.div`
   padding: 12px;
   border-radius: 4px;
   background-color: ${props => props.theme.palette.accents_0};
-
-  .form-item-wrapper {
-    margin-bottom: 0;
-
-    .form-item {
-      margin-top: 12px;
-    }
-  }
 `;
 
 export const Tip = styled(Text)`
@@ -48,6 +40,10 @@ export const Tip = styled(Text)`
   line-height: 1.67;
   color: ${props => props.theme.palette.accents_6};
   word-break: normal;
+`;
+
+export const StyledInput = styled(Input)`
+  margin-top: 12px;
 `;
 
 export const Footer = styled.div`
