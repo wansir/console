@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import request from '../../utils/request';
-import { UseListInstance, UseListOptions, UseListState } from './types';
+import type { UseListInstance, UseListOptions, UseListState } from './types';
 
 const useData = (
   url: string,
@@ -30,6 +30,8 @@ const useData = (
 const formatData = (data: any[], format: (items: any) => any) => {
   return data.map(item => format(item));
 };
+
+export type { UseListOptions };
 
 export function useList<T>(options: UseListOptions<T>): UseListInstance<T> {
   const mode = options.mode || 'page';
