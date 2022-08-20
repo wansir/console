@@ -167,7 +167,7 @@ const getUserGlobalRules = async (username, token) => {
   return rules;
 };
 
-const getUserDetail = async token => {
+const getUserDetail = async (token, clusterRole) => {
   let user = {};
 
   const { username } = jwtDecode(token);
@@ -184,6 +184,7 @@ const getUserDetail = async token => {
       lang: get(resp, 'spec.lang'),
       username: get(resp, 'metadata.name'),
       globalrole: get(resp, 'metadata.annotations["iam.kubesphere.io/globalrole"]'),
+      grantedClusters: get(resp, 'metadata.annotations["iam.kubesphere.io/granted-clusters"]', []),
       lastLoginTime: get(resp, 'status.lastLoginTime'),
     };
   } else {
@@ -191,18 +192,47 @@ const getUserDetail = async token => {
   }
 
   try {
-    user.globalRules = await getUserGlobalRules(username, token);
+    const roles = await getUserGlobalRules(username, token);
+
+    if (clusterRole === 'member') {
+      roles.users = roles.users.filter(role => role !== 'manage');
+      roles.workspaces = roles.workspaces.filter(role => role !== 'manage');
+    }
+
+    const isClustersRole = Object.keys(roles).includes('clusters');
+
+    if (!isClustersRole && user.grantedClusters.length > 0) {
+      roles.clusters = ['view'];
+    }
+    user.globalRules = roles;
   } catch (error) {}
 
   return user;
 };
 
-const getWorkspaces = async token => {
+const getWorkspaces = async (token, clusterRole) => {
   let workspaces = [];
+  let version = 3.2;
+
+  const backendVersion = await sendGatewayRequest({
+    method: 'GET',
+    url: '/kapis/version',
+    token,
+  });
+  if (backendVersion) {
+    const updatedVersion = backendVersion.gitVersion.replace(/[^\d.]/g, '');
+    version = Number(updatedVersion.split('.').slice(0, 2).join('.'));
+  }
+  const url =
+    version > 3.2
+      ? clusterRole === 'host'
+        ? '/kapis/tenant.kubesphere.io/v1alpha3/workspacetemplates'
+        : '/kapis/tenant.kubesphere.io/v1alpha3/workspaces'
+      : '/kapis/tenant.kubesphere.io/v1alpha2/workspaces';
 
   const resp = await sendGatewayRequest({
     method: 'GET',
-    url: '/kapis/tenant.kubesphere.io/v1alpha2/workspaces',
+    url,
     params: { limit: 10 },
     token,
   });
@@ -240,7 +270,7 @@ const getKSConfig = async token => {
   return resp;
 };
 
-const getCurrentUser = async ctx => {
+const getCurrentUser = async (ctx, clusterRole) => {
   const token = ctx.cookies.get('token');
 
   if (!token) {
@@ -250,9 +280,85 @@ const getCurrentUser = async ctx => {
     ctx.throw(401, 'Not Login');
   }
 
-  const [userDetail, workspaces] = await Promise.all([getUserDetail(token), getWorkspaces(token)]);
+  const [userDetail, workspaces] = await Promise.all([
+    getUserDetail(token, clusterRole),
+    getWorkspaces(token, clusterRole),
+  ]);
 
   return { ...userDetail, workspaces };
+};
+
+const getK8sRuntime = async ctx => {
+  const token = ctx.cookies.get('token');
+  let resp = 'docker';
+  if (!token) {
+    return resp;
+  }
+  try {
+    const nodeList = await sendGatewayRequest({
+      method: 'GET',
+      url: '/api/v1/nodes',
+      token,
+    });
+    if (nodeList.items) {
+      const runTime = nodeList.items[0].status.nodeInfo.containerRuntimeVersion;
+      resp = runTime.split(':')[0];
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return resp;
+};
+
+const getClusterRole = async ctx => {
+  const token = ctx.cookies.get('token');
+  let role = 'host';
+  if (!token) {
+    return role;
+  }
+  try {
+    const config = await sendGatewayRequest({
+      method: 'GET',
+      url: '/api/v1/namespaces/kubesphere-system/configmaps/kubesphere-config',
+      token,
+    });
+    const data = config.data['kubesphere.yaml'];
+    const str = /clusterRole:(\s*[\w]+\s*)/g.exec(data);
+
+    if (str && Array.isArray(str)) {
+      const clusterRole = str[0].split(':')[1].replace(/\s/g, '');
+      role = ['host', 'member'].indexOf(clusterRole) === -1 ? 'host' : clusterRole;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return role;
+};
+
+const getSupportGpuList = async ctx => {
+  const token = ctx.cookies.get('token');
+  let gpuKinds = [];
+  if (!token) {
+    return [];
+  }
+  try {
+    const list = await sendGatewayRequest({
+      method: 'GET',
+      url: '/kapis/config.kubesphere.io/v1alpha2/configs/gpu/kinds',
+      token,
+    });
+    if (Array.isArray(list)) {
+      const defaultGpu = list.filter(item => item.default).map(item => item.resourceName);
+
+      const otherGpus = list.filter(item => !item.default).map(item => item.resourceName);
+
+      gpuKinds = [...defaultGpu, ...otherGpus];
+    }
+  } catch (error) {}
+
+  return gpuKinds;
 };
 
 const getOAuthInfo = async () => {
@@ -341,4 +447,7 @@ module.exports = {
   getNewToken,
   getKSConfig,
   createUser,
+  getK8sRuntime,
+  getClusterRole,
+  getSupportGpuList,
 };
