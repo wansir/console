@@ -5,3 +5,4 @@ export * from './DataTable';
 export * from './CodeEditor';
 export { default as CodeViewer } from './CodeViewer';
 export { default as StatusIndicator } from './StatusIndicator';
+export * from './DeleteConfirmModal';

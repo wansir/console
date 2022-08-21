@@ -65,3 +65,54 @@ export const getBaseInfo = (item: any) => ({
   resourceVersion: get(item, 'metadata.resourceVersion'),
   isFedManaged: get(item, 'metadata.labels["kubefed.io/managed"]') === 'true',
 });
+
+export const getRoleBaseInfo = (
+  item: any,
+  module: 'workspaceroles' | 'globalroles' | 'clusterroles' | 'roles' | 'devopsroles' | string,
+) => {
+  const baseInfo = getBaseInfo(item);
+  const labels = get(item, 'metadata.labels', {});
+
+  if (!labels['iam.kubesphere.io/role-template']) {
+    switch (module) {
+      case 'workspaceroles': {
+        const name = baseInfo.name.slice(labels['kubesphere.io/workspace'].length + 1);
+        if (globals.config.presetWorkspaceRoles.includes(name)) {
+          baseInfo.description = t(`ROLE_WORKSPACE_${name.toUpperCase().replace(/-/g, '_')}`);
+        }
+        break;
+      }
+      case 'globalroles': {
+        const name = baseInfo.name;
+        if (globals.config.presetGlobalRoles.includes(name)) {
+          baseInfo.description = t(`ROLE_${name.toUpperCase().replace(/-/g, '_')}`);
+        }
+        break;
+      }
+      case 'clusterroles': {
+        const name = baseInfo.name;
+        if (globals.config.presetClusterRoles.includes(name)) {
+          baseInfo.description = t(`ROLE_${name.toUpperCase().replace(/-/g, '_')}`);
+        }
+        break;
+      }
+      case 'roles': {
+        const name = baseInfo.name;
+        if (globals.config.presetRoles.includes(name)) {
+          baseInfo.description = t(`ROLE_PROJECT_${name.toUpperCase().replace(/-/g, '_')}`);
+        }
+        break;
+      }
+      case 'devopsroles': {
+        const name = baseInfo.name;
+        if (globals.config.presetRoles.includes(name)) {
+          baseInfo.description = t(`ROLE_DEVOPS_${name.toUpperCase().replace(/-/g, '_')}`);
+        }
+        break;
+      }
+      default:
+    }
+  }
+
+  return baseInfo;
+};
