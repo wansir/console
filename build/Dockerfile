@@ -3,15 +3,10 @@
 # that can be found in the LICENSE file.
 
 # Prepare the build environment
-FROM node:14-alpine3.15 as builder
-
-ARG YARN_VERSION=1.22.4
+FROM node:lts-alpine as builder
 
 WORKDIR /kubesphere
 ADD . /kubesphere/
-
-RUN apk add --no-cache --virtual .build-deps ca-certificates python2 python3 py3-pip make openssl g++ bash
-RUN npm install yarn@${YARN_VERSION}
 
 # If you have trouble downloading the yarn binary, try the following:
 # RUN yarn config set registry https://registry.npmmirror.com
