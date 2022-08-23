@@ -1,6 +1,6 @@
 apiVersion: v2
 name: demo
-description: Demo Plugin for KubeSphere.
+description: Demo Extension for KubeSphere.
 type: application
 version: 0.0.1
 appVersion: "0.0.1"
@@ -9,10 +9,10 @@ keywords:
 home: https://kubesphere.io
 sources:
   - https://github.com/chenz24/console
-# dependencies: 
+# dependencies:
 #   - name: foo
 #     version: v0.0.1
-maintainers: 
+maintainers:
   - name: kubesphere
     email: chenz8606@gmail.com
     url: https://github.com/chenz24
