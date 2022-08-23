@@ -25,7 +25,7 @@ RUN mv /kubesphere/server/locales \
        /kubesphere/server/public \
        /kubesphere/server/views \
        /kubesphere/server/sample \
-       /kubesphere/server/configs/config.yaml /out/server/
+       /kubesphere/server/configs /out/server/
 #RUN ["/bin/bash", "-c", "mv /kubesphere/server/{locales,public,sample,views,config.yaml} /out/server/"]
 RUN mv /kubesphere/package.json /out/
 
