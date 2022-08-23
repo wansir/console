@@ -9,7 +9,7 @@
     />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title><%= title %></title>
-    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon" />
     <style>
       <%- include('../public/loading.css') %>
     </style>
@@ -23,13 +23,16 @@
     <div id="root">
       <%- include('./components/loading.html')  %>
     </div>
-    <script type="text/javascript">
-      window.globals = JSON.parse(`<%- globals %>`)
+    <script type="systemjs-importmap">
+      { "imports": <%- importMap %> }
     </script>
-    <% if (manifest && manifest.js && manifest.js.length > 0) { %>
-      <% manifest.js.forEach(function(item){ %>
-        <script type="text/javascript" src="<%= bundlePrefix %>/<%= item %>"></script>
-      <% }) %>
+    <script type="text/javascript">
+      window.globals = JSON.parse(`<%- globals %>`);
+    </script>
+    <% if (isDev) { %>
+    <%- include('./components/dev_scripts.html') %>
+    <% } else { %>
+    <%- include('./components/prod_scripts.html') %>
     <% } %>
   </body>
 </html>

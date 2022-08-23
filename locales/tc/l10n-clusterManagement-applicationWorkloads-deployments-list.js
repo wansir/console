@@ -36,17 +36,19 @@ module.exports = {
   // List > Create > Pod Settings
   PREVIOUS: '上一步',
   NOTE: '請注意',
+  CREATE_CONFIGMAP_SECRET_DESC: '如果没有配置字典或保密字典滿足要求，您可以',
   // List > Create > Pod Settings > Add Container > Container Settings
   IMAGE: '鏡像',
   IMAGE_VALUE: '鏡像：{value}',
   // List > Create > Pod Settings > Add Container > Health Check > Readiness Check > TCP Port
   PORT_NUMBER_EMPTY: '請輸入端口號。',
   USER: '用戶',
-  // List > Create > Volume Settings
+  // List > Create > Storage Settings
   VOLUME_NAME_EXIST: '儲存卷名稱已使用',
   SELECT_TYPE: '選擇{type}',
   SPECIFY_SUBPATH: '點擊指定子路徑',
   SPECIFY_SUBPATH_TIP: '指定需要掛載到容器的儲存卷子路徑。',
+  MOUNT_PATH: '掛載路徑',
   // List > Create > Advanced Settings
   NETWORK_SEGMENT_SCAP: '網段',
   AVAILABLE_ADDRESSES: '可用地址數量',

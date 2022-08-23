@@ -36,17 +36,19 @@ module.exports = {
   // List > Create > Pod Settings
   PREVIOUS: 'Anterior',
   NOTE: 'Advertencia',
+  CREATE_CONFIGMAP_SECRET_DESC: 'If no configmap or secret meets the requirements, you can',
   // List > Create > Pod Settings > Add Container > Container Settings
   IMAGE: 'Imagen',
   IMAGE_VALUE: 'Imagen: {value}',
   // List > Create > Pod Settings > Add Container > Health Check > Readiness Check > TCP Port
   PORT_NUMBER_EMPTY: 'Please enter a port number.',
   USER: 'Usuario',
-  // List > Create > Volume Settings
+  // List > Create > Storage Settings
   VOLUME_NAME_EXIST: 'nombre de volumen existe',
   SELECT_TYPE: 'Select {type}',
   SPECIFY_SUBPATH: 'Haga clic para agregar subPath',
   SPECIFY_SUBPATH_TIP: 'Solo es apropiado para montar volúmenes, pero no para hostpath',
+  MOUNT_PATH: 'Mount path',
   // List > Create > Advanced Settings
   NETWORK_SEGMENT_SCAP: 'Network segment',
   AVAILABLE_ADDRESSES: 'Available Number',

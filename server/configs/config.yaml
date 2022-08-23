@@ -1,0 +1,617 @@
+# kubesphere configuration
+server:
+  http:
+    hostname: localhost
+    port: 8000
+    static:
+      development:
+        /public: server/public
+        /build: build
+        /dist: dist
+      production:
+        /public: server/public
+        /assets: dist/assets
+        /dist: dist
+
+  # redis config for multi replicas
+  # redis:
+  #   port: 6379
+  #   host: 127.0.0.1
+  redisTimeout: 5000
+
+  # kubesphere console session params, not login session
+  sessionKey: "kubesphere:sess"
+  sessionTimeout: 3600000 # unit: millisecond
+
+  # backend service gateway server
+  apiServer:
+    clientID: kubesphere
+    clientSecret: kubesphere
+    url: http://ks-apiserver
+    wsUrl: ws://ks-apiserver
+
+  # docker image search default url
+  dockerHubUrl: https://hub.docker.com
+
+client:
+  title: KubeSphere
+  description: ""
+
+  version:
+    kubesphere: 3.1.0
+
+  homePage: /dashboard
+
+  # kubesphere urls
+  issueUrl: https://github.com/kubesphere/kubesphere/issues/new/choose
+  reposUrl: https://github.com/kubesphere/kubesphere
+  slackUrl: https://kubesphere.slack.com
+  documents:
+    url: https://v3-1.docs.kubesphere.io/docs
+    api: https://v3-1.docs.kubesphere.io/docs/reference/api-docs/
+
+  # current support lanaguages
+  supportLangs:
+    - label: "繁體中文"
+      value: "tc"
+    - label: "简体中文"
+      value: "zh"
+    - label: "English"
+      value: "en"
+    - label: "Español"
+      value: "es"
+  defaultLang: "en"
+
+  # top-bar navigations
+  topbarNavs:
+    name: topbar
+    children:
+      - name: platform
+        title: Platform
+        icon: cogwheel
+      - name: app_store
+        title: APP_STORE
+        icon: appcenter
+      - name: workbench
+        title: Workbench
+        icon: dashboard
+  # platform management navigations
+  globalNavs:
+    name: platform
+    children:
+      - name: clusters
+        title: CLUSTERS_MANAGEMENT
+        desc: CLUSTERS_MANAGE_DESC
+        icon: cluster
+      - name: access
+        title: ACCESS_CONTROL
+        icon: key
+        authKey: users|roles|workspaces
+      - name: apps-manage
+        title: APP_STORE_MANAGEMENT
+        icon: openpitrix
+        authKey: app-templates
+        authAction: manage
+        ksModule: openpitrix.appstore
+      - name: settings
+        title: PLATFORM_SETTINGS
+        icon: cogwheel
+        authKey: platform-settings
+        authAction: manage
+
+  clusterNavs:
+    name: cluster
+    children:
+      - name: overview
+        title: OVERVIEW
+        icon: dashboard
+        skipAuth: true
+        showInDisable: true
+      - name: nodes
+        title: NODE_PL
+        icon: nodes
+        children:
+          - { name: nodes, title: CLUSTER_NODE_PL }
+          - { name: edgenodes, title: EDGE_NODE_PL, clusterModule: kubeedge }
+      - { name: components, title: SYSTEM_COMPONENT_PL, icon: components }
+      - { name: projects, title: PROJECT_PL, icon: project }
+      - name: app-workloads
+        title: APPLICATION_WORKLOAD_PL
+        icon: appcenter
+        children:
+          - name: workloads
+            title: WORKLOAD_PL
+            tabs:
+              - { name: deployments, title: DEPLOYMENT_PL }
+              - { name: statefulsets, title: STATEFULSET_PL }
+              - { name: daemonsets, title: DAEMONSET_PL }
+          - name: jobs
+            title: JOB_PL
+            tabs:
+              - { name: jobs, title: JOB_PL }
+              - { name: cronjobs, title: CRONJOB_PL }
+          - { name: pods, title: POD_PL }
+          - { name: services, title: SERVICE_PL }
+          - { name: ingresses, title: ROUTE_PL }
+      - name: config
+        title: CONFIGURATION
+        icon: hammer
+        children:
+          - { name: secrets, title: SECRET_PL }
+          - { name: configmaps, title: CONFIGMAP_PL }
+          - {
+            name: serviceaccounts,
+            title: SERVICE_ACCOUNT_PL,
+            requiredClusterVersion: v3.1.0,
+          }
+      - name: network
+        title: NETWORK
+        icon: earth
+        children:
+          - {
+            name: networkpolicies,
+            title: NETWORK_POLICY_PL,
+            clusterModule: network,
+          }
+          - {
+            name: ippools,
+            title: POD_IP_POOL_PL,
+            clusterModule: "network.ippool",
+          }
+      # Contains dangerous operations, only available for platform-admin.
+      - { name: customresources, title: CRD_PL, icon: select, admin: true }
+      - name: storage
+        title: STORAGE
+        icon: database
+        children:
+          - { name: volumes, title: VOLUME_PL }
+          - {
+            name: volume-snapshots,
+            title: VOLUME_SNAPSHOT_PL,
+            authKey: volumes,
+          }
+          - { name: storageclasses, title: STORAGE_CLASS_PL }
+      - name: monitoring-alerting
+        title: MONITORING_AND_ALERTING
+        icon: monitor
+        children:
+          - {
+            name: monitor-cluster,
+            title: CLUSTER_STATUS,
+            icon: linechart,
+            authKey: monitoring,
+          }
+          - {
+            name: monitor-resource,
+            title: APPLICATION_RESOURCE_PL,
+            icon: linechart,
+            authKey: monitoring,
+          }
+          - {
+            name: alerts,
+            title: ALERTING_MESSAGE_PL,
+            icon: loudspeaker,
+            clusterModule: alerting,
+            requiredClusterVersion: v3.1.0,
+          }
+          - {
+            name: alert-rules,
+            title: ALERTING_POLICY_PL,
+            icon: hammer,
+            clusterModule: alerting,
+            requiredClusterVersion: v3.1.0,
+          }
+          - {
+            name: custom-monitoring,
+            title: CUSTOM_MONITORING,
+            requiredClusterVersion: v3.1.0,
+          }
+      - name: cluster-settings
+        title: CLUSTER_SETTINGS
+        icon: cogwheel
+        showInDisable: true
+        children:
+          - {
+            name: base-info,
+            title: BASIC_INFORMATION,
+            skipAuth: true,
+            showInDisable: true,
+          }
+          - {
+            name: visibility,
+            title: CLUSTER_VISIBILITY,
+            authKey: cluster-settings,
+            multiCluster: true,
+          }
+          # - { name: members, title: Cluster Members }
+          # - { name: roles, title: Cluster Roles }
+          - {
+            name: log-collections,
+            title: LOG_RECEIVER_PL,
+            icon: file,
+            authKey: cluster-settings,
+            clusterModule: logging|events|auditing,
+          }
+          - {
+            name: gateways,
+            title: GATEWAY_SETTINGS,
+            authKey: cluster-settings,
+          }
+
+  # access control page navigations
+  accessNavs:
+    name: "access"
+    children:
+      - { name: workspaces, title: WORKSPACE_PL, icon: enterprise }
+      - { name: accounts, title: USER_PL, icon: human, authKey: users }
+      - { name: roles, title: PLATFORM_ROLE_PL, icon: role }
+
+  # platform settings navigations
+  platformSettingsNavs:
+    name: "platformsettings"
+    children:
+      - {
+        name: base-info,
+        title: PLATFORM_INFORMATION,
+        icon: home,
+        authKey: platform-settings,
+      }
+      - name: notification-management
+        title: NOTIFICATION_MANAGEMENT
+        icon: bell
+        children:
+          - name: notification-configuration
+            title: NOTIFICATION_CONFIGURATION
+            tabs:
+              - { name: mail, title: Mail, authKey: platform-settings }
+              - {
+                name: dingtalk,
+                title: DingTalk,
+                authKey: platform-settings,
+              }
+              - { name: wecom, title: WeCom, authKey: platform-settings }
+              - { name: slack, title: Slack, authKey: platform-settings }
+              - { name: webhook, title: Webhook, authKey: platform-settings }
+
+  # workspace page navigations
+  workspaceNavs:
+    name: "workspace"
+    children:
+      - {
+        name: overview,
+        title: OVERVIEW,
+        icon: dashboard,
+        authKey: "projects",
+      }
+      - name: projects
+        title: PROJECT_PL
+        icon: project
+        skipAuth: true
+        tabs:
+          - { name: projects, title: PROJECT_PL }
+          - { name: federatedprojects, title: MULTI_CLUSTER_PROJECT_PL }
+      - {
+        name: devops,
+        title: DEVOPS_PROJECT_PL,
+        icon: strategy-group,
+        ksModule: devops,
+        skipAuth: true,
+      }
+      - name: apps
+        title: APPS_MANAGEMENT
+        icon: appcenter
+        children:
+          - {
+            name: apps,
+            title: APP_TEMPLATE_PL,
+            icon: appcenter,
+            authKey: app-templates,
+            ksModule: openpitrix.appstore,
+          }
+          - {
+            name: repos,
+            title: APP_REPOSITORY_PL,
+            authKey: "app-repos",
+            ksModule: openpitrix,
+          }
+      - name: management
+        title: WORKSPACE_SETTINGS
+        icon: cogwheel
+        children:
+          - { name: base-info, title: Basic Info, skipAuth: true }
+          - {
+            name: quota,
+            title: WORKSPACE_QUOTA_PL,
+            authKey: "workspace-settings",
+          }
+          - { name: roles, title: WORKSPACE_ROLE_PL }
+          - { name: members, title: WORKSPACE_MEMBER_PL }
+          - { name: groups, title: DEPARTMENT_PL }
+
+  # apps manage page navigations
+  manageAppNavs:
+    name: "apps"
+    children:
+      - { name: store, title: APP_STORE, icon: appcenter }
+      - { name: categories, title: APP_CATEGORY_PL, icon: tag }
+      - { name: reviews, title: APP_REVIEW, icon: safe-notice }
+
+  # project page navigations
+  projectNavs:
+    name: "project"
+    children:
+      - {
+        name: overview,
+        title: OVERVIEW,
+        icon: dashboard,
+        authKey: "services",
+      }
+      - name: app-workloads
+        title: APPLICATION_WORKLOAD_PL
+        icon: appcenter
+        children:
+          - { name: applications, title: APP_PL, icon: application }
+          - { name: services, title: SERVICE_PL }
+          - name: workloads
+            title: WORKLOAD_PL
+            tabs:
+              - { name: deployments, title: DEPLOYMENT_PL }
+              - { name: statefulsets, title: STATEFULSET_PL }
+              - { name: daemonsets, title: DAEMONSET_PL }
+          - name: jobs
+            title: Jobs
+            tabs:
+              - { name: jobs, title: JOB_PL }
+              - { name: cronjobs, title: CRONJOB_PL }
+          - { name: ingresses, title: ROUTE_PL }
+          - { name: pods, title: POD_PL }
+      - name: storage
+        title: STORAGE
+        icon: database
+        children:
+          - { name: volumes, title: VOLUME_PL }
+          - { name: volume-snapshots, title: VOLUME_SNAPSHOT_PL }
+      - name: config
+        title: CONFIGURATION
+        icon: hammer
+        children:
+          - { name: secrets, title: SECRET_PL }
+          - { name: configmaps, title: CONFIGMAP_PL }
+          - {
+            name: serviceaccounts,
+            title: SERVICE_ACCOUNT_PL,
+            requiredClusterVersion: v3.1.0,
+          }
+      - {
+        name: grayrelease,
+        title: GRAYSCALE_RELEASE,
+        icon: bird,
+        authKey: grayscale-release,
+        clusterModule: servicemesh,
+      }
+      - {
+        name: s2ibuilders,
+        title: IMAGE_BUILDER_PL,
+        icon: vnas,
+        clusterModule: devops,
+      }
+      - name: monitoring
+        title: MONITORING_AND_ALERTING
+        icon: monitor
+        children:
+          - {
+            name: alerts,
+            title: ALERTING_MESSAGE_PL,
+            icon: loudspeaker,
+            clusterModule: alerting,
+            requiredClusterVersion: v3.1.0,
+          }
+          - {
+            name: alert-rules,
+            title: ALERTING_POLICY_PL,
+            icon: hammer,
+            clusterModule: alerting,
+            requiredClusterVersion: v3.1.0,
+          }
+          - {
+            name: custom-monitoring,
+            title: CUSTOM_MONITORING,
+            requiredClusterVersion: v3.1.0,
+          }
+      - name: settings
+        title: PROJECT_SETTINGS
+        icon: cogwheel
+        children:
+          - { name: base-info, title: Basic Info, skipAuth: true }
+          - {
+            name: networkpolicies,
+            title: NETWORK_ISOLATION,
+            clusterModule: network,
+            authKey: "project-settings",
+          }
+          - { name: roles, title: PROJECT_ROLE_PL }
+          - { name: members, title: PROJECT_MEMBER_PL }
+          - {
+            name: gateways,
+            title: GATEWAY_SETTINGS,
+            authKey: "project-settings",
+          }
+          - {
+            name: log-collections,
+            title: LOG_COLLECTION,
+            authKey: "project-settings",
+          }
+
+  federatedProjectNavs:
+    cate: "project"
+    children:
+      - { name: overview, title: OVERVIEW, icon: dashboard, skipAuth: true }
+      - name: app-workloads
+        title: APPLICATION_WORKLOAD_PL
+        icon: appcenter
+        children:
+          - { name: applications, title: APP_PL, icon: application }
+          - { name: services, title: SERVICE_PL }
+          - name: workloads
+            title: WORKLOAD_PL
+            tabs:
+              - { name: deployments, title: DEPLOYMENT_PL }
+              - { name: statefulsets, title: STATEFULSET_PL }
+          - { name: ingresses, title: ROUTE_PL }
+      - { name: volumes, title: VOLUME_PL, icon: storage }
+      - name: config
+        title: CONFIGURATION
+        icon: hammer
+        children:
+          - { name: secrets, title: SECRET_PL }
+          - { name: configmaps, title: CONFIGMAP_PL }
+      - name: settings
+        title: PROJECT_SETTINGS
+        icon: cogwheel
+        children:
+          - { name: base-info, title: BASIC_INFORMATION, skipAuth: true }
+          - {
+            name: quota,
+            title: PROJECT_QUOTA_PL,
+            authKey: "project-settings",
+          }
+          - {
+            name: gateways,
+            title: GATEWAY_SETTINGS,
+            authKey: "project-settings",
+          }
+          - {
+            name: log-collections,
+            title: LOG_COLLECTION,
+            authKey: "project-settings",
+          }
+
+  # devops page navigations
+  devopsNavs:
+    name: "devops"
+    children:
+      - { name: pipelines, title: PIPELINE_PL, icon: application }
+      - name: management
+        title: DEVOPS_PROJECT_SETTINGS
+        icon: cogwheel
+        open: true
+        children:
+          - { name: base-info, title: BASIC_INFORMATION, skipAuth: true }
+          - { name: credentials, title: CREDENTIAL_PL }
+          - { name: roles, title: DEVOPS_PROJECT_ROLE_PL }
+          - { name: members, title: DEVOPS_PROJECT_MEMBER_PL }
+
+  # system workspace rules control
+  systemWorkspace: system-workspace
+  systemWorkspaceRules:
+    devops: []
+    members: [manage]
+    projects: [view, edit, manage]
+    roles: [view]
+    workspaces: [view, edit]
+  systemWorkspaceProjectRules:
+    alerting: [manage]
+    members: [manage]
+    roles: [manage]
+    custom-monitoring: [manage]
+
+  # preset infos
+  presetUsers: [admin, sonarqube]
+  presetGlobalRoles:
+    [platform-admin, platform-regular, workspaces-manager, users-manager]
+  presetClusterRoles: [cluster-admin, cluster-viewer]
+  presetWorkspaceRoles: [admin, regular, viewer, self-provisioner]
+  presetDevOpsRoles: [admin, operator, viewer]
+  presetRoles: [admin, operator, viewer]
+
+  # system annotations that need to be hidden for edit
+  preservedAnnotations: [".*kubesphere.io/", "openpitrix_runtime"]
+
+  # namespaces that need to be disable collection file log
+  disabledLoggingSidecarNamespace: ["kubesphere-logging-system"]
+
+  # loadbalancer annotations, default support qingcloud lb
+  loadBalancerDefaultAnnotations:
+    service.beta.kubernetes.io/qingcloud-load-balancer-eip-ids: ""
+    service.beta.kubernetes.io/qingcloud-load-balancer-type: "0"
+
+  # control error notify on page
+  enableErrorNotify: true
+
+  # enable image search when add image for a container
+  enableImageSearch: true
+
+  # development
+  # disable authorization check when developing
+  disableAuthorization: false
+
+  # show kubeconfig
+  enableKubeConfig: true
+
+  # third party tools
+  thirdPartyTools:
+    []
+    # - title:
+    #   description:
+  #   link:
+
+  # docs url for resources
+  resourceDocs:
+    # Project User Guide
+    applications: /project-user-guide/application/app-template/
+    composingapps: /project-user-guide/application/compose-app/
+    deployments: /project-user-guide/application-workloads/deployments/
+    statefulsets: /project-user-guide/application-workloads/statefulsets/
+    daemonsets: /project-user-guide/application-workloads/daemonsets/
+    jobs: /project-user-guide/application-workloads/jobs/
+    cronjobs: /project-user-guide/application-workloads/cronjobs/
+    services: /project-user-guide/application-workloads/services/
+    ingresses: /project-user-guide/application-workloads/routes/
+    s2i_template: /project-user-guide/image-builder/s2i-templates/
+    volumes: /project-user-guide/storage/volumes/
+    secrets: /project-user-guide/configuration/secrets/
+    configmaps: /project-user-guide/configuration/configmaps/
+    serviceaccounts: /project-user-guide/configuration/serviceaccounts/
+    imageregistry: /project-user-guide/configuration/image-registry/
+    grayrelease: /project-user-guide/grayscale-release/overview/
+
+    # Project Administration
+    internet: /project-administration/project-gateway/
+    project_base_info: /workspace-administration/project-quotas/
+    project_roles: /project-administration/role-and-member-management/
+    project_members: /project-administration/role-and-member-management/
+
+    # Cluster Administrator Guide
+    nodes: /cluster-administration/nodes/
+    storageclasses: /cluster-administration/persistent-volume-and-storage-class/
+
+    # DevOps User Guide
+    pipelines: /devops-user-guide/how-to-use/pipeline-settings/
+    cridentials: /devops-user-guide/how-to-use/credential-management/
+
+    # Developer Guide
+    helm_specification: /application-store/app-developer-guide/helm-specification/
+    helm_developer_guide: /application-store/app-developer-guide/helm-developer-guide/
+
+    # Custom Console
+    custom_console: /cluster-administration/platform-settings/customize-basic-information/
+
+    # Kube Config
+    kube_config: /multicluster-management/enable-multicluster/retrieve-kubeconfig/
+  # devops:
+  #  replace sonarqube link to customize url origin, default is useless
+  # sonarqubeURL: http://139.123.123.123:8080
+
+  #notification management
+  notification:
+    mail:
+      max_number_of_eamil: 50
+    dingtalk:
+      max_number_of_cid: 20
+      max_number_of_keyword: 20
+    wecom:
+      max_number_of_toUser: 50
+      max_number_of_toParty: 20
+      max_number_of_toTag: 20
+    slack:
+      max_number_of_channel: 20

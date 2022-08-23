@@ -16,32 +16,29 @@
  * along with KubeSphere Console.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const Router = require('koa-router')
-const convert = require('koa-convert')
-const bodyParser = require('koa-bodyparser')
+const Router = require('koa-router');
+const RouterProxy = require('koa-router-proxy');
+const convert = require('koa-convert');
+const bodyParser = require('koa-bodyparser');
 
-const proxy = require('./middlewares/proxy')
-const checkToken = require('./middlewares/checkToken')
-const checkIfExist = require('./middlewares/checkIfExist')
+const proxy = require('./middlewares/proxy');
+const checkToken = require('./middlewares/checkToken');
+const checkIfExist = require('./middlewares/checkIfExist');
 
-const {
-  k8sResourceProxy,
-  devopsWebhookProxy,
-  b2iFileProxy,
-} = require('./proxy')
+const { getServerConfig } = require('./libs/utils');
 
-const {
-  handleSampleData,
-  handleDockerhubProxy,
-  handleHarborProxy,
-} = require('./controllers/api')
+const { server: serverConfig } = getServerConfig();
+
+const { k8sResourceProxy, devopsWebhookProxy, b2iFileProxy } = require('./proxy');
+
+const { handleSampleData, handleDockerhubProxy, handleHarborProxy } = require('./controllers/api');
 
 const {
   handleLogin,
   handleLogout,
   handleOAuthLogin,
   handleLoginConfirm,
-} = require('./controllers/session')
+} = require('./controllers/session');
 
 const {
   renderView,
@@ -49,17 +46,17 @@ const {
   renderLogin,
   renderLoginConfirm,
   renderMarkdown,
-} = require('./controllers/view')
+} = require('./controllers/view');
 
 const parseBody = convert(
   bodyParser({
     formLimit: '200kb',
     jsonLimit: '200kb',
     bufferLimit: '4mb',
-  })
-)
+  }),
+);
 
-const router = new Router()
+const router = new Router();
 
 router
   .use(proxy('/devops_webhook/(.*)', devopsWebhookProxy))
@@ -78,14 +75,27 @@ router
   .get('/login', renderLogin)
   .post('/login/confirm', parseBody, handleLoginConfirm)
   .get('/login/confirm', renderLoginConfirm)
-  .post('/logout', handleLogout)
+  .get('/logout', handleLogout)
 
   // oauth
   .get('/oauth/redirect/:name', handleOAuthLogin)
 
   // terminal
-  .get('/terminal*', renderTerminal)
-  // page entry
-  .all('*', renderView)
+  .get('/terminal(.*)', renderTerminal)
 
-module.exports = router
+  // plugin static files proxy.
+  .get(
+    '/pstatic/(.*)',
+    RouterProxy('(.*)', {
+      target: serverConfig.apiServer.url,
+      changeOrigin: true,
+      rewrite: path => {
+        return path.replace('/pstatic', '');
+      },
+    }),
+  )
+
+  // page entry
+  .all('(.*)', renderView);
+
+module.exports = router;
