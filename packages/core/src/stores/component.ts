@@ -27,7 +27,7 @@ const componentMapper = (item: any) => {
 };
 
 export const useFetchCategories = () => {
-  const url = 'apis/extensions.kubesphere.io/v1alpha1/categories';
+  const url = 'apis/kubesphere.io/v1alpha1/categories';
   return useQuery(['component-categories'], async () => {
     const data = await request(url);
     return data as any;
@@ -35,13 +35,13 @@ export const useFetchCategories = () => {
 };
 
 export const useFetchComponents = (params: Record<string, any>) => {
-  const url = 'apis/extensions.kubesphere.io/v1alpha1/plugins';
+  const url = 'apis/kubesphere.io/v1alpha1/extensions';
 
   return useList({ url, params, format: componentMapper });
 };
 
 export const useFetchComponent = (name: string) => {
-  const url = `apis/extensions.kubesphere.io/v1alpha1/plugins/${name}/`;
+  const url = `apis/kubesphere.io/v1alpha1/extensions/${name}/`;
   return useQuery(['component', name], async () => {
     const data = await request(url);
     return componentMapper(data);
@@ -49,7 +49,7 @@ export const useFetchComponent = (name: string) => {
 };
 
 export const useFetchFile = (name: string, version: string, file: string) => {
-  const url = `apis/packages.extensions.kubesphere.io/v1alpha1/pluginversions/${name}-v${version}/files`;
+  const url = `apis/packages.kubesphere.io/v1alpha1/extensionversions/${name}-v${version}/files`;
   const params = { name: file };
   return useQuery(
     ['component-file', name, version, file],
@@ -65,7 +65,7 @@ export const useFetchFile = (name: string, version: string, file: string) => {
 };
 
 export const useFetchFileNames = (name: string, version: string, invoke: boolean) => {
-  const url = `apis/packages.extensions.kubesphere.io/v1alpha1/pluginversions/${name}-v${version}/files`;
+  const url = `apis/packages.kubesphere.io/v1alpha1/extensionversions/${name}-v${version}/files`;
   return useQuery(
     ['component-file', name, version],
     async () => {
@@ -80,7 +80,7 @@ export const useFetchFileNames = (name: string, version: string, invoke: boolean
 };
 
 export const useFetchSubscriptions = (name: string) => {
-  const url = `apis/extensions.kubesphere.io/v1alpha1/subscriptions/${name}`;
+  const url = `apis/kubesphere.io/v1alpha1/subscriptions/${name}`;
   return useQuery(
     ['Subscriptions', name],
     async () => {
@@ -94,7 +94,7 @@ export const useFetchSubscriptions = (name: string) => {
 };
 
 export const useSubscriptionMutation = (name: string) => {
-  const url = `apis/extensions.kubesphere.io/v1alpha1/subscriptions/${name}`;
+  const url = `apis/kubesphere.io/v1alpha1/subscriptions/${name}`;
   return useMutation(data => {
     return request.put(url, data);
   });

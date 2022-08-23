@@ -6,5 +6,5 @@ spec:
   rawFrom:
     url: http://{{ include "demo.fullname" . }}.{{ .Release.Namespace }}.svc
 status:
-  enabled: true
+  state: Available
   link: /dist/demo.kubesphere.io/v1alpha2/index.js

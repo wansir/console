@@ -14,8 +14,8 @@ const getInstalledExtensions = async ctx => {
     if (Array.isArray(extensions?.items)) {
       extensions.items.forEach(item => {
         const name = get(item, 'metadata.name');
-        const { link, enabled } = item.status;
-        if (enabled) {
+        const { link, state } = item.status;
+        if (state == "Available") {
           installedExtensions.push({
             name,
             link,
