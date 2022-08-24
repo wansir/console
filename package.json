@@ -13,7 +13,7 @@
     "serve": "NODE_ENV=production node server/server.js",
     "dev:client": "ksc dev -s true",
     "dev:server": "ksc-server",
-    "build": "yarn build:dll && yarn build:prod && yarn build:locales && yarn build:server",
+    "build": "yarn build:dll && yarn build:locales && yarn build:prod && yarn build:server",
     "build:dll": "ksc build:dll -s true",
     "build:prod": "cross-env dll=true ksc build:prod -s true",
     "build:server": "NODE_ENV=production webpack --config scripts/webpack.server.js --stats errors-only",
