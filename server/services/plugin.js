@@ -3,7 +3,7 @@ const { sendGatewayRequest } = require('../libs/request');
 
 const getInstalledExtensions = async ctx => {
   try {
-    const url = '/apis/kubesphere.io/v1alpha1/jsbundles';
+    const url = '/apis/extensions.kubesphere.io/v1alpha1/jsbundles';
     const extensions = await sendGatewayRequest({
       method: 'GET',
       url,
